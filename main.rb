@@ -36,7 +36,7 @@ class Fenetre < Gosu::Window
 
     @ennemis = Array.new
     @ennemisModele = Array.new
-    for i in 0..4
+   for i in 0..4
         @ennemis << Ennemi.new(@map)
         @ennemisModele << CreateModele::player(true)
     end
@@ -100,9 +100,9 @@ class Fenetre < Gosu::Window
   def draw
     # self.drawMapClip
     self.drawMapTotal
-    @playerModele.draw(@camera, @player.x, 0, (@map_height*20) - @player.y, 0, 0, 0)
+    @playerModele.draw(@camera, @player.x, 0, @player.z, 0, 0, 0)
     for i in 0..4
-      @ennemisModele[i].draw(@camera, @ennemis[i].x, 0, (@map_height*20) - @ennemis[i].y, 0, 0, 0)
+      @ennemisModele[i].draw(@camera, @ennemis[i].x, 0, @ennemis[i].z, 0, 0, 0)
     end
     Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
     #@map.draw
