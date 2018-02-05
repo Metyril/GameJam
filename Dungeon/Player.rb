@@ -49,17 +49,19 @@ class Player < Element
 
 #Gestion des deplacements
   def deplacement(depl)
-
-    d = Math.sin(@angle) + Math.cos(@angle)
     case depl
     when "Z"
-      @x += d * @vitesse
+      @x += Math.sin(@angle)* @vitesse
+      @z += Math.cos(-@angle)* @vitesse
     when "S"
-      @x -=  d * @vitesse
+      @x -= Math.sin(@angle)* @vitesse
+      @z -=  Math.cos(-@angle)* @vitesse
     when "D"
-      @z += d * @vitesse
+      @x += Math.cos(@angle)* @vitesse
+      @z +=  Math.sin(-@angle)* @vitesse
     when "Q"
-      @z -= d * @vitesse
+      @x -= Math.cos(@angle)* @vitesse
+      @z -= Math.sin(-@angle)* @vitesse
     end
   end
 

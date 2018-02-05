@@ -41,7 +41,7 @@ class Fenetre < Gosu::Window
         @ennemisModele << CreateModele::player(true)
     end
 
-    @camera = Camera.new
+    @camera = Camera.new(@player.x,@player.y-20,@player.z-20)
 
     @listeModeleCellules = Array.new
     for i in (0..15)
@@ -68,36 +68,65 @@ class Fenetre < Gosu::Window
     frontal = 1 if Gosu.button_down? Gosu::KB_I
     lateral = -1 if Gosu.button_down? Gosu::KB_J
     lateral = 1 if Gosu.button_down? Gosu::KB_L
-
-
-
-    @player.deplacement("Z") if Gosu.button_down? Gosu::KB_W
-    @player.deplacement("S") if Gosu.button_down? Gosu::KB_S
-    @player.deplacement("D") if Gosu.button_down? Gosu::KB_D
-    @player.deplacement("Q") if Gosu.button_down? Gosu::KB_A
-
-
-
-
     @camera.position.y -= 0.2 if Gosu.button_down? Gosu::KB_E or Gosu.button_down? Gosu::KB_SPACE
     @camera.position.y += 0.2 if Gosu.button_down? Gosu::KB_Q or Gosu.button_down? Gosu::KB_LEFT_CONTROL
 
     @camera.rotation.x -= 0.02 if Gosu.button_down? Gosu::KB_UP
     @camera.rotation.x += 0.02 if Gosu.button_down? Gosu::KB_DOWN
-    @camera.rotation.y -= 0.02 if Gosu.button_down? Gosu::KB_LEFT
-    @camera.rotation.y += 0.02 if Gosu.button_down? Gosu::KB_RIGHT
+    if Gosu.button_down? Gosu::KB_LEFT
+      @camera.rotation.y -= 0.02
+      @player.changementAngle(@camera.rotation.y)
+    end
+    if Gosu.button_down? Gosu::KB_RIGHT
+      @camera.rotation.y += 0.02
+      @player.changementAngle(@camera.rotation.y)
+    end
 
     @camera.position.x += Math.sin(@camera.rotation.y) * frontal + Math.cos(-@camera.rotation.y) * lateral
     @camera.position.z += Math.cos(@camera.rotation.y) * frontal + Math.sin(-@camera.rotation.y) * lateral
-
-    #@camera.rotation.x += Math.cos(angle) * dist
-    #@camera.rotation.y += Math.sin(angle) * dist
 
     if @camera.rotation.x > DEMIPI
       @camera.rotation.x = DEMIPI
     elsif @camera.rotation.x < -DEMIPI
       @camera.rotation.x = -DEMIPI
     end
+
+
+
+    if Gosu.button_down? Gosu::KB_W
+      @player.deplacement("Z")
+      @camera.position.x +=Math.sin(@camera.rotation.y)* @player.vitesse
+      @camera.position.z += + Math.cos(-@camera.rotation.y)* @player.vitesse
+    end
+    if Gosu.button_down? Gosu::KB_S
+      @player.deplacement("S")
+
+      @camera.position.x -= Math.sin(@camera.rotation.y)* @player.vitesse
+      @camera.position.z -= Math.cos(-@camera.rotation.y)* @player.vitesse
+    end
+    if Gosu.button_down? Gosu::KB_D
+        @player.deplacement("D")
+
+        @camera.position.x += Math.cos(@camera.rotation.y)* @player.vitesse
+        @camera.position.z += Math.sin(-@camera.rotation.y)* @player.vitesse
+    end
+    if Gosu.button_down? Gosu::KB_A
+      @player.deplacement("Q")
+
+      @camera.position.x -= Math.cos(@camera.rotation.y)* @player.vitesse
+      @camera.position.z -= Math.sin(-@camera.rotation.y)* @player.vitesse
+    end
+
+
+
+
+
+
+    #@camera.rotation.x += Math.cos(angle) * dist
+    #@camera.rotation.y += Math.sin(angle) * dist
+
+
+
   end
 
   def draw

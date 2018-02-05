@@ -109,8 +109,8 @@ end
 
 class Camera
   attr_accessor :position, :rotation
-  def initialize
-    @position = Point.new(0, 0, 0)
+  def initialize(x,y,z)
+    @position = Point.new(x, y, z)
     @rotation = Point.new(0, 0, 0)
   end
 end
