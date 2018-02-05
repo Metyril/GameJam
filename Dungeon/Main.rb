@@ -101,6 +101,24 @@ class GameWindow < Gosu::Window     # Hérite de la fenêtre Gosu
                     ennemi.y += @cell_size if @map.map[ennemi.y / @cell_size][ennemi.x / @cell_size] & S != 0
             end
         end
+
+        case button_down?
+        when (Gosu::KB_Z)
+          @player.deplacementX("Z")
+        when (Gosu::KB_S)
+          @player.deplacementX("S")
+        when (Gosu::KB_D)
+          @player.deplacementX("D")
+        when (Gosu::KB_Q)
+          @player.deplacementX("Q")
+        when (Gosu::KB_Space)
+          if @player.arme.class == ArmeTire
+            @player.tirer()
+          else
+            @player.frapper()
+          end
+        end
+
     end
 
 
@@ -108,7 +126,7 @@ class GameWindow < Gosu::Window     # Hérite de la fenêtre Gosu
         close if id == Gosu::KbEscape
         @buttons_down += 1
     end
-    
+
 
     def button_up(id)       # Opérations à faire lorsqu'on relâche une touche du clavier / de la souris
         @buttons_down -= 1
@@ -140,7 +158,7 @@ class GameWindow < Gosu::Window     # Hérite de la fenêtre Gosu
         @ennemis.each do |ennemi|
             ennemi.draw
         end
-        
+
     end
 
 end # Fin GameWindow
