@@ -31,6 +31,7 @@ class Fenetre < Gosu::Window
       @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0')))
       #@listeModeleCellules.push(CreateModele::cellule("0111"))
     end
+    @playerModele = CreateModele::player
   end
 
   def update
@@ -86,7 +87,7 @@ class Fenetre < Gosu::Window
         end
       end
     end
-
+    @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)
     Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
   end
 end
