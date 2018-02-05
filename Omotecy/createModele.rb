@@ -253,4 +253,115 @@ class CreateModele
 
     return Modele.new(pointsCellule, trianglesCellule)
   end
+
+
+
+  def self.player
+    p9 = Point.new(-2, -1, -1)
+    p10 = Point.new(-2, -2, -1)
+    p11 = Point.new(-1, -3, -1)
+    p12 = Point.new(2, -1, -1)
+    p13 = Point.new(2, -2, -1)
+    p14 = Point.new(1, -3, -1)
+
+    p15 = Point.new(-2, -1, 1)
+    p16 = Point.new(-2, -2, 1)
+    p17 = Point.new(-1, -3, 1)
+    p18 = Point.new(2, -1, 1)
+    p19 = Point.new(2, -2, 1)
+    p20 = Point.new(1, -3, 1)
+
+    p1 = Point.new(-1, 4, -1)
+    p2 = Point.new(-1, 0, -1)
+    p3 = Point.new(1, 4, -1)
+    p4 = Point.new(1, 0, -1)
+    p5 = Point.new(-1, 0, 1)
+    p6 = Point.new(-1, 4, 1)
+    p7 = Point.new(1, 4, 1)
+    p8 = Point.new(1, 0, 1)
+
+    pointsPlayer = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
+
+    trianglesPlayer = [
+      # devant corps
+      Triangle.new(p1, p2, p3, 0xff2ecc71),
+      Triangle.new(p3, p2, p4, 0xff2ecc71),
+      #---
+
+      # deriere corps
+      Triangle.new(p5, p6, p7, 0xff2ecc71),
+      Triangle.new(p8, p5, p7, 0xff2ecc71),
+      #---
+
+      # haut corps
+      Triangle.new(p6, p1, p7, 0xff2ecc71),
+      Triangle.new(p1, p3, p7, 0xff2ecc71),
+      #---
+
+      # droite corps
+      Triangle.new(p4, p8, p7, 0xff2ecc71),
+      Triangle.new(p3, p4, p7, 0xff2ecc71),
+      #---
+
+      # gauche corps
+      Triangle.new(p5, p2, p6, 0xff2ecc71),
+      Triangle.new(p2, p1, p6, 0xff2ecc71),
+      #---
+
+      # arrière tete
+      Triangle.new(p8, p18, p19, 0xffffeaa7),
+      Triangle.new(p8, p19, p20, 0xffffeaa7),
+      Triangle.new(p8, p20, p17, 0xffffeaa7),
+      Triangle.new(p8, p17, p16, 0xffffeaa7),
+      Triangle.new(p8, p16, p15, 0xffffeaa7),
+      Triangle.new(p8, p15, p5, 0xffffeaa7),
+      #---
+
+      # avant tete
+      Triangle.new(p4, p13, p12, 0xffffeaa7),
+      Triangle.new(p4, p14, p13, 0xffffeaa7),
+      Triangle.new(p4, p11, p14, 0xffffeaa7),
+      Triangle.new(p4, p10, p11, 0xffffeaa7),
+      Triangle.new(p4, p9, p10, 0xffffeaa7),
+      Triangle.new(p4, p2, p9, 0xffffeaa7),
+      #---
+
+      # face 1 tete
+      Triangle.new(p11, p20, p14, 0xffffeaa7),
+      Triangle.new(p20, p11, p17, 0xffffeaa7),
+      #--
+
+      # face 2 tete
+      Triangle.new(p14, p20, p19, 0xffffeaa7),
+      Triangle.new(p14, p19, p13, 0xffffeaa7),
+      #--
+
+      # face 3 tete
+      Triangle.new(p13, p19, p12, 0xffffeaa7),
+      Triangle.new(p19, p18, p12, 0xffffeaa7),
+      #--
+
+      # face 4 tete
+      Triangle.new(p18, p8, p12, 0xffffeaa7),
+      Triangle.new(p12, p8, p4, 0xffffeaa7),
+      #--
+
+      # face 5 tete
+      Triangle.new(p16, p17, p10, 0xffffeaa7),
+      Triangle.new(p10, p17, p11, 0xffffeaa7),
+      #--
+
+      # face 6 tete
+      Triangle.new(p16, p9, p15, 0xffffeaa7),
+      Triangle.new(p9, p16, p10, 0xffffeaa7),
+      #--
+
+      # face 7 tete
+      Triangle.new(p15, p2, p5, 0xffffeaa7),
+      Triangle.new(p2, p15, p9, 0xffffeaa7)
+      #--
+    ]
+
+    return Modele.new(pointsPlayer, trianglesPlayer)
+  end
 end

@@ -80,6 +80,35 @@ class Fenetre < Gosu::Window
     #@map.draw
   end
 
+
+  def drawMapClipRoMain
+    cibleX = (@camera.position.x/20).round
+    cibleZ = (@camera.position.z/20).round
+    minZ = cibleZ-5
+    maxZ = cibleZ+5
+    minX = cibleX-5
+    maxX = cibleX+5
+
+    for i in (0...@map.map.length)
+      if minZ <= i && i<= maxZ
+        for j in ( 0 ... @map.map[i].length)
+          if minX <= i && i<= maxX
+            if @map.map[i][j] != 0
+              @listeModeleCellules[@map.map[i][j]].draw(@camera, j*20, 0, i*20, 0, 0, 0)
+            end
+          end
+        end
+      end
+    end
+  #  @map.map[minZ ... maxZ].reverse_each.with_index do |row, i|
+  #    row[minX ... maxX].each.with_index do |cel, j|
+  #      if cel != 0
+  #            @listeModeleCellules[cel].draw(@camera, (cibleX + j)*20, 0,  (cibleZ + i)*20, 0, 0, 0)
+  #      end
+  #    end
+  #  end
+  end
+
   def drawMapClip
     cibleX = @camera.position.x
     cibleZ = @camera.position.z
@@ -94,13 +123,13 @@ class Fenetre < Gosu::Window
       row.each do |cel|
         if cel != 0
           if (x >= cibleX - size && x <= cibleX + size) && (z >= cibleZ - size && z <= cibleZ + size)
-          @listeModeleCellules[cel].draw(@camera, x, 0, z, 0, 0, 0)
+            @listeModeleCellules[cel].draw(@camera, x, 0, z, 0, 0, 0)
+          end
         end
-      end
 
-      x += 20
+        x += 20
+      end
     end
-  end
   end
 
   def drawMapTotal
