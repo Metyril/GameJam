@@ -111,15 +111,15 @@ class GameWindow < Gosu::Window     # Hérite de la fenêtre Gosu
           @player.deplacementX("D")
         when (Gosu::KB_Q)
           @player.deplacementX("Q")
-        when (Gosu::KB_Space)
+         when (Gosu::KB_Space)
 
-          if @player.arme != 0
-            if @player.arme.class == ArmeTire
-              @player.tirer()
-            else
-              @player.frapper()
-            end
-          end
+           if @player.arme != 0
+             if @player.arme.class == ArmeTire
+               @player.tirer()
+             else
+             @player.frapper()
+             end
+           end
         end
 
     end

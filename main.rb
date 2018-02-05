@@ -35,10 +35,9 @@ class Fenetre < Gosu::Window
     @playerModele = CreateModele::player
 
     @ennemis = Array.new
-    @ennemisModele = Array.new
-   for i in 0..4
+    @ennemisModele = CreateModele::player(true)
+    for i in 0..4
         @ennemis << Ennemi.new(@map)
-        @ennemisModele << CreateModele::player(true)
     end
 
     @camera = Camera.new
@@ -64,10 +63,17 @@ class Fenetre < Gosu::Window
     frontal = 0
     lateral = 0
 
-    frontal = -1 if Gosu.button_down? Gosu::KB_S
-    frontal = 1 if Gosu.button_down? Gosu::KB_W
-    lateral = -1 if Gosu.button_down? Gosu::KB_A
-    lateral = 1 if Gosu.button_down? Gosu::KB_D
+    frontal = -1 if Gosu.button_down? Gosu::KB_K
+    frontal = 1 if Gosu.button_down? Gosu::KB_I
+    lateral = -1 if Gosu.button_down? Gosu::KB_J
+    lateral = 1 if Gosu.button_down? Gosu::KB_L
+
+
+    @player.x += Math.sin(@player.angle) + Math.cos(@player.angle) if Gosu.button_down? Gosu::KB_Z
+    @player.x -= Math.sin(@player.angle) + Math.cos(@player.angle) if Gosu.button_down? Gosu::KB_S
+    @player.y -= Math.cos(@player.angle) + Math.sin(@player.angle) if Gosu.button_down? Gosu::KB_D
+    @player.y += Math.cos(@player.angle) + Math.sin(@player.angle) if Gosu.button_down? Gosu::KB_Q
+
 
     @camera.position.y -= 0.2 if Gosu.button_down? Gosu::KB_E or Gosu.button_down? Gosu::KB_SPACE
     @camera.position.y += 0.2 if Gosu.button_down? Gosu::KB_Q or Gosu.button_down? Gosu::KB_LEFT_CONTROL
@@ -93,9 +99,9 @@ class Fenetre < Gosu::Window
   def draw
     # self.drawMapClip
     self.drawMapTotal
-    @playerModele.draw(@camera, @player.x, 0, @player.z, 0, 0, 0)
-    for i in 0..4
-      @ennemisModele[i].draw(@camera, @ennemis[i].x, 0, @ennemis[i].z, 0, 0, 0)
+    @playerModele.draw(@camera, @player.x, @player.y, @player.z, 0, 0, 0)
+    @ennemis.each do |ennemi|
+      @ennemisModele.draw(@camera, ennemi.x, ennemi.y, ennemi.z, 0, 0, 0)
     end
     Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
     #@map.draw
@@ -104,7 +110,7 @@ class Fenetre < Gosu::Window
   def drawMapClip
     cibleX = @camera.position.x
     cibleZ = @camera.position.z
-    size = 10 * 20
+    size = 10 * @cell_size
 
     z = 0
     x = 0
