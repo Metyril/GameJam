@@ -283,57 +283,82 @@ class CreateModele
     pointsPlayer = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
 
     trianglesPlayer = [
-      # devant
+      # devant corps
       Triangle.new(p1, p2, p3, 0xff2ecc71),
       Triangle.new(p3, p2, p4, 0xff2ecc71),
       #---
 
-      # deriere
-      Triangle.new(p5, p6, p7, 0xfff39c12),
-      Triangle.new(p8, p5, p7, 0xfff39c12),
+      # deriere corps
+      Triangle.new(p5, p6, p7, 0xff2ecc71),
+      Triangle.new(p8, p5, p7, 0xff2ecc71),
       #---
 
-      # haut
-      Triangle.new(p6, p1, p7, 0xff2980b9),
-      Triangle.new(p1, p3, p7, 0xff2980b9),
+      # haut corps
+      Triangle.new(p6, p1, p7, 0xff2ecc71),
+      Triangle.new(p1, p3, p7, 0xff2ecc71),
       #---
 
-      # droite
-      Triangle.new(p4, p8, p7, 0xff8e44ad),
-      Triangle.new(p3, p4, p7, 0xff8e44ad),
+      # droite corps
+      Triangle.new(p4, p8, p7, 0xff2ecc71),
+      Triangle.new(p3, p4, p7, 0xff2ecc71),
       #---
 
-      # gauche
-      Triangle.new(p5, p2, p6, 0xffecf0f1),
-      Triangle.new(p2, p1, p6, 0xffecf0f1),
+      # gauche corps
+      Triangle.new(p5, p2, p6, 0xff2ecc71),
+      Triangle.new(p2, p1, p6, 0xff2ecc71),
       #---
 
-      # arrière octo
-      Triangle.new(p8, p18, p19, 0xffecf0f1),
-      Triangle.new(p8, p19, p20, 0xffecf0f1),
-      Triangle.new(p8, p20, p17, 0xffecf0f1),
-      Triangle.new(p8, p17, p16, 0xffecf0f1),
-      Triangle.new(p8, p16, p15, 0xffecf0f1),
-      Triangle.new(p8, p15, p5, 0xffecf0f1),
+      # arrière tete
+      Triangle.new(p8, p18, p19, 0xffffeaa7),
+      Triangle.new(p8, p19, p20, 0xffffeaa7),
+      Triangle.new(p8, p20, p17, 0xffffeaa7),
+      Triangle.new(p8, p17, p16, 0xffffeaa7),
+      Triangle.new(p8, p16, p15, 0xffffeaa7),
+      Triangle.new(p8, p15, p5, 0xffffeaa7),
       #---
 
-      # avant octo
-      Triangle.new(p4, p13, p12, 0xffecf0f1),
-      Triangle.new(p4, p14, p13, 0xffecf0f1),
-      Triangle.new(p4, p11, p14, 0xffecf0f1),
-      Triangle.new(p4, p10, p11, 0xffecf0f1),
-      Triangle.new(p4, p9, p10, 0xffecf0f1),
-      Triangle.new(p4, p2, p9, 0xffecf0f1),
+      # avant tete
+      Triangle.new(p4, p13, p12, 0xffffeaa7),
+      Triangle.new(p4, p14, p13, 0xffffeaa7),
+      Triangle.new(p4, p11, p14, 0xffffeaa7),
+      Triangle.new(p4, p10, p11, 0xffffeaa7),
+      Triangle.new(p4, p9, p10, 0xffffeaa7),
+      Triangle.new(p4, p2, p9, 0xffffeaa7),
       #---
 
-      # face 1
-      Triangle.new(p11, p20, p14, 0xff00ff00),
-      Triangle.new(p20, p11, p17, 0xff0000ff),
+      # face 1 tete
+      Triangle.new(p11, p20, p14, 0xffffeaa7),
+      Triangle.new(p20, p11, p17, 0xffffeaa7),
       #--
 
-      # face 2
-      Triangle.new(p14, p20, p13, 0xff00ff00),
-      Triangle.new(p20, p19, p13, 0xff0000ff)
+      # face 2 tete
+      Triangle.new(p14, p20, p19, 0xffffeaa7),
+      Triangle.new(p14, p19, p13, 0xffffeaa7),
+      #--
+
+      # face 3 tete
+      Triangle.new(p13, p19, p12, 0xffffeaa7),
+      Triangle.new(p19, p18, p12, 0xffffeaa7),
+      #--
+
+      # face 4 tete
+      Triangle.new(p18, p8, p12, 0xffffeaa7),
+      Triangle.new(p12, p8, p4, 0xffffeaa7),
+      #--
+
+      # face 5 tete
+      Triangle.new(p16, p17, p10, 0xffffeaa7),
+      Triangle.new(p10, p17, p11, 0xffffeaa7),
+      #--
+
+      # face 6 tete
+      Triangle.new(p16, p9, p15, 0xffffeaa7),
+      Triangle.new(p9, p16, p10, 0xffffeaa7),
+      #--
+
+      # face 7 tete
+      Triangle.new(p15, p2, p5, 0xffffeaa7),
+      Triangle.new(p2, p15, p9, 0xffffeaa7)
       #--
     ]
 
