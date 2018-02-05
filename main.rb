@@ -40,6 +40,8 @@ class Fenetre < Gosu::Window
         @ennemis << Ennemi.new(@map)
     end
 
+    @batte = CreateModele::batte
+
     @camera = Camera.new
 
     @listeModeleCellules = Array.new
@@ -105,6 +107,9 @@ class Fenetre < Gosu::Window
     @ennemis.each do |ennemi|
       @ennemisModele.draw(@camera, ennemi.x, ennemi.y, ennemi.z, 0, 0, 0)
     end
+
+    @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)
+    @batte.draw(@camera, 3, 0, 0, 0, 0, 0)
     Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
     #@map.draw
   end

@@ -372,4 +372,32 @@ class CreateModele
 
     return Modele.new(pointsPlayer, trianglesPlayer)
   end
+
+  def self.batte
+    size = 2
+
+    b1 = Point.new(-0.2 * size, -3 * size, -0.2 * size)
+    b2 = Point.new(-0.2 * size, -3 * size, 0.2 * size)
+    b3 = Point.new(0, -3.2 * size, 0)
+    b4 = Point.new(0.2 * size, -3 * size, 0.2 * size)
+    b5 = Point.new(0.2 * size, -3 * size, -0.2 * size)
+    b6 = Point.new(0, 0, 0)
+
+    pointBatte = [b1, b2, b3, b4, b5, b6]
+
+    triangleBatte = [
+      Triangle.new(b1, b2, b3, 0xffcc8e35),
+      Triangle.new(b2, b4, b3, 0xffffb142),
+      Triangle.new(b4, b5, b3, 0xffd35400),
+      Triangle.new(b5, b1, b3, 0xffe67e22),
+
+      ### pyramide haut
+      Triangle.new(b2, b1, b6, 0xffcc8e35),
+      Triangle.new(b4, b2, b6, 0xffffb142),
+      Triangle.new(b5, b4, b6, 0xffd35400),
+      Triangle.new(b1, b5, b6, 0xffe67e22)
+    ]
+
+    return Modele.new(pointBatte, triangleBatte)
+  end
 end
