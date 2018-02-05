@@ -161,12 +161,12 @@ class Map
         @rooms.each do |room|
             x = room.x_pos + rand(0..room.width-1)
             y = room.y_pos + rand(0..room.height-1)
-    
+
             while @map[y][x] < 15
                 x = room.x_pos + rand(0..room.width-1)
                 y = room.y_pos + rand(0..room.height-1)
             end
-    
+
             if @map[y][x-1] < 15
                 @map[y][x] |= W
                 @map[y][x-1] |= E
@@ -188,7 +188,7 @@ class Map
         @rooms.each do |room|
             x = rand(0..room.width-1)
             y = rand(0..room.height-1)
-    
+
             while room.room[y][x] == 15 || room.room[y][x] == 6 || room.room[y][x] == 5 || room.room[y][x] == 10 || room.room[y][x] == 9
                 x = rand(0..room.width-1)
                 y = rand(0..room.height-1)
@@ -196,7 +196,7 @@ class Map
 
             x += room.x_pos
             y += room.y_pos
-    
+
             if @map[y][x] == 7
                 @map[y][x] |= W
                 @map[y][x-1] |= E
@@ -221,7 +221,7 @@ class Map
             x = 0
             y = 0
             @map.each do |row|
-                row.each do |cell|                
+                row.each do |cell|
                     if cell == N
                         @map[y][x] = 0
                         @map[y-1][x] -= S

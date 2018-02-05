@@ -22,7 +22,7 @@ class Fenetre < Gosu::Window
 
     Triangle.setRefSize(WIDTH, HEIGHT)
 
-    @map = Map.new(50, 50, 1, 1, 5, 'random')
+    @map = Map.new(100, 100, 70, 1, 70, 'random')
 
     @camera = Camera.new
 
@@ -34,7 +34,7 @@ class Fenetre < Gosu::Window
   end
 
   def update
-    self.caption = "#{Gosu.fps} FPS / ZQSD, espace, ctrl et souris | double echap pour quitter"
+    self.caption = "#{Gosu.fps} FPS / x:#{@camera.position.x.round} y:#{@camera.position.y.round} z:#{@camera.position.z.round}"
 
     #angle = 0
     #dist = 0
@@ -74,20 +74,49 @@ class Fenetre < Gosu::Window
   end
 
   def draw
+    self.drawMapClip
+    #self.drawMapTotal
+    Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
+    #@map.draw
+  end
+
+  def drawMapClip
+    cibleX = @camera.position.x
+    cibleZ = @camera.position.z
+    size = 10 * 20
+
     z = 0
     x = 0
-    @map.map.each do |row|
+
+    @map.map.reverse_each do |row|
       z += 20
       x = 0
       row.each do |cel|
-        x +=20
+        if cel != 0
+          if (x >= cibleX - size && x <= cibleX + size) && (z >= cibleZ - size && z <= cibleZ + size)
+          @listeModeleCellules[cel].draw(@camera, x, 0, z, 0, 0, 0)
+        end
+      end
+
+      x += 20
+    end
+  end
+  end
+
+  def drawMapTotal
+    z = 0
+    x = 0
+
+    @map.map.reverse_each do |row|
+      z += 20
+      x = 0
+      row.each do |cel|
+        x += 20
         if cel != 0
           @listeModeleCellules[cel].draw(@camera, x, 0, z, 0, 0, 0)
         end
       end
     end
-
-    Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
   end
 end
 
