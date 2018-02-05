@@ -22,7 +22,7 @@ class Element
         end
         @x *= @cell_size
         @z *= @cell_size
-        @z = ((@map.width-1) * @cell_size) - @z
+        #@z = ((@map.width-1) * @cell_size) - @z
     end # Fin createElement
 
 

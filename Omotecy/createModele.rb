@@ -188,7 +188,16 @@ class CreateModele
     return Modele.new(pointsMur, trianglesMur)
   end
 
-  def self.cellule m = "0000"
+  def self.cellule m = "0000", theme = 0
+    couleurSol = 0xff808e9b
+    couleur1 = 0xff7158e2
+    couleur2 = 0xffff9f1a
+
+    if theme == 1
+      couleur1 = 0xff34ace0
+      couleur2 = 0xffe55039
+    end
+
     size = 10
 
     c1 = Point.new(-size, 0, size)
@@ -199,20 +208,20 @@ class CreateModele
     pointsCellule = [c1, c2, c3, c4]
 
     trianglesCellule = [
-      TriangleSpe.new(c1, c2, c3, 0xff808e9b),
-      TriangleSpe.new(c1, c3, c4, 0xff808e9b)
+      TriangleSpe.new(c1, c2, c3, couleurSol),
+      TriangleSpe.new(c1, c3, c4, couleurSol)
     ]
 
-    #NORD
-    if m[3] == "0"
+    #SUD
+    if m[2] == "0"
       cm1 = Point.new(-size, -size, size)
       cm2 = Point.new(size, -size, size)
 
       pointsCellule.push(cm1)
       pointsCellule.push(cm2)
 
-      trianglesCellule.push(Triangle.new(cm1, c2, c1, 0xff7158e2))
-      trianglesCellule.push(Triangle.new(cm2, c2, cm1, 0xff7158e2))
+      trianglesCellule.push(Triangle.new(cm1, c2, c1, couleur1))
+      trianglesCellule.push(Triangle.new(cm2, c2, cm1, couleur1))
     end
 
     #EST
@@ -223,20 +232,20 @@ class CreateModele
       pointsCellule.push(cm1)
       pointsCellule.push(cm2)
 
-      trianglesCellule.push(Triangle.new(cm1, c3, c2, 0xffff9f1a))
-      trianglesCellule.push(Triangle.new(cm2, c3, cm1, 0xffff9f1a))
+      trianglesCellule.push(Triangle.new(cm1, c3, c2, couleur2))
+      trianglesCellule.push(Triangle.new(cm2, c3, cm1, couleur2))
     end
 
-    #SUD
-    if m[2] == "0"
+    #NORD
+    if m[3] == "0"
       cm1 = Point.new(size, -size, -size)
       cm2 = Point.new(-size, -size, -size)
 
       pointsCellule.push(cm1)
       pointsCellule.push(cm2)
 
-      trianglesCellule.push(Triangle.new(cm1, c4, c3, 0xff7158e2))
-      trianglesCellule.push(Triangle.new(cm2, c4, cm1, 0xff7158e2))
+      trianglesCellule.push(Triangle.new(cm1, c4, c3, couleur1))
+      trianglesCellule.push(Triangle.new(cm2, c4, cm1, couleur1))
     end
 
     #OUEST
@@ -247,8 +256,8 @@ class CreateModele
       pointsCellule.push(cm1)
       pointsCellule.push(cm2)
 
-      trianglesCellule.push(Triangle.new(cm1, c1, c4, 0xffff9f1a))
-      trianglesCellule.push(Triangle.new(cm2, c1, cm1, 0xffff9f1a))
+      trianglesCellule.push(Triangle.new(cm1, c1, c4, couleur2))
+      trianglesCellule.push(Triangle.new(cm2, c1, cm1, couleur2))
     end
 
     return Modele.new(pointsCellule, trianglesCellule)
@@ -274,18 +283,18 @@ class CreateModele
     p7 = Point.new(1, 0, 1)
     p8 = Point.new(1, -4, 1)
 
-    p9 = Point.new(-2, -5, -1)
-    p10 = Point.new(-2, -6, -1)
+    p9 = Point.new(-1, -5, -2)
+    p10 = Point.new(-1, -6, -2)
     p11 = Point.new(-1, -7, -1)
-    p12 = Point.new(2, -5, -1)
-    p13 = Point.new(2, -6, -1)
-    p14 = Point.new(1, -7, -1)
+    p12 = Point.new(-1, -5, 2)
+    p13 = Point.new(-1, -6, 2)
+    p14 = Point.new(-1, -7, 1)
 
-    p15 = Point.new(-2, -5, 1)
-    p16 = Point.new(-2, -6, 1)
-    p17 = Point.new(-1, -7, 1)
-    p18 = Point.new(2, -5, 1)
-    p19 = Point.new(2, -6, 1)
+    p15 = Point.new(1, -5, -2)
+    p16 = Point.new(1, -6, -2)
+    p17 = Point.new(1, -7, -1)
+    p18 = Point.new(1, -5, 2)
+    p19 = Point.new(1, -6, 2)
     p20 = Point.new(1, -7, 1)
 
     pointsPlayer = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
@@ -317,59 +326,87 @@ class CreateModele
       #---
 
       # arrière tete
-      Triangle.new(p8, p18, p19, head_color),
-      Triangle.new(p8, p19, p20, head_color),
-      Triangle.new(p8, p20, p17, head_color),
-      Triangle.new(p8, p17, p16, head_color),
-      Triangle.new(p8, p16, p15, head_color),
-      Triangle.new(p8, p15, p5, head_color),
+      Triangle.new(p8, p19, p18, head_color),
+      Triangle.new(p8, p20, p19, head_color),
+      Triangle.new(p8, p17, p20, head_color),
+      Triangle.new(p8, p16, p17, head_color),
+      Triangle.new(p8, p15, p16, head_color),
+      Triangle.new(p8, p4, p15, head_color),
       #---
 
       # avant tete
-      Triangle.new(p4, p13, p12, head_color),
-      Triangle.new(p4, p14, p13, head_color),
-      Triangle.new(p4, p11, p14, head_color),
-      Triangle.new(p4, p10, p11, head_color),
-      Triangle.new(p4, p9, p10, head_color),
-      Triangle.new(p4, p2, p9, head_color),
+      Triangle.new(p5, p12, p13, head_color),
+      Triangle.new(p5, p13, p14, head_color),
+      Triangle.new(p5, p14, p11, head_color),
+      Triangle.new(p5, p11, p10, head_color),
+      Triangle.new(p5, p10, p9, head_color),
+      Triangle.new(p5, p9, p2, head_color),
       #---
 
       # face 1 tete
-      Triangle.new(p11, p20, p14, head_color),
-      Triangle.new(p20, p11, p17, head_color),
+      Triangle.new(p11, p14, p20, head_color),
+      Triangle.new(p20, p17, p11, head_color),
       #--
 
       # face 2 tete
-      Triangle.new(p14, p20, p19, head_color),
-      Triangle.new(p14, p19, p13, head_color),
+      Triangle.new(p14, p19, p20, head_color),
+      Triangle.new(p14, p13, p19, head_color),
       #--
 
       # face 3 tete
-      Triangle.new(p13, p19, p12, head_color),
-      Triangle.new(p19, p18, p12, head_color),
+      Triangle.new(p13, p12, p19, head_color),
+      Triangle.new(p19, p12, p18, head_color),
       #--
 
       # face 4 tete
-      Triangle.new(p18, p8, p12, head_color),
-      Triangle.new(p12, p8, p4, head_color),
+      Triangle.new(p18, p12, p8, head_color),
+      Triangle.new(p12, p5, p8, head_color),
       #--
 
       # face 5 tete
-      Triangle.new(p16, p17, p10, head_color),
-      Triangle.new(p10, p17, p11, head_color),
+      Triangle.new(p16, p10, p17, head_color),
+      Triangle.new(p10, p11, p17, head_color),
       #--
 
       # face 6 tete
-      Triangle.new(p16, p9, p15, head_color),
-      Triangle.new(p9, p16, p10, head_color),
+      Triangle.new(p16, p15, p9, head_color),
+      Triangle.new(p9, p10, p16, head_color),
       #--
 
       # face 7 tete
-      Triangle.new(p15, p2, p5, head_color),
-      Triangle.new(p2, p15, p9, head_color)
+      Triangle.new(p15, p4, p2, head_color),
+      Triangle.new(p2, p9, p15, head_color)
       #--
     ]
 
     return Modele.new(pointsPlayer, trianglesPlayer)
+  end
+
+  def self.batte
+    size = 2
+
+    b1 = Point.new(-0.2 * size, -3 * size, -0.2 * size)
+    b2 = Point.new(-0.2 * size, -3 * size, 0.2 * size)
+    b3 = Point.new(0, -3.2 * size, 0)
+    b4 = Point.new(0.2 * size, -3 * size, 0.2 * size)
+    b5 = Point.new(0.2 * size, -3 * size, -0.2 * size)
+    b6 = Point.new(0, 0, 0)
+
+    pointBatte = [b1, b2, b3, b4, b5, b6]
+
+    triangleBatte = [
+      Triangle.new(b1, b2, b3, 0xffcc8e35),
+      Triangle.new(b2, b4, b3, 0xffffb142),
+      Triangle.new(b4, b5, b3, 0xffd35400),
+      Triangle.new(b5, b1, b3, 0xffe67e22),
+
+      ### pyramide haut
+      Triangle.new(b2, b1, b6, 0xffcc8e35),
+      Triangle.new(b4, b2, b6, 0xffffb142),
+      Triangle.new(b5, b4, b6, 0xffd35400),
+      Triangle.new(b1, b5, b6, 0xffe67e22)
+    ]
+
+    return Modele.new(pointBatte, triangleBatte)
   end
 end
