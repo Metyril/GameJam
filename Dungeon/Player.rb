@@ -6,8 +6,8 @@ require_relative './Element.rb'
 
 class Player < Element
       attr_accessor :vie,:items , :puissance,:arme
-    def initialize(map,itbox=5,x=0,y=0,vie = 3, puissance =1)
-        super map, itbox, x, y
+    def initialize(map, itbox=5, x=0, y=0, z=0, vie = 3, puissance =1)
+        super map, itbox, x, y, z
         @vie = vie
         @arme = 0 ;
         @puissance = puissance
