@@ -199,11 +199,12 @@ class CreateModele
     pointsCellule = [c1, c2, c3, c4]
 
     trianglesCellule = [
-      Triangle.new(c1, c2, c3, 0xff808e9b),
-      Triangle.new(c1, c3, c4, 0xff808e9b)
+      TriangleSpe.new(c1, c2, c3, 0xff808e9b),
+      TriangleSpe.new(c1, c3, c4, 0xff808e9b)
     ]
 
-    if m[0] == "0"
+    #SUD
+    if m[2] == "0"
       cm1 = Point.new(-size, -size, size)
       cm2 = Point.new(size, -size, size)
 
@@ -214,6 +215,7 @@ class CreateModele
       trianglesCellule.push(Triangle.new(cm2, c2, cm1, 0xff7158e2))
     end
 
+    #EST
     if m[1] == "0"
       cm1 = Point.new(size, -size, size)
       cm2 = Point.new(size, -size, -size)
@@ -225,7 +227,8 @@ class CreateModele
       trianglesCellule.push(Triangle.new(cm2, c3, cm1, 0xffff9f1a))
     end
 
-    if m[2] == "0"
+    #NORD
+    if m[3] == "0"
       cm1 = Point.new(size, -size, -size)
       cm2 = Point.new(-size, -size, -size)
 
@@ -236,7 +239,8 @@ class CreateModele
       trianglesCellule.push(Triangle.new(cm2, c4, cm1, 0xff7158e2))
     end
 
-    if m[3] == "0"
+    #OUEST
+    if m[0] == "0"
       cm1 = Point.new(-size, -size, -size)
       cm2 = Point.new(-size, -size, size)
 

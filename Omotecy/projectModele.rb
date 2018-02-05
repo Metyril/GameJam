@@ -99,6 +99,14 @@ class Modele
   end
 end
 
+class TriangleSpe < Triangle
+  def draw()
+     if ((@b.x - @a.x) * (@c.y - @a.y) - (@b.y - @a.y) * (@c.x - @a.x)) > 0 && @a.z > 0 && @b.z > 0 && @c.z > 0
+      Gosu::draw_triangle(@a.x + @@DWIDTH, @a.y + @@DHEIGHT, @couleur, @b.x + @@DWIDTH, @b.y + @@DHEIGHT, @couleur, @c.x + @@DWIDTH, @c.y + @@DHEIGHT, @couleur, -9999)
+    end
+  end
+end
+
 class Camera
   attr_accessor :position, :rotation
   def initialize
