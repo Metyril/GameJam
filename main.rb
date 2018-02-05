@@ -47,7 +47,7 @@ class Fenetre < Gosu::Window
 
     @listeModeleCellules = Array.new
     for i in (0..15)
-      @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0')))
+      @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), 0))
       #@listeModeleCellules.push(CreateModele::cellule("0111"))
     end
   end
@@ -103,11 +103,11 @@ class Fenetre < Gosu::Window
   end
 
   def draw
-    # self.drawMapClip
+    #self.drawMapClip
     self.drawMapTotal
-    @playerModele.draw(@camera, @player.x, 0, @player.z, 0, 0, 0)
+    @playerModele.draw(@camera, @player.x, @player.y, @player.z, 0, 0, 0)
     for i in 0..4
-      @ennemisModele[i].draw(@camera, @ennemis[i].x, 0, @ennemis[i].z, 0, 0, 0)
+      @ennemisModele[i].draw(@camera, @ennemis[i].x, @ennemis[i].y, @ennemis[i].z, 0, 0, 0)
     end
 
     @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)
@@ -124,7 +124,8 @@ class Fenetre < Gosu::Window
     z = 0
     x = 0
 
-    @map.map.reverse_each do |row|
+    #@map.map.reverse_each do |row|
+    @map.map.each do |row|
       row.each do |cel|
         if cel != 0
           if (x >= cibleX - size && x <= cibleX + size) && (z >= cibleZ - size && z <= cibleZ + size)
@@ -150,7 +151,8 @@ class Fenetre < Gosu::Window
     z = 0
     x = 0
 
-    @map.map.reverse.each do |row|
+    #@map.map.reverse.each do |row|
+    @map.map.each do |row|
       row.each do |cel|
         if cel != 0
           @listeModeleCellules[cel].draw(@camera, x, 0, z, 0, 0, 0)

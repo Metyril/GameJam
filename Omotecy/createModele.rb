@@ -188,7 +188,16 @@ class CreateModele
     return Modele.new(pointsMur, trianglesMur)
   end
 
-  def self.cellule m = "0000"
+  def self.cellule m = "0000", theme = 0
+    couleurSol = 0xff808e9b
+    couleur1 = 0xff7158e2
+    couleur2 = 0xffff9f1a
+
+    if theme == 1
+      couleur1 = 0xff34ace0
+      couleur2 = 0xffe55039
+    end
+
     size = 10
 
     c1 = Point.new(-size, 0, size)
@@ -199,20 +208,20 @@ class CreateModele
     pointsCellule = [c1, c2, c3, c4]
 
     trianglesCellule = [
-      TriangleSpe.new(c1, c2, c3, 0xff808e9b),
-      TriangleSpe.new(c1, c3, c4, 0xff808e9b)
+      TriangleSpe.new(c1, c2, c3, couleurSol),
+      TriangleSpe.new(c1, c3, c4, couleurSol)
     ]
 
-    #NORD
-    if m[3] == "0"
+    #SUD
+    if m[2] == "0"
       cm1 = Point.new(-size, -size, size)
       cm2 = Point.new(size, -size, size)
 
       pointsCellule.push(cm1)
       pointsCellule.push(cm2)
 
-      trianglesCellule.push(Triangle.new(cm1, c2, c1, 0xff7158e2))
-      trianglesCellule.push(Triangle.new(cm2, c2, cm1, 0xff7158e2))
+      trianglesCellule.push(Triangle.new(cm1, c2, c1, couleur1))
+      trianglesCellule.push(Triangle.new(cm2, c2, cm1, couleur1))
     end
 
     #EST
@@ -223,20 +232,20 @@ class CreateModele
       pointsCellule.push(cm1)
       pointsCellule.push(cm2)
 
-      trianglesCellule.push(Triangle.new(cm1, c3, c2, 0xffff9f1a))
-      trianglesCellule.push(Triangle.new(cm2, c3, cm1, 0xffff9f1a))
+      trianglesCellule.push(Triangle.new(cm1, c3, c2, couleur2))
+      trianglesCellule.push(Triangle.new(cm2, c3, cm1, couleur2))
     end
 
-    #SUD
-    if m[2] == "0"
+    #NORD
+    if m[3] == "0"
       cm1 = Point.new(size, -size, -size)
       cm2 = Point.new(-size, -size, -size)
 
       pointsCellule.push(cm1)
       pointsCellule.push(cm2)
 
-      trianglesCellule.push(Triangle.new(cm1, c4, c3, 0xff7158e2))
-      trianglesCellule.push(Triangle.new(cm2, c4, cm1, 0xff7158e2))
+      trianglesCellule.push(Triangle.new(cm1, c4, c3, couleur1))
+      trianglesCellule.push(Triangle.new(cm2, c4, cm1, couleur1))
     end
 
     #OUEST
@@ -247,8 +256,8 @@ class CreateModele
       pointsCellule.push(cm1)
       pointsCellule.push(cm2)
 
-      trianglesCellule.push(Triangle.new(cm1, c1, c4, 0xffff9f1a))
-      trianglesCellule.push(Triangle.new(cm2, c1, cm1, 0xffff9f1a))
+      trianglesCellule.push(Triangle.new(cm1, c1, c4, couleur2))
+      trianglesCellule.push(Triangle.new(cm2, c1, cm1, couleur2))
     end
 
     return Modele.new(pointsCellule, trianglesCellule)
