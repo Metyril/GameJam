@@ -274,18 +274,18 @@ class CreateModele
     p7 = Point.new(1, 0, 1)
     p8 = Point.new(1, -4, 1)
 
-    p9 = Point.new(-2, -5, -1)
-    p10 = Point.new(-2, -6, -1)
+    p9 = Point.new(-1, -5, -2)
+    p10 = Point.new(-1, -6, -2)
     p11 = Point.new(-1, -7, -1)
-    p12 = Point.new(2, -5, -1)
-    p13 = Point.new(2, -6, -1)
-    p14 = Point.new(1, -7, -1)
+    p12 = Point.new(-1, -5, 2)
+    p13 = Point.new(-1, -6, 2)
+    p14 = Point.new(-1, -7, 1)
 
-    p15 = Point.new(-2, -5, 1)
-    p16 = Point.new(-2, -6, 1)
-    p17 = Point.new(-1, -7, 1)
-    p18 = Point.new(2, -5, 1)
-    p19 = Point.new(2, -6, 1)
+    p15 = Point.new(1, -5, -2)
+    p16 = Point.new(1, -6, -2)
+    p17 = Point.new(1, -7, -1)
+    p18 = Point.new(1, -5, 2)
+    p19 = Point.new(1, -6, 2)
     p20 = Point.new(1, -7, 1)
 
     pointsPlayer = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
@@ -317,56 +317,56 @@ class CreateModele
       #---
 
       # arrière tete
-      Triangle.new(p8, p18, p19, head_color),
-      Triangle.new(p8, p19, p20, head_color),
-      Triangle.new(p8, p20, p17, head_color),
-      Triangle.new(p8, p17, p16, head_color),
-      Triangle.new(p8, p16, p15, head_color),
-      Triangle.new(p8, p15, p5, head_color),
+      Triangle.new(p8, p19, p18, head_color),
+      Triangle.new(p8, p20, p19, head_color),
+      Triangle.new(p8, p17, p20, head_color),
+      Triangle.new(p8, p16, p17, head_color),
+      Triangle.new(p8, p15, p16, head_color),
+      Triangle.new(p8, p4, p15, head_color),
       #---
 
       # avant tete
-      Triangle.new(p4, p13, p12, head_color),
-      Triangle.new(p4, p14, p13, head_color),
-      Triangle.new(p4, p11, p14, head_color),
-      Triangle.new(p4, p10, p11, head_color),
-      Triangle.new(p4, p9, p10, head_color),
-      Triangle.new(p4, p2, p9, head_color),
+      Triangle.new(p5, p12, p13, head_color),
+      Triangle.new(p5, p13, p14, head_color),
+      Triangle.new(p5, p14, p11, head_color),
+      Triangle.new(p5, p11, p10, head_color),
+      Triangle.new(p5, p10, p9, head_color),
+      Triangle.new(p5, p9, p2, head_color),
       #---
 
       # face 1 tete
-      Triangle.new(p11, p20, p14, head_color),
-      Triangle.new(p20, p11, p17, head_color),
+      Triangle.new(p11, p14, p20, head_color),
+      Triangle.new(p20, p17, p11, head_color),
       #--
 
       # face 2 tete
-      Triangle.new(p14, p20, p19, head_color),
-      Triangle.new(p14, p19, p13, head_color),
+      Triangle.new(p14, p19, p20, head_color),
+      Triangle.new(p14, p13, p19, head_color),
       #--
 
       # face 3 tete
-      Triangle.new(p13, p19, p12, head_color),
-      Triangle.new(p19, p18, p12, head_color),
+      Triangle.new(p13, p12, p19, head_color),
+      Triangle.new(p19, p12, p18, head_color),
       #--
 
       # face 4 tete
-      Triangle.new(p18, p8, p12, head_color),
-      Triangle.new(p12, p8, p4, head_color),
+      Triangle.new(p18, p12, p8, head_color),
+      Triangle.new(p12, p5, p8, head_color),
       #--
 
       # face 5 tete
-      Triangle.new(p16, p17, p10, head_color),
-      Triangle.new(p10, p17, p11, head_color),
+      Triangle.new(p16, p10, p17, head_color),
+      Triangle.new(p10, p11, p17, head_color),
       #--
 
       # face 6 tete
-      Triangle.new(p16, p9, p15, head_color),
-      Triangle.new(p9, p16, p10, head_color),
+      Triangle.new(p16, p15, p9, head_color),
+      Triangle.new(p9, p10, p16, head_color),
       #--
 
       # face 7 tete
-      Triangle.new(p15, p2, p5, head_color),
-      Triangle.new(p2, p15, p9, head_color)
+      Triangle.new(p15, p4, p2, head_color),
+      Triangle.new(p2, p9, p15, head_color)
       #--
     ]
 
