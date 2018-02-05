@@ -106,10 +106,10 @@ class Fenetre < Gosu::Window
   end
 
   def draw
-    for i in (1..2) do
-      for j in (1..2) do
-        for k in (1..2) do
-          @modele3.draw(@camera, i*6 + 5, j*6, k*6, @gangle*0.2 , @gangle, 0)
+    for i in (1..9) do
+      for j in (1..9) do
+        for k in (1..9) do
+          @modele.draw(@camera, i*6 + 5, j*6, k*6, @gangle*0.2 , @gangle, 0)
         end
       end
     end
@@ -134,6 +134,8 @@ class Fenetre < Gosu::Window
     @listCellules[7].draw(@camera, -40, 30, 40, 0, 0, 0)
     @listCellules[1].draw(@camera, -20, 30, 40, 0, 0, 0)
     @listCellules[4].draw(@camera, -60, 30, 40, 0, 0, 0)
+
+    Gosu::draw_rect(0, 0, $WIDTH, $HEIGHT, 0xff2c3e50, -999)
   end
 
   def needs_cursor?
