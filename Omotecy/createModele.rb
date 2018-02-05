@@ -203,8 +203,8 @@ class CreateModele
       TriangleSpe.new(c1, c3, c4, 0xff808e9b)
     ]
 
-    #SUD
-    if m[2] == "0"
+    #NORD
+    if m[3] == "0"
       cm1 = Point.new(-size, -size, size)
       cm2 = Point.new(size, -size, size)
 
@@ -227,8 +227,8 @@ class CreateModele
       trianglesCellule.push(Triangle.new(cm2, c3, cm1, 0xffff9f1a))
     end
 
-    #NORD
-    if m[3] == "0"
+    #SUD
+    if m[2] == "0"
       cm1 = Point.new(size, -size, -size)
       cm2 = Point.new(-size, -size, -size)
 

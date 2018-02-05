@@ -22,11 +22,11 @@ class Fenetre < Gosu::Window
 
     Triangle.setRefSize(WIDTH, HEIGHT)
 
-    @map_width = 50         # Largeur de la Map
-    @map_height = 50        # Hauteur de la Map
+    @map_width = 30         # Largeur de la Map
+    @map_height = 30        # Hauteur de la Map
     @cell_size = 20         # Taille d'une cellule
     @wall_size = 5          # Largeur d'un mur
-    @nb_room = 5            # Nombre de salles
+    @nb_room = 3            # Nombre de salles
     @type_gen = 'random'    # Type de génération / 4 valeurs possibles : 'random', 'newest', 'middle', 'oldest'
 
     @map = Map.new(@map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen)   # Map à générer
@@ -36,7 +36,7 @@ class Fenetre < Gosu::Window
 
     @ennemis = Array.new
     @ennemisModele = Array.new
-    for i in 0..19
+    for i in 0..4
         @ennemis << Ennemi.new(@map)
         @ennemisModele << CreateModele::player(true)
     end
@@ -51,7 +51,7 @@ class Fenetre < Gosu::Window
   end
 
   def update
-    self.caption = "#{Gosu.fps} FPS / ZQSD, espace, ctrl et souris | double echap pour quitter"
+    self.caption = "#{Gosu.fps} FPS / x:#{@camera.position.x.round} y:#{@camera.position.y.round} z:#{@camera.position.z.round}"
 
     #angle = 0
     #dist = 0
@@ -91,23 +91,60 @@ class Fenetre < Gosu::Window
   end
 
   def draw
+    # self.drawMapClip
+    self.drawMapTotal
+    @playerModele.draw(@camera, @player.x, 0, (@map_height*20) - @player.y, 0, 0, 0)
+    for i in 0..4
+      @ennemisModele[i].draw(@camera, @ennemis[i].x, 0, (@map_height*20) - @ennemis[i].y, 0, 0, 0)
+    end
+    Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
+    #@map.draw
+  end
+
+  def drawMapClip
+    cibleX = @camera.position.x
+    cibleZ = @camera.position.z
+    size = 10 * 20
+
     z = 0
     x = 0
-    @map.map.each do |row|
+
+    @map.map.reverse_each do |row|
+      row.each do |cel|
+        if cel != 0
+          if (x >= cibleX - size && x <= cibleX + size) && (z >= cibleZ - size && z <= cibleZ + size)
+            @listeModeleCellules[cel].draw(@camera, x, 0, z, 0, 0, 0)
+            # if @player.x == x && @player.y == z
+            #   @playerModele.draw(@camera, @player.x, 0, @player.y, 0, 0, 0)
+            # end
+            # for i in 0..4
+            #   if @ennemis[i].x == x && @ennemis[i].y == z
+            #     @ennemisModele[i].draw(@camera, @ennemis[i].x, 0, @ennemis[i].y, 0, 0, 0)
+            #   end
+            # end
+          end
+        end
+        x += 20
+      end
       z += 20
       x = 0
+    end
+  end
+
+  def drawMapTotal
+    z = 0
+    x = 0
+
+    @map.map.reverse.each do |row|
       row.each do |cel|
-        x +=20
         if cel != 0
           @listeModeleCellules[cel].draw(@camera, x, 0, z, 0, 0, 0)
         end
+        x += 20
       end
+      z += 20
+      x = 0
     end
-    @playerModele.draw(@camera, @player.x, 0, @player.y, 0, 0, 0)
-    for i in 0..19
-      @ennemisModele[i].draw(@camera, @ennemis[i].x, 0, @ennemis[i].y, 0, 0, 0)
-    end
-    Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
   end
 end
 
