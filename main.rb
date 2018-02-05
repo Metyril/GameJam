@@ -64,10 +64,17 @@ class Fenetre < Gosu::Window
     frontal = 0
     lateral = 0
 
-    frontal = -1 if Gosu.button_down? Gosu::KB_S
-    frontal = 1 if Gosu.button_down? Gosu::KB_W
-    lateral = -1 if Gosu.button_down? Gosu::KB_A
-    lateral = 1 if Gosu.button_down? Gosu::KB_D
+    frontal = -1 if Gosu.button_down? Gosu::KB_K
+    frontal = 1 if Gosu.button_down? Gosu::KB_I
+    lateral = -1 if Gosu.button_down? Gosu::KB_J
+    lateral = 1 if Gosu.button_down? Gosu::KB_L
+
+
+    @player.x = -0.5 if Gosu.button_down? Gosu::KB_Z
+    @player.x = +0.5 if Gosu.button_down? Gosu::KB_S
+    @player.y = -0.5 if Gosu.button_down? Gosu::KB_D
+    @player.y = +0.5 if Gosu.button_down? Gosu::KB_Q
+
 
     @camera.position.y -= 0.2 if Gosu.button_down? Gosu::KB_E or Gosu.button_down? Gosu::KB_SPACE
     @camera.position.y += 0.2 if Gosu.button_down? Gosu::KB_Q or Gosu.button_down? Gosu::KB_LEFT_CONTROL
