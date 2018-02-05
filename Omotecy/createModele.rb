@@ -327,13 +327,13 @@ class CreateModele
       #---
 
       # face 1
-      Triangle.new(p11, p20, p14, 0xffecf0f1),
-      Triangle.new(p20, p11, p17, 0xffecf0f1),
+      Triangle.new(p11, p20, p14, 0xff00ff00),
+      Triangle.new(p20, p11, p17, 0xff0000ff),
       #--
 
       # face 2
       Triangle.new(p14, p20, p13, 0xff00ff00),
-      Triangle.new(p20, p13, p16, 0xff0000ff)
+      Triangle.new(p20, p19, p13, 0xff0000ff)
       #--
     ]
 
