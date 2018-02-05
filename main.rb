@@ -41,13 +41,10 @@ class Fenetre < Gosu::Window
         @ennemisModele << CreateModele::player(true)
     end
 
-<<<<<<< HEAD
     @camera = Camera.new(@player.x,@player.y-20,@player.z-20)
-=======
+
     @batte = CreateModele::batte
 
-    @camera = Camera.new
->>>>>>> 6a67a5c736c059a45378f414b6a23e5910c3ef62
 
     @listeModeleCellules = Array.new
     for i in (0..15)
