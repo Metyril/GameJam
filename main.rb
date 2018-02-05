@@ -22,7 +22,24 @@ class Fenetre < Gosu::Window
 
     Triangle.setRefSize(WIDTH, HEIGHT)
 
-    @map = Map.new(50, 50, 1, 1, 5, 'random')
+    @map_width = 50         # Largeur de la Map
+    @map_height = 50        # Hauteur de la Map
+    @cell_size = 20         # Taille d'une cellule
+    @wall_size = 5          # Largeur d'un mur
+    @nb_room = 5            # Nombre de salles
+    @type_gen = 'random'    # Type de génération / 4 valeurs possibles : 'random', 'newest', 'middle', 'oldest'
+
+    @map = Map.new(@map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen)   # Map à générer
+
+    @player = Player.new(@map)
+    @playerModele = CreateModele::player
+
+    @ennemis = Array.new
+    @ennemisModele = Array.new
+    for i in 0..19
+        @ennemis << Ennemi.new(@map)
+        @ennemisModele << CreateModele::player(true)
+    end
 
     @camera = Camera.new
 
@@ -31,7 +48,6 @@ class Fenetre < Gosu::Window
       @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0')))
       #@listeModeleCellules.push(CreateModele::cellule("0111"))
     end
-    @playerModele = CreateModele::player
   end
 
   def update
@@ -87,7 +103,10 @@ class Fenetre < Gosu::Window
         end
       end
     end
-    @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)
+    @playerModele.draw(@camera, @player.x, 0, @player.y, 0, 0, 0)
+    for i in 0..19
+      @ennemisModele[i].draw(@camera, @ennemis[i].x, 0, @ennemis[i].y, 0, 0, 0)
+    end
     Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
   end
 end

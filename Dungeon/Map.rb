@@ -40,7 +40,7 @@ OPPOSITE   = { E => W, W =>  E, N =>  S, S => N }
 class Map
 
     # Getters
-    attr_accessor :map, :width, :height, :rooms
+    attr_accessor :map, :width, :height, :rooms, :cell_size
 
     def initialize(width, height, cell_size, wall_size, nb_room, type_gen)
         @width = width              # Largeur de la Map

@@ -4,9 +4,9 @@ require 'gosu'  # Librairie graphique Gosu
 class Element
     attr_accessor :x, :y, :itBox
 
-    def initialize(map, cell_size,itbox,x,y)
+    def initialize(map,itbox,x,y)
         @map = map
-        @cell_size = cell_size
+        @cell_size = @map.cell_size
         @x = x
         @y = y
         @itBox = itbox
