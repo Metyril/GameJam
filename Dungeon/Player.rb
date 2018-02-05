@@ -5,12 +5,13 @@ require_relative './Element.rb'
 
 
 class Player < Element
-      attr_accessor :vie,:items , :puissance,:arme,:angle
+      attr_accessor :vie,:items , :puissance,:arme,:angle,:vitesse
     def initialize(map, itbox=5, x=0, y=0, z=0, vie = 3, puissance =1)
         super map, itbox, x, y, z
         @angle = 0
         @vie = vie
         @arme = 0
+        @vitesse = 0.5
         @puissance = puissance
         @items = Array.new()
     end
@@ -47,20 +48,18 @@ class Player < Element
   end
 
 #Gestion des deplacements
-  def deplacementX(depl)
+  def deplacement(depl)
+
+    d = Math.sin(@angle) + Math.cos(@angle)
     case depl
     when "Z"
-      @x = @x + Math.sin(@angle)
-      @y = @y + Math.cos(@angle)
+      @x += d * @vitesse
     when "S"
-      @x = @x + Math.sin(-@angle)
-      @y = @y + Math.cos(-@angle)
+      @x -=  d * @vitesse
     when "D"
-      @x = @x + Math.sin(@angle+90)
-      @y = @y + Math.cos(@angle+90)
+      @z += d * @vitesse
     when "Q"
-      @x = @x + Math.sin(@angle-90)
-      @y = @y + Math.cos(@angle-90)
+      @z -= d * @vitesse
     end
   end
 
