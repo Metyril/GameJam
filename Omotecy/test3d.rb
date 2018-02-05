@@ -1,5 +1,5 @@
 require 'gosu'
-# require 'auto_click'
+#require 'auto_click'
 require_relative 'projectModele.rb'
 require_relative 'createModele.rb'
 
@@ -59,13 +59,13 @@ class Fenetre < Gosu::Window
   def update
     self.caption = "#{Gosu.fps} FPS / ZQSD, espace, ctrl et souris | double echap pour quitter"
 
-    angle = 0
-    dist = 0
-    # if @focus
-    #   angle = -Math.atan2($MOUSEREFX - cursor_position[0],  $MOUSEREFY - cursor_position[1])
-    #   dist = Math.sqrt(($MOUSEREFX - cursor_position[0])**2 + ($MOUSEREFY - cursor_position[1])**2) * 0.005
-    #   mouse_move($MOUSEREFX, $MOUSEREFY)
-    # end
+    #angle = 0
+    #dist = 0
+    #if @focus
+    #  angle = -Math.atan2($MOUSEREFX - cursor_position[0],  $MOUSEREFY - cursor_position[1])
+    #  dist = Math.sqrt(($MOUSEREFX - cursor_position[0])**2 + ($MOUSEREFY - cursor_position[1])**2) * 0.005
+    #  mouse_move($MOUSEREFX, $MOUSEREFY)
+    #end
 
     frontal = 0
     lateral = 0
@@ -86,8 +86,8 @@ class Fenetre < Gosu::Window
     @camera.position.x += Math.sin(@camera.rotation.y) * frontal + Math.cos(-@camera.rotation.y) * lateral
     @camera.position.z += Math.cos(@camera.rotation.y) * frontal + Math.sin(-@camera.rotation.y) * lateral
 
-    # @camera.rotation.x += Math.cos(angle) * dist
-    # @camera.rotation.y += Math.sin(angle) * dist
+    #@camera.rotation.x += Math.cos(angle) * dist
+    #@camera.rotation.y += Math.sin(angle) * dist
 
     if @camera.rotation.x > $DEMIPI
       @camera.rotation.x = $DEMIPI
@@ -106,10 +106,10 @@ class Fenetre < Gosu::Window
     end
   end
 
-  def draw    
-    for i in (1..9) do
-      for j in (1..9) do
-        for k in (1..9) do
+  def draw
+    for i in (1..8) do
+      for j in (1..8) do
+        for k in (1..8) do
           @modele.draw(@camera, i*6 + 5, j*6, k*6, @gangle*0.2 , @gangle, 0)
         end
       end
