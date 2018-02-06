@@ -9,8 +9,8 @@ require_relative 'Dungeon/ObjetRamassable.rb'
 require_relative 'Omotecy/createModele.rb'
 require_relative 'Omotecy/projectModele.rb'
 
-WIDTH = 1000
-HEIGHT = 600
+WIDTH = 1280
+HEIGHT = 720
 
 ##$WIDTH = 1600
 ##$HEIGHT = 900
@@ -19,7 +19,7 @@ DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
   def initialize
-    super WIDTH, HEIGHT
+    super WIDTH, HEIGHT, option = {fullscreen: false}
 
     Triangle.setRefSize(WIDTH, HEIGHT)
 
@@ -249,4 +249,4 @@ class Fenetre < Gosu::Window
   end
 end
 
-#Fenetre.new.show
+Fenetre.new.show

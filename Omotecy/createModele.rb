@@ -526,8 +526,7 @@ class CreateModele
 
     return Modele.new(pointsPlayer, trianglesPlayer)
   end
-<<<<<<< HEAD
-
+  
   def self.batte
     size = 2
 
@@ -647,6 +646,4 @@ class CreateModele
 
     return Modele.new(pointsRuby, trianglesRuby)
   end
-=======
->>>>>>> 11d4c7426d41b93cfa0b4d72077ff6e71e42eaac
 end

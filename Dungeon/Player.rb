@@ -70,7 +70,7 @@ class Player < Element
       @z -= Math.sin(-@angle)* @vitesse
     end
 
-    self.collisions
+    #self.collisions
   end
 
   def changementAngle(angle)
