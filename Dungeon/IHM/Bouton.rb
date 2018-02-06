@@ -17,8 +17,8 @@ class Bouton
   end
 
   def draw
-      @font.draw(@text,@x+@x/4+10,@y+10,3,5,5,Gosu::Color::BLACK)
+      @font.draw(@text,@x+@x/4+10,@y,3,5,5,Gosu::Color::BLACK)
       Gosu.draw_rect(@x, @y, @width, @height, @color, 2)
   end # Fin draw
-  
+
 end
