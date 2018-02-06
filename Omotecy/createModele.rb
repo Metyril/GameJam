@@ -212,6 +212,18 @@ class CreateModele
       TriangleSpe.new(c1, c3, c4, couleurSol)
     ]
 
+    #NORD
+    if m[3] == "0"
+      cm1 = Point.new(size, -size, -size)
+      cm2 = Point.new(-size, -size, -size)
+
+      pointsCellule.push(cm1)
+      pointsCellule.push(cm2)
+
+      trianglesCellule.push(Triangle.new(cm1, c4, c3, couleur1))
+      trianglesCellule.push(Triangle.new(cm2, c4, cm1, couleur1))
+    end
+
     #SUD
     if m[2] == "0"
       cm1 = Point.new(-size, -size, size)
@@ -234,18 +246,6 @@ class CreateModele
 
       trianglesCellule.push(Triangle.new(cm1, c3, c2, couleur2))
       trianglesCellule.push(Triangle.new(cm2, c3, cm1, couleur2))
-    end
-
-    #NORD
-    if m[3] == "0"
-      cm1 = Point.new(size, -size, -size)
-      cm2 = Point.new(-size, -size, -size)
-
-      pointsCellule.push(cm1)
-      pointsCellule.push(cm2)
-
-      trianglesCellule.push(Triangle.new(cm1, c4, c3, couleur1))
-      trianglesCellule.push(Triangle.new(cm2, c4, cm1, couleur1))
     end
 
     #OUEST

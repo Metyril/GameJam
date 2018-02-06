@@ -14,6 +14,17 @@ class Element
         self.createElement
     end # Fin initialize
 
+    def getCelX
+      return (@x / @map.cell_size).round
+    end
+
+    def getCelZ
+      return (@z / @map.cell_size).round
+    end
+
+    def getCelVal
+      return @map.map[self.getCelZ][self.getCelX]
+    end
 
     def createElement
         @x, @z = rand(@map.width), rand(@map.height)
@@ -25,6 +36,9 @@ class Element
         #@z = ((@map.width-1) * @cell_size) - @z
     end # Fin createElement
 
+    def update
+
+    end
 
     def draw
         Gosu.draw_rect(@x, @z, @cell_size, @cell_size, Gosu::Color.argb(0xff_00ff00), 1)

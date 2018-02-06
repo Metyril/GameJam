@@ -35,10 +35,9 @@ class Fenetre < Gosu::Window
     @playerModele = CreateModele::player
 
     @ennemis = Array.new
-    @ennemisModele = Array.new
+    @ennemisModele = CreateModele::player(true)
    for i in 0..4
-        @ennemis << Ennemi.new(@map)
-        @ennemisModele << CreateModele::player(true)
+      @ennemis << Ennemi.new(@map)
     end
 
     @camera = Camera.new(@player.x,@player.y-20,@player.z-20)
@@ -54,7 +53,7 @@ class Fenetre < Gosu::Window
   end
 
   def update
-    self.caption = "#{Gosu.fps} FPS / x:#{@camera.position.x.round} y:#{@camera.position.y.round} z:#{@camera.position.z.round}"
+    self.caption = "#{Gosu.fps} FPS / x:#{@camera.position.x.round} y:#{@camera.position.y.round} z:#{@camera.position.z.round} | Px:#{@player.getCelX} Pz:#{@player.getCelZ} PVal:#{@player.getCelVal}"
 
     #angle = 0
     #dist = 0
@@ -135,9 +134,10 @@ class Fenetre < Gosu::Window
   def draw
     #self.drawMapClip
     self.drawMapTotal
-    @playerModele.draw(@camera, @player.x, @player.y, @player.z, 0, 0, 0)
-    for i in 0..4
-      @ennemisModele[i].draw(@camera, @ennemis[i].x, @ennemis[i].y, @ennemis[i].z, 0, 0, 0)
+    @playerModele.draw(@camera, @player.x, @player.y, @player.z, 0, -@player.angle, 0)
+
+    @ennemis.each do |ennemi|
+      @ennemisModele.draw(@camera, ennemi.x, ennemi.y, ennemi.z, 0, 0, 0)
     end
 
     @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)
