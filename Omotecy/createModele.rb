@@ -648,4 +648,130 @@ class CreateModele
 
     return Modele.new(pointsRuby, trianglesRuby)
   end
+
+  def self.pilule
+
+  #Hauteur
+  hauteur = 2
+
+  #Couleurs
+  rouge = 0xFFEA2027
+  cyan = 0xFF12CBC4
+
+  #Points Gros Octogone Rouge
+  p1r = Point.new(0,0+hauteur,0)
+  p2r = Point.new(-1,1+hauteur,0)
+  p3r = Point.new(-1,3+hauteur,0)
+  p4r = Point.new(0,4+hauteur,0)
+  p5r = Point.new(2,4+hauteur,0)
+  p6r = Point.new(3,3+hauteur,0)
+  p7r = Point.new(3,1+hauteur,0)
+  p8r = Point.new(2,0+hauteur,0)
+
+  #Points Gros Octogone Milieu
+  p1m = Point.new(0,0+hauteur,4)
+  p2m = Point.new(-1,1+hauteur,4)
+  p3m = Point.new(-1,3+hauteur,4)
+  p4m = Point.new(0,4+hauteur,4)
+  p5m = Point.new(2,4+hauteur,4)
+  p6m = Point.new(3,3+hauteur,4)
+  p7m = Point.new(3,1+hauteur,4)
+  p8m = Point.new(2,0+hauteur,4)
+
+  #Points Gros Octogone Cyan
+  p1c = Point.new(0,0+hauteur,8)
+  p2c = Point.new(-1,1+hauteur,8)
+  p3c = Point.new(-1,3+hauteur,8)
+  p4c = Point.new(0,4+hauteur,8)
+  p5c = Point.new(2,4+hauteur,8)
+  p6c = Point.new(3,3+hauteur,8)
+  p7c = Point.new(3,1+hauteur,8)
+  p8c = Point.new(2,0+hauteur,8)
+
+  pointsPilule = [p1r, p2r, p3r, p4r, p5r, p6r, p7r,
+                  p1m, p2m, p3m, p4m, p5m, p6m, p7m,
+                  p1c, p2c, p3c, p4r, p5c, p6c, p7c]
+
+  trianglesPilule = [
+
+  #Triangles Gros Octogone Rouge
+  Triangle.new(p1r,p2r,p3r,rouge),
+  Triangle.new(p1r,p3r,p4r,rouge),
+  Triangle.new(p1r,p4r,p5r,rouge),
+  Triangle.new(p1r,p5r,p6r,rouge),
+  Triangle.new(p1r,p6r,p7r,rouge),
+  Triangle.new(p1r,p7r,p8r,rouge),
+
+  #Triangles Gros Octogone Milieu
+  Triangle.new(p1m,p2m,p3m,rouge),
+  Triangle.new(p1m,p3m,p4m,rouge),
+  Triangle.new(p1m,p4m,p5m,rouge),
+  Triangle.new(p1m,p5m,p6m,rouge),
+  Triangle.new(p1m,p6m,p7m,rouge),
+  Triangle.new(p1m,p7m,p8m,rouge),
+
+  #Triangles Gros Octogone Cyan
+  Triangle.new(p1c,p2c,p3c,cyan),
+  Triangle.new(p1c,p3c,p4c,cyan),
+  Triangle.new(p1c,p4c,p5c,cyan),
+  Triangle.new(p1c,p5c,p6c,cyan),
+  Triangle.new(p1c,p6c,p7c,cyan),
+  Triangle.new(p1c,p7c,p8c,cyan),
+
+  #Triangles reliant Gros Octogone Rouge et Milieu
+  #Face 1
+  Triangle.new(p1r,p1m,p2m,rouge),
+  Triangle.new(p1r,p2r,p2m,rouge),
+  #Face 2
+  Triangle.new(p2r,p2m,p3m,rouge),
+  Triangle.new(p2r,p3r,p3m,rouge),
+  #Face 3
+  Triangle.new(p3r,p3m,p4m,rouge),
+  Triangle.new(p3r,p4r,p4m,rouge),
+  #Face 4
+  Triangle.new(p4r,p4m,p5m,rouge),
+  Triangle.new(p4r,p5r,p5m,rouge),
+  #Face 5
+  Triangle.new(p5r,p5m,p6m,rouge),
+  Triangle.new(p5r,p6r,p6m,rouge),
+  #Face 6
+  Triangle.new(p6r,p6m,p7m,rouge),
+  Triangle.new(p6r,p7r,p7m,rouge),
+  #Face 7
+  Triangle.new(p7r,p7m,p8m,rouge),
+  Triangle.new(p7r,p8r,p8m,rouge),
+  #Face 8
+  Triangle.new(p8r,p8m,p1m,rouge),
+  Triangle.new(p8r,p1r,p1m,rouge),
+
+  #Triangles reliant Gros Octogone Cyan et Milieu
+  #Face 1
+  Triangle.new(p1c,p1m,p2m,cyan),
+  Triangle.new(p1c,p2c,p2m,cyan),
+  #Face 2
+  Triangle.new(p2c,p2m,p3m,cyan),
+  Triangle.new(p2c,p3c,p3m,cyan),
+  #Face 3
+  Triangle.new(p3c,p3m,p4m,cyan),
+  Triangle.new(p3c,p4c,p4m,cyan),
+  #Face 4
+  Triangle.new(p4c,p4m,p5m,cyan),
+  Triangle.new(p4c,p5c,p5m,cyan),
+  #Face 5
+  Triangle.new(p5c,p5m,p6m,cyan),
+  Triangle.new(p5c,p6c,p6m,cyan),
+  #Face 6
+  Triangle.new(p6c,p6m,p7m,cyan),
+  Triangle.new(p6c,p7c,p7m,cyan),
+  #Face 7
+  Triangle.new(p7c,p7m,p8m,cyan),
+  Triangle.new(p7c,p8c,p8m,cyan),
+  #Face 8
+  Triangle.new(p8c,p8m,p1m,cyan),
+  Triangle.new(p8c,p1c,p1m,cyan)
+  ]
+
+  return Modele.new(pointsPilule, trianglesPilule)
+end
+
 end
