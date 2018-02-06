@@ -5,8 +5,8 @@ require_relative './Element.rb'
 
 
 class Player < Element
-      attr_accessor :vie,:items , :puissance,:arme,:angle,:vitesse
-    def initialize(map, modele, itbox=5, x=0, y=0, z=0, vie = 3, puissance =1)
+      attr_accessor :vie,:items , :puissance,:arme,:angle,:vitesse, :angle
+    def initialize(map, modele, itbox=1, x=0, y=0, z=0, vie = 3, puissance =1)
         super map, modele, itbox, x, y, z
         @angle = 0
         @vie = vie
@@ -49,9 +49,9 @@ class Player < Element
 
 #Gestion des deplacements
   def deplacement(depl)
-    @lastCel = self.getCelVal
-    @lastXCel = self.getCelX
-    @lastZCel = self.getCelZ
+    #@lastCel = self.getCelVal
+    #@lastXCel = self.getCelX
+    #@lastZCel = self.getCelZ
     #@lastX = @x
     #@lastZ = @z
 
@@ -87,7 +87,8 @@ class Player < Element
 
 
 
-    #def draw
-    #    Gosu.draw_rect(@x, @y, @cell_size, @cell_size, Gosu::Color.argb(0xff_ff0000), 2)
-    #end # Fin draw
+  def draw cam
+    @modele.draw(cam, @x, @y, @z, 0, -@angle, 0)
+      #Gosu.draw_rect(@x, @y, @cell_size, @cell_size, Gosu::Color.argb(0xff_ff0000), 2)
+  end # Fin draw
 end # Fin Player

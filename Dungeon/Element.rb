@@ -2,7 +2,7 @@
 require 'gosu'  # Librairie graphique Gosu
 
 class Element
-    attr_accessor :x, :y, :z, :itBox
+    attr_accessor :x, :y, :z, :itBox, :isDetruit
 
     def initialize(map,modele,itbox=0,x=0,y=0,z=0)
       @modele = modele
@@ -19,8 +19,14 @@ class Element
         @lastZ = 0
         @lastX = 0
 
+        @isDetruit = false
+
         self.createElement
     end # Fin initialize
+
+    def detruire
+      @isDetruit = true
+    end
 
     def getCelX
       return (@x / @map.cell_size).round

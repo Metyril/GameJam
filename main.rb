@@ -9,6 +9,8 @@ require_relative 'Dungeon/ObjetRamassable.rb'
 require_relative 'Omotecy/createModele.rb'
 require_relative 'Omotecy/projectModele.rb'
 
+require_relative 'Dungeon/MurHitBox.rb'
+
 WIDTH = 1280
 HEIGHT = 720
 
@@ -47,13 +49,16 @@ class Fenetre < Gosu::Window
 
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
     @batte = CreateModele::batte
-
+    @ruby = CreateModele::ruby
 
     @listeModeleCellules = Array.new
     for i in (0..15)
       @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), 0))
       #@listeModeleCellules.push(CreateModele::cellule("0111"))
     end
+
+    #               SUD                         NORD                           EST                           OUEST
+    @mursHitBox = [MurHitBox.new("S"), MurHitBox.new("N"), MurHitBox.new(@cell_size), MurHitBox.new(@cell_size)]
   end
 
   def button_down(id)
@@ -98,62 +103,86 @@ class Fenetre < Gosu::Window
     #  mouse_move($MOUSEREFX, $MOUSEREFY)
     #end
 
-    frontal = 0
-    lateral = 0
+#########################################################""""""""""""
 
-    frontal = -1 if Gosu.button_down? Gosu::KB_K
-    frontal = 1 if Gosu.button_down? Gosu::KB_I
-    lateral = -1 if Gosu.button_down? Gosu::KB_J
-    lateral = 1 if Gosu.button_down? Gosu::KB_L
-    @camera.position.y -= 0.2 if Gosu.button_down? Gosu::KB_E or Gosu.button_down? Gosu::KB_SPACE
-    @camera.position.y += 0.2 if Gosu.button_down? Gosu::KB_Q or Gosu.button_down? Gosu::KB_LEFT_CONTROL
+  #  frontal = 0
+  #  lateral = 0
 
-    if Gosu.button_down? Gosu::KB_UP
-      @camera.rotation.x -= 0.02
-      self.rotation()
-    end
+    #frontal = -1 if Gosu.button_down? Gosu::KB_K
+    #frontal = 1 if Gosu.button_down? Gosu::KB_I
+    #lateral = -1 if Gosu.button_down? Gosu::KB_J
+    #lateral = 1 if Gosu.button_down? Gosu::KB_L
+    #@camera.position.y -= 0.2 if Gosu.button_down? Gosu::KB_E or Gosu.button_down? Gosu::KB_SPACE
+    #@camera.position.y += 0.2 if Gosu.button_down? Gosu::KB_Q or Gosu.button_down? Gosu::KB_LEFT_CONTROL
 
-    if Gosu.button_down? Gosu::KB_DOWN
-      @camera.rotation.x += 0.02
-      self.rotation()
-    end
-    if Gosu.button_down? Gosu::KB_LEFT
-      @camera.rotation.y += 0.02
-      @player.changementAngle(@camera.rotation.y)
-      @camera.position.x = (30*Math.sin(-@camera.rotation.y)) + @player.x
-      @camera.position.z = (-30*Math.cos(@camera.rotation.y)) + @player.z
-    end
-    if Gosu.button_down? Gosu::KB_RIGHT
-      @camera.rotation.y -= 0.02
-      @player.changementAngle(@camera.rotation.y)
-      @camera.position.x = (30*Math.sin(-@camera.rotation.y)) + @player.x
-      @camera.position.z = (-30*Math.cos(@camera.rotation.y)) + @player.z
-    end
+    #if Gosu.button_down? Gosu::KB_UP
+  #    @camera.rotation.x -= 0.02
+  #    self.rotation()
+    #end
+
+    #if Gosu.button_down? Gosu::KB_DOWN
+    #  @camera.rotation.x += 0.02
+    #  self.rotation()
+    #end
+    #if Gosu.button_down? Gosu::KB_LEFT
+    #  @camera.rotation.y += 0.02
+    #  @player.changementAngle(@camera.rotation.y)
+    #  @camera.position.x = (30*Math.sin(-@camera.rotation.y)) + @player.x
+    #  @camera.position.z = (-30*Math.cos(@camera.rotation.y)) + @player.z
+  #  end
+    #if Gosu.button_down? Gosu::KB_RIGHT
+    #  @camera.rotation.y -= 0.02
+    #  @player.changementAngle(@camera.rotation.y)
+    #  @camera.position.x = (30*Math.sin(-@camera.rotation.y)) + @player.x
+    #  @camera.position.z = (-30*Math.cos(@camera.rotation.y)) + @player.z
+    #end
 
 
-    if Gosu.button_down? Gosu::KB_W
-      @player.deplacement("Z")
-      @camera.position.x += Math.sin(@camera.rotation.y)* @player.vitesse
-      @camera.position.z +=  Math.cos(-@camera.rotation.y)* @player.vitesse
-    end
-    if Gosu.button_down? Gosu::KB_S
-      @player.deplacement("S")
+    #if Gosu.button_down? Gosu::KB_W
+    #  @player.deplacement("Z")
+    #  @camera.position.x += Math.sin(@camera.rotation.y)* @player.vitesse
+    #  @camera.position.z +=  Math.cos(-@camera.rotation.y)* @player.vitesse
+    #end
+    #if Gosu.button_down? Gosu::KB_S
+    #  @player.deplacement("S")
 
-      @camera.position.x -= Math.sin(@camera.rotation.y)* @player.vitesse
-      @camera.position.z -= Math.cos(-@camera.rotation.y)* @player.vitesse
-    end
-    if Gosu.button_down? Gosu::KB_D
-        @player.deplacement("D")
+    #  @camera.position.x -= Math.sin(@camera.rotation.y)* @player.vitesse
+    #  @camera.position.z -= Math.cos(-@camera.rotation.y)* @player.vitesse
+    #end
+    #if Gosu.button_down? Gosu::KB_D
+    #    @player.deplacement("D")
 
-        @camera.position.x += Math.cos(@camera.rotation.y)* @player.vitesse
-        @camera.position.z += Math.sin(-@camera.rotation.y)* @player.vitesse
-    end
-    if Gosu.button_down? Gosu::KB_A
-      @player.deplacement("Q")
+    #    @camera.position.x += Math.cos(@camera.rotation.y)* @player.vitesse
+    #    @camera.position.z += Math.sin(-@camera.rotation.y)* @player.vitesse
+    #end
+    #if Gosu.button_down? Gosu::KB_A
+    #  @player.deplacement("Q")
 
-      @camera.position.x -= Math.cos(@camera.rotation.y)* @player.vitesse
-      @camera.position.z -= Math.sin(-@camera.rotation.y)* @player.vitesse
-    end
+    #  @camera.position.x -= Math.cos(@camera.rotation.y)* @player.vitesse
+    #  @camera.position.z -= Math.sin(-@camera.rotation.y)* @player.vitesse
+    #end
+
+####################################"""""""""""""""
+
+  frontal = 0
+  lateral = 0
+
+  frontal = -0.4 if Gosu.button_down? Gosu::KB_S
+  frontal = 0.4 if Gosu.button_down? Gosu::KB_W
+  lateral = -0.4 if Gosu.button_down? Gosu::KB_A
+  lateral = 0.4 if Gosu.button_down? Gosu::KB_D
+
+  @player.angle += -0.1 if Gosu.button_down? Gosu::KB_LEFT
+  @player.angle += 0.1 if Gosu.button_down? Gosu::KB_RIGHT
+
+  @player.x += Math.sin(@player.angle) * frontal + Math.cos(-@player.angle) * lateral
+  @player.z += Math.cos(@player.angle) * frontal + Math.sin(-@player.angle) * lateral
+
+  @camera.position.x = @player.x
+  @camera.position.z = @player.z - 40
+
+  @camera.position.y = -20
+  @camera.rotation.x = -0.5
 
 
     if @camera.rotation.x > DEMIPI
@@ -172,12 +201,38 @@ class Fenetre < Gosu::Window
     #update des objets
 
     @player.update
-    @ennemis.each do |ennemi|
-      ennemi.update
-    end
+    self.murCollision @player
+
 
     @ramassables.each do |ramassable|
-      ramassable.update
+      ramassable.detruire if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+    end
+
+    self.iter @ennemis
+    self.iter @ramassables
+  end
+
+  def dist o1, o2
+    return Math.sqrt((o2.x - o1.x)**2 + (o2.z - o1.z)**2)
+  end
+
+  def iter liste
+    liste.delete_if do |elem|
+      elem.update
+      elem.isDetruit
+    end
+  end
+
+  def murCollision cible
+    val = cible.getCelVal
+    if (val & S) == 0
+      @mursHitBox[0].setPos(cible.getCelX*@cell_size, cible.getCelZ*@cell_size+(@cell_size/2))
+      @mursHitBox[0].collision cible
+    end
+
+    if (val & N) == 0
+      @mursHitBox[1].setPos(cible.getCelX*@cell_size, cible.getCelZ*@cell_size-(@cell_size/2))
+      @mursHitBox[1].collision cible
     end
   end
 
@@ -198,7 +253,8 @@ class Fenetre < Gosu::Window
     end
 
     @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)
-    @batte.draw(@camera, 3, 0, 0, 0, 0, 0)
+    @batte.draw(@camera, @mursHitBox[0].x, 0, @mursHitBox[0].z, 0, 0, 0)
+    @ruby.draw(@camera, @mursHitBox[1].x, 0, @mursHitBox[1].z, 0, 0, 0)
     Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
     #@map.draw
   end
