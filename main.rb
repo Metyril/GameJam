@@ -40,8 +40,7 @@ class Fenetre < Gosu::Window
       @ennemis << Ennemi.new(@map)
     end
 
-    @camera = Camera.new(@player.x,@player.y-20,@player.z-50.5)
-
+    @camera = Camera.new(@player.x, @player.y,@player.z-30)
     @batte = CreateModele::batte
 
 
@@ -50,6 +49,31 @@ class Fenetre < Gosu::Window
       @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), 0))
       #@listeModeleCellules.push(CreateModele::cellule("0111"))
     end
+  end
+
+  def rotation()
+      @cameraBase = Camera.new(0,0,-30)
+      self.rotateX()
+      self.rotateY()
+      self.rotateZ()
+      @camera.position.x = @cameraBase.position.x + @player.x
+      @camera.position.y = @cameraBase.position.y + @player.y
+      @camera.position.z = @cameraBase.position.z + @player.z
+  end
+
+  def rotateZ()
+    @cameraBase.position.x = @cameraBase.position.x*Math.cos(@camera.rotation.z) - @cameraBase.position.y*Math.sin(@camera.rotation.z)
+    @cameraBase.position.y = @cameraBase.position.y*Math.cos(@camera.rotation.z) + @cameraBase.position.x*Math.sin(@camera.rotation.z)
+  end
+
+  def rotateY()
+    @cameraBase.position.x = @cameraBase.position.x*Math.cos(@camera.rotation.y) - @cameraBase.position.z*Math.sin(@camera.rotation.y)
+    @cameraBase.position.z = @cameraBase.position.z*Math.cos(@camera.rotation.y) + @cameraBase.position.x*Math.sin(@camera.rotation.y)
+  end
+
+  def rotateX()
+    @cameraBase.position.y = @cameraBase.position.y*Math.cos(@camera.rotation.x) - @cameraBase.position.z*Math.sin(@camera.rotation.x)
+    @cameraBase.position.z = @cameraBase.position.z*Math.cos(@camera.rotation.x) + @cameraBase.position.y*Math.sin(@camera.rotation.x)
   end
 
   def update
@@ -73,34 +97,33 @@ class Fenetre < Gosu::Window
     @camera.position.y -= 0.2 if Gosu.button_down? Gosu::KB_E or Gosu.button_down? Gosu::KB_SPACE
     @camera.position.y += 0.2 if Gosu.button_down? Gosu::KB_Q or Gosu.button_down? Gosu::KB_LEFT_CONTROL
 
-    @camera.rotation.x -= 0.02 if Gosu.button_down? Gosu::KB_UP
-    @camera.rotation.x += 0.02 if Gosu.button_down? Gosu::KB_DOWN
+    if Gosu.button_down? Gosu::KB_UP
+      @camera.rotation.x -= 0.02
+      self.rotation()
+    end
+
+    if Gosu.button_down? Gosu::KB_DOWN
+      @camera.rotation.x += 0.02
+      self.rotation()
+    end
     if Gosu.button_down? Gosu::KB_LEFT
       @camera.rotation.y += 0.02
       @player.changementAngle(@camera.rotation.y)
-      @camera.position.x -= Math.cos(@camera.rotation.y)
-      @camera.position.z += Math.sin(@camera.rotation.y)
+      @camera.position.x = (30*Math.sin(-@camera.rotation.y)) + @player.x
+      @camera.position.z = (-30*Math.cos(@camera.rotation.y)) + @player.z
     end
     if Gosu.button_down? Gosu::KB_RIGHT
       @camera.rotation.y -= 0.02
       @player.changementAngle(@camera.rotation.y)
-      @camera.position.x += Math.cos(@camera.rotation.y)
-      @camera.position.z -= Math.sin(@camera.rotation.y)
+      @camera.position.x = (30*Math.sin(-@camera.rotation.y)) + @player.x
+      @camera.position.z = (-30*Math.cos(@camera.rotation.y)) + @player.z
     end
-
-
-    if @camera.rotation.x > DEMIPI
-      @camera.rotation.x = DEMIPI
-    elsif @camera.rotation.x < -DEMIPI
-      @camera.rotation.x = -DEMIPI
-    end
-
 
 
     if Gosu.button_down? Gosu::KB_W
       @player.deplacement("Z")
-      @camera.position.x +=Math.sin(@camera.rotation.y)* @player.vitesse
-      @camera.position.z += + Math.cos(-@camera.rotation.y)* @player.vitesse
+      @camera.position.x += Math.sin(@camera.rotation.y)* @player.vitesse
+      @camera.position.z +=  Math.cos(-@camera.rotation.y)* @player.vitesse
     end
     if Gosu.button_down? Gosu::KB_S
       @player.deplacement("S")
@@ -122,7 +145,11 @@ class Fenetre < Gosu::Window
     end
 
 
-
+    if @camera.rotation.x > DEMIPI
+      @camera.rotation.x = DEMIPI
+    elsif @camera.rotation.x < -DEMIPI
+      @camera.rotation.x = -DEMIPI
+    end
 
 
 
@@ -134,8 +161,8 @@ class Fenetre < Gosu::Window
   end
 
   def draw
-    self.drawMapClip
-    #self.drawMapTotal
+    #self.drawMapClip
+    self.drawMapTotal
     @playerModele.draw(@camera, @player.x, @player.y, @player.z, 0, -@player.angle, 0)
 
     @ennemis.each do |ennemi|
