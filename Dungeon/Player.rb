@@ -6,8 +6,8 @@ require_relative './Element.rb'
 
 class Player < Element
       attr_accessor :vie,:items , :puissance,:arme,:angle,:vitesse
-    def initialize(map, itbox=5, x=0, y=0, z=0, vie = 3, puissance =1)
-        super map, itbox, x, y, z
+    def initialize(map, modele, itbox=5, x=0, y=0, z=0, vie = 3, puissance =1)
+        super map, modele, itbox, x, y, z
         @angle = 0
         @vie = vie
         @arme = 0
@@ -87,7 +87,7 @@ class Player < Element
 
 
 
-    def draw
-        Gosu.draw_rect(@x, @y, @cell_size, @cell_size, Gosu::Color.argb(0xff_ff0000), 2)
-    end # Fin draw
+    #def draw
+    #    Gosu.draw_rect(@x, @y, @cell_size, @cell_size, Gosu::Color.argb(0xff_ff0000), 2)
+    #end # Fin draw
 end # Fin Player

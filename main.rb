@@ -4,6 +4,7 @@ require_relative 'Dungeon/Map.rb'
 require_relative 'Dungeon/Player.rb'
 require_relative 'Dungeon/Element.rb'
 require_relative 'Dungeon/Ennemi.rb'
+require_relative 'Dungeon/ObjetRamassable.rb'
 
 require_relative 'Omotecy/createModele.rb'
 require_relative 'Omotecy/projectModele.rb'
@@ -31,18 +32,25 @@ class Fenetre < Gosu::Window
 
     @map = Map.new(@map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen)   # Map à générer
 
-    @player = Player.new(@map)
     @playerModele = CreateModele::player
+    @player = Player.new(@map, @playerModele)
+
 
     @ennemis = Array.new
-    @ennemisModele = CreateModele::player(true)
-   for i in 0..4
-      @ennemis << Ennemi.new(@map)
+    ennemisModele = CreateModele::player(true)
+    for i in 0..4
+      @ennemis << Ennemi.new(@map, ennemisModele)
+    end
+
+    modeleruby = CreateModele::ruby
+    @ramassables = Array.new
+    for i in 1..20
+      @ramassables << ObjetRamassable.new(@map, modeleruby)
     end
 
     @camera = Camera.new(@player.x,@player.y-20,@player.z-50.5)
 
-    @batte = CreateModele::batte
+    @batte = CreateModele::ruby
 
 
     @listeModeleCellules = Array.new
@@ -126,16 +134,33 @@ class Fenetre < Gosu::Window
     #@camera.rotation.y += Math.sin(angle) * dist
 
 
+    #################################
+    #update des objets
 
+    @player.update
+    @ennemis.each do |ennemi|
+      ennemi.update
+    end
+
+    @ramassables.each do |ramassable|
+      ramassable.update
+    end
   end
 
   def draw
     self.drawMapClip
     #self.drawMapTotal
-    @playerModele.draw(@camera, @player.x, @player.y, @player.z, 0, -@player.angle, 0)
+    #@playerModele.draw(@camera, @player.x, @player.y, @player.z, 0, -@player.angle, 0)
+
+    @player.draw(@camera)
 
     @ennemis.each do |ennemi|
-      @ennemisModele.draw(@camera, ennemi.x, ennemi.y, ennemi.z, 0, 0, 0)
+      #@ennemisModele.draw(@camera, ennemi.x, ennemi.y, ennemi.z, 0, 0, 0)
+      ennemi.draw(@camera)
+    end
+
+    @ramassables.each do |ramassable|
+      ramassable.draw(@camera)
     end
 
     @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)

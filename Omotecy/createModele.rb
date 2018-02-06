@@ -409,4 +409,96 @@ class CreateModele
 
     return Modele.new(pointBatte, triangleBatte)
   end
+
+  def self.pistolet
+    size = 3
+
+    p1 = Point.new(-0.1 * size, 0, 0)
+    p2 = Point.new(-0.1 * size, 0, 1 * size)
+    p3 = Point.new(-0.1 * size, -0.2 * size, 1 * size)
+    p4 = Point.new(-0.1 * size, -0.2 * size, -0.1 * size)
+    p5 = Point.new(-0.1 * size, 0.3 * size, -0.35 * size)
+    p6 = Point.new(-0.1 * size, 0.4 * size, -0.3 * size)
+
+    p7 = Point.new(0.1 * size, 0, 0)
+    p8 = Point.new(0.1 * size, 0, 1 * size)
+    p9 = Point.new(0.1 * size, -0.2 * size, 1 * size)
+    p10 = Point.new(0.1 * size, -0.2 * size, -0.1 * size)
+    p11 = Point.new(0.1 * size, 0.3 * size, -0.35 * size)
+    p12 = Point.new(0.1 * size, 0.4 * size, -0.3 * size)
+
+    pointsPistolet = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]
+
+    trianglesPistolet = [
+      Triangle.new(p7, p9, p8, 0xffdcdde1),
+      Triangle.new(p9, p7, p10, 0xffdcdde1),
+      Triangle.new(p10, p7, p11, 0xffdcdde1),
+      Triangle.new(p11, p7, p12, 0xffdcdde1),
+
+      Triangle.new(p1, p2, p3, 0xffdcdde1),
+      Triangle.new(p3, p4, p1, 0xffdcdde1),
+      Triangle.new(p4, p5, p1, 0xffdcdde1),
+      Triangle.new(p5, p6, p1, 0xffdcdde1),
+
+
+      Triangle.new(p1, p8, p2, 0xff808e9b),
+      Triangle.new(p1, p7, p8, 0xff808e9b),
+
+      Triangle.new(p2, p8, p3, 0xff2f3640),
+      Triangle.new(p3, p8, p9, 0xff2f3640),
+
+      Triangle.new(p3, p9, p4, 0xffd2dae2),
+      Triangle.new(p4, p9, p10, 0xffd2dae2),
+
+      Triangle.new(p4, p10, p5, 0xffd2dae2),
+      Triangle.new(p10, p11, p5, 0xffd2dae2),
+
+      Triangle.new(p5, p11, p6, 0xff808e9b),
+      Triangle.new(p11, p12, p6, 0xff808e9b),
+
+      Triangle.new(p6, p7, p1, 0xff808e9b),
+      Triangle.new(p6, p12, p7, 0xff808e9b)
+    ]
+
+    return Modele.new(pointsPistolet, trianglesPistolet)
+  end
+
+  def self.ruby
+    r1 = Point.new(0.5, -3, 1.5)
+    r2 = Point.new(1.5, -3, 0.5)
+    r3 = Point.new(1.5, -3, -0.5)
+    r4 = Point.new(0.5, -3, -1.5)
+    r5 = Point.new(-0.5, -3, -1.5)
+    r6 = Point.new(-1.5, -3, -0.5)
+    r7 = Point.new(-1.5, -3, 0.5)
+    r8 = Point.new(-0.5, -3, 1.5)
+
+    r9 = Point.new(0, 0, 0)
+    r10 = Point.new(0, -4, 0)
+
+    pointsRuby = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10]
+
+    trianglesRuby = [
+      Triangle.new(r2, r1, r9, 0xffe74c3c),
+      Triangle.new(r3, r2, r9, 0xffc0392b),
+      Triangle.new(r4, r3, r9, 0xffe74c3c),
+      Triangle.new(r5, r4, r9, 0xffc0392b),
+      Triangle.new(r6, r5, r9, 0xffe74c3c),
+      Triangle.new(r7, r6, r9, 0xffc0392b),
+      Triangle.new(r8, r7, r9, 0xffe74c3c),
+      Triangle.new(r1, r8, r9, 0xffc0392b),
+
+
+      Triangle.new(r1, r2, r10, 0xffe84118),
+      Triangle.new(r2, r3, r10, 0xffc23616),
+      Triangle.new(r3, r4, r10, 0xffe84118),
+      Triangle.new(r4, r5, r10, 0xffc23616),
+      Triangle.new(r5, r6, r10, 0xffe84118),
+      Triangle.new(r6, r7, r10, 0xffc23616),
+      Triangle.new(r7, r8, r10, 0xffe84118),
+      Triangle.new(r8, r1, r10, 0xffc23616)
+    ]
+
+    return Modele.new(pointsRuby, trianglesRuby)
+  end
 end

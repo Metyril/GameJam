@@ -4,7 +4,8 @@ require 'gosu'  # Librairie graphique Gosu
 class Element
     attr_accessor :x, :y, :z, :itBox
 
-    def initialize(map,itbox,x,y,z)
+    def initialize(map,modele,itbox=0,x=0,y=0,z=0)
+      @modele = modele
         @map = map
         @cell_size = @map.cell_size
         @x = x
@@ -99,7 +100,11 @@ class Element
       return col
     end
 
-    def draw
-        Gosu.draw_rect(@x, @z, @cell_size, @cell_size, Gosu::Color.argb(0xff_00ff00), 1)
+    def update
+    end
+
+    def draw camera
+        #Gosu.draw_rect(@x, @z, @cell_size, @cell_size, Gosu::Color.argb(0xff_00ff00), 1)
+        @modele.draw(camera, @x, @y, @z, 0, 0, 0)
     end # Fin draw
 end # Fin Element
