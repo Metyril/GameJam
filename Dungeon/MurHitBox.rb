@@ -13,8 +13,6 @@ class MurHitBox
   end
 
   def collision cible
-    puts "cible.x: #{cible.x} cible.z: #{cible.z}, @x: #{@x} @z: #{@z}"
-
     if @o == "S"
       if (cible.z + cible.itBox + 2) > @z
         cible.z = @z - cible.itBox - 2

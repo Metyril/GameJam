@@ -414,9 +414,11 @@ class CreateModele
     if ennemi
       body_color = 0xffccae62
       head_color = 0xffbadc58
+      head_color2 = 0xffA0BC4B
     else
       body_color = 0xff2ecc71
       head_color = 0xffffeaa7
+      head_color2 = 0xffe0c47d
     end
 
     p1 = Point.new(-1, 0, -1)
@@ -489,13 +491,13 @@ class CreateModele
       #---
 
       # face 1 tete
-      Triangle.new(p11, p20, p14, head_color),
-      Triangle.new(p20, p11, p17, head_color),
+      Triangle.new(p11, p20, p14, head_color2),
+      Triangle.new(p20, p11, p17, head_color2),
       #--
 
       # face 2 tete
-      Triangle.new(p14, p20, p19, head_color),
-      Triangle.new(p14, p19, p13, head_color),
+      Triangle.new(p14, p20, p19, head_color2),
+      Triangle.new(p14, p19, p13, head_color2),
       #--
 
       # face 3 tete
@@ -509,8 +511,8 @@ class CreateModele
       #--
 
       # face 5 tete
-      Triangle.new(p16, p17, p10, head_color),
-      Triangle.new(p10, p17, p11, head_color),
+      Triangle.new(p16, p17, p10, head_color2),
+      Triangle.new(p10, p17, p11, head_color2),
       #--
 
       # face 6 tete

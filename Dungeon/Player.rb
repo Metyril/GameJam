@@ -2,8 +2,6 @@ require 'gosu'
 
 require_relative './Element.rb'
 
-
-
 class Player < Element
       attr_accessor :vie,:items , :puissance,:arme,:angle,:vitesse, :angle
     def initialize(map, modele, itbox=1, x=0, y=0, z=0, vie = 3, puissance =1)
@@ -47,32 +45,6 @@ class Player < Element
     end
   end
 
-#Gestion des deplacements
-  def deplacement(depl)
-    #@lastCel = self.getCelVal
-    #@lastXCel = self.getCelX
-    #@lastZCel = self.getCelZ
-    #@lastX = @x
-    #@lastZ = @z
-
-    case depl
-    when "Z"
-      @x += Math.sin(@angle)* @vitesse
-      @z += Math.cos(-@angle)* @vitesse
-    when "S"
-      @x -= Math.sin(@angle)* @vitesse
-      @z -=  Math.cos(-@angle)* @vitesse
-    when "D"
-      @x += Math.cos(@angle)* @vitesse
-      @z +=  Math.sin(-@angle)* @vitesse
-    when "Q"
-      @x -= Math.cos(@angle)* @vitesse
-      @z -= Math.sin(-@angle)* @vitesse
-    end
-
-    #self.collisions
-  end
-
   def changementAngle(angle)
     @angle = angle
   end
@@ -84,8 +56,6 @@ class Player < Element
   def tirer()
     return @arme.tirer(@x,@y,@angle)
   end
-
-
 
   def draw cam
     @modele.draw(cam, @x, @y, @z, 0, -@angle, 0)

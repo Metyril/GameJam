@@ -1,28 +1,3 @@
-##################################################################################################################################################
-#       Principe de la classe :
-# La classe Map réalise 4 fonctions plus ou moins complexes :
-#   - Elle crée @nb_room Room en vérifiant les possibles collisions
-#   - Elle place toutes les Rooms crées dans la grille de cellules @map
-#   - Elle crée le labyrinthe (appelé ailleurs Maze) à partir de @map
-#   - Elle s'occupe d'afficher @map dans la fenêtre Gosu
-#
-#       Principe de création du Maze :
-# Pour créer le Maze, nous utilisons un algorithme de génération de labyrinthe appelé "Growing Tree"
-# Le code utilisé est toutefois paramétré pour ressembler à un autre algorithme: "Recursive Backtracking"
-# Plus d'informations sur ces algorithmes sont disponibles ici : http://www.astrolog.org/labyrnth/algrithm.htm
-#
-#       Principe de la méthode createMaze et de l'évaluation des cellules :
-# La méthode createMaze se base sur une liste de cellules à traiter
-# Pour chaque cellule, on choisit une direction à "ouvrir" : on pourra passer de cette cellule à celle adjacente suivant la direction choisie
-# Pour retenir les directions qui ont été ouvertes dans une cellule, on les code sur 4 bits -> 4 directions et 2 états, ouvert et fermé
-# Ex : (Voir constantes ci-dessous) Une cellule est ouverte au Nord et à l'Ouest, elle aura pour valeur 9, soit 1001 en binaire
-# En codant ces valeurs et en les plaçant dans toute la Map, il est facile d'afficher à l'écran les murs autour des cellules
-# Mais l'on peut aussi considérer cela comme un id : si deux cellules ont la même valeur, alors ce sont deux mêmes objets
-##################################################################################################################################################
-
-
-
-# Dépendances Gems
 require 'gosu'  # Librairie graphique Gosu
 
 # Dépendances Fichiers
