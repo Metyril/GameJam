@@ -67,30 +67,30 @@ class Fenetre < Gosu::Window
     end
   end
 
-  def rotation()
-      @cameraBase = Camera.new(0,0,-30)
-      self.rotateX()
-      self.rotateY()
-      self.rotateZ()
-      @camera.position.x = @cameraBase.position.x + @player.x
-      @camera.position.y = @cameraBase.position.y + @player.y
-      @camera.position.z = @cameraBase.position.z + @player.z
-  end
+  #def rotation()
+  #    @cameraBase = Camera.new(0,0,-30)
+  #    self.rotateX()
+  #    self.rotateY()
+  #    self.rotateZ()
+  #    @camera.position.x = @cameraBase.position.x + @player.x
+  #    @camera.position.y = @cameraBase.position.y + @player.y
+  #    @camera.position.z = @cameraBase.position.z + @player.z
+  #end
 
-  def rotateZ()
-    @cameraBase.position.x = @cameraBase.position.x*Math.cos(@camera.rotation.z) - @cameraBase.position.y*Math.sin(@camera.rotation.z)
-    @cameraBase.position.y = @cameraBase.position.y*Math.cos(@camera.rotation.z) + @cameraBase.position.x*Math.sin(@camera.rotation.z)
-  end
+  #def rotateZ()
+  #  @cameraBase.position.x = @cameraBase.position.x*Math.cos(@camera.rotation.z) - @cameraBase.position.y*Math.sin(@camera.rotation.z)
+    #  @cameraBase.position.y = @cameraBase.position.y*Math.cos(@camera.rotation.z) + @cameraBase.position.x*Math.sin(@camera.rotation.z)
+  #end
 
-  def rotateY()
-    @cameraBase.position.x = @cameraBase.position.x*Math.cos(@camera.rotation.y) - @cameraBase.position.z*Math.sin(@camera.rotation.y)
-    @cameraBase.position.z = @cameraBase.position.z*Math.cos(@camera.rotation.y) + @cameraBase.position.x*Math.sin(@camera.rotation.y)
-  end
+  #def rotateY()
+  #  @cameraBase.position.x = @cameraBase.position.x*Math.cos(@camera.rotation.y) - @cameraBase.position.z*Math.sin(@camera.rotation.y)
+  #  @cameraBase.position.z = @cameraBase.position.z*Math.cos(@camera.rotation.y) + @cameraBase.position.x*Math.sin(@camera.rotation.y)
+  #end
 
-  def rotateX()
-    @cameraBase.position.y = @cameraBase.position.y*Math.cos(@camera.rotation.x) - @cameraBase.position.z*Math.sin(@camera.rotation.x)
-    @cameraBase.position.z = @cameraBase.position.z*Math.cos(@camera.rotation.x) + @cameraBase.position.y*Math.sin(@camera.rotation.x)
-  end
+  #def rotateX()
+  #  @cameraBase.position.y = @cameraBase.position.y*Math.cos(@camera.rotation.x) - @cameraBase.position.z*Math.sin(@camera.rotation.x)
+  #  @cameraBase.position.z = @cameraBase.position.z*Math.cos(@camera.rotation.x) + @cameraBase.position.y*Math.sin(@camera.rotation.x)
+  #end
 
   def update
     self.caption = "#{Gosu.fps} FPS / x:#{@camera.position.x.round} y:#{@camera.position.y.round} z:#{@camera.position.z.round} | Px:#{@player.getCelX} Pz:#{@player.getCelZ} PVal:#{@player.getCelVal}"
@@ -162,27 +162,26 @@ class Fenetre < Gosu::Window
     #  @camera.position.z -= Math.sin(-@camera.rotation.y)* @player.vitesse
     #end
 
-####################################"""""""""""""""
+#################################################################################################
 
-  frontal = 0
-  lateral = 0
+    frontal = 0
+    lateral = 0
+    frontal = -0.4 if Gosu.button_down? Gosu::KB_S
+    frontal = 0.4 if Gosu.button_down? Gosu::KB_W
+    lateral = -0.4 if Gosu.button_down? Gosu::KB_A
+    lateral = 0.4 if Gosu.button_down? Gosu::KB_D
+    @player.angle += -0.1 if Gosu.button_down? Gosu::KB_LEFT
+    @player.angle += 0.1 if Gosu.button_down? Gosu::KB_RIGHT
+    @player.x += Math.sin(@player.angle) * frontal + Math.cos(-@player.angle) * lateral
+    @player.z += Math.cos(@player.angle) * frontal + Math.sin(-@player.angle) * lateral
 
-  frontal = -0.4 if Gosu.button_down? Gosu::KB_S
-  frontal = 0.4 if Gosu.button_down? Gosu::KB_W
-  lateral = -0.4 if Gosu.button_down? Gosu::KB_A
-  lateral = 0.4 if Gosu.button_down? Gosu::KB_D
+#################################################################################################
 
-  @player.angle += -0.1 if Gosu.button_down? Gosu::KB_LEFT
-  @player.angle += 0.1 if Gosu.button_down? Gosu::KB_RIGHT
+    @camera.position.x = @player.x
+    @camera.position.z = @player.z - 40
 
-  @player.x += Math.sin(@player.angle) * frontal + Math.cos(-@player.angle) * lateral
-  @player.z += Math.cos(@player.angle) * frontal + Math.sin(-@player.angle) * lateral
-
-  @camera.position.x = @player.x
-  @camera.position.z = @player.z - 40
-
-  @camera.position.y = -20
-  @camera.rotation.x = -0.5
+    @camera.position.y = -20
+    @camera.rotation.x = -0.5
 
 
     if @camera.rotation.x > DEMIPI
