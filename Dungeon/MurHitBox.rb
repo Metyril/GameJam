@@ -26,5 +26,17 @@ class MurHitBox
         cible.z = @z + cible.itBox + 2
       end
     end
+
+    if @o == "E"
+      if (cible.x + cible.itBox + 2) > @x
+        cible.x = @x - cible.itBox - 2
+      end
+    end
+
+    if @o == "W"
+      if (cible.x - cible.itBox - 2) < @x
+        cible.x = @x + cible.itBox + 2
+      end
+    end
   end
 end
