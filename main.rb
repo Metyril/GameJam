@@ -193,4 +193,4 @@ class Fenetre < Gosu::Window
   end
 end
 
-Fenetre.new.show
+#Fenetre.new.show
