@@ -6,16 +6,16 @@ require_relative '../../main.rb'
 
 class MenuPrincipal < Gosu::Window
 
-    def initialize(width=1500, height=1500, options={:fullscreen => false, :update_interval => 75})     # options facultatif / update_interval est en ms
+    def initialize(width=1000, height=600, options={:fullscreen => false, :update_interval => 75})     # options facultatif / update_interval est en ms
       super
       @cursor = Gosu::Image.new('../../media/mouse.png')
-      @titre = Gosu::Image.new('../../media/Omotecy - Titre Final.png')
-      @bouton = Bouton.new(500,550,500,100,Gosu::Color::BLUE,"Jouer");
+      @titre = Gosu::Image.new('../../media/titre.png')
+      @bouton = Bouton.new(350,250,310,80,Gosu::Color::BLUE,"Jouer",3);
     end
 
     def draw
       @bouton.draw
-      @titre.draw 160, 200, 2
+      @titre.draw 200, 100, 2
       @cursor.draw self.mouse_x, self.mouse_y, 4
     end
 
