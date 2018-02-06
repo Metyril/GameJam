@@ -145,6 +145,7 @@ class Fenetre < Gosu::Window
     end
 
 
+<<<<<<< HEAD
     if @camera.rotation.x > DEMIPI
       @camera.rotation.x = DEMIPI
     elsif @camera.rotation.x < -DEMIPI
@@ -153,6 +154,8 @@ class Fenetre < Gosu::Window
 
 
 
+=======
+>>>>>>> d7f36a47aa1b68ce7ef25e412dad7cb7cef50056
     #@camera.rotation.x += Math.cos(angle) * dist
     #@camera.rotation.y += Math.sin(angle) * dist
 
@@ -224,4 +227,4 @@ class Fenetre < Gosu::Window
   end
 end
 
-Fenetre.new.show
+#Fenetre.new.show
