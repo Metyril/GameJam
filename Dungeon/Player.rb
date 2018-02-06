@@ -49,6 +49,12 @@ class Player < Element
 
 #Gestion des deplacements
   def deplacement(depl)
+    @lastCel = self.getCelVal
+    @lastXCel = self.getCelX
+    @lastZCel = self.getCelZ
+    #@lastX = @x
+    #@lastZ = @z
+
     case depl
     when "Z"
       @x += Math.sin(@angle)* @vitesse
@@ -63,6 +69,8 @@ class Player < Element
       @x -= Math.cos(@angle)* @vitesse
       @z -= Math.sin(-@angle)* @vitesse
     end
+
+    self.collisions
   end
 
   def changementAngle(angle)
