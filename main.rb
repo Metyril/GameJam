@@ -12,9 +12,6 @@ require_relative 'Omotecy/projectModele.rb'
 WIDTH = 1280
 HEIGHT = 720
 
-##$WIDTH = 1600
-##$HEIGHT = 900
-
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
@@ -56,6 +53,12 @@ class Fenetre < Gosu::Window
     for i in (0..15)
       @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), 0))
       #@listeModeleCellules.push(CreateModele::cellule("0111"))
+    end
+  end
+
+  def button_down(id)
+    if id == Gosu::KbEscape
+      close
     end
   end
 

@@ -526,7 +526,7 @@ class CreateModele
 
     return Modele.new(pointsPlayer, trianglesPlayer)
   end
-  
+
   def self.batte
     size = 2
 
@@ -634,14 +634,14 @@ class CreateModele
       Triangle.new(r1, r8, r9, 0xffc0392b),
 
 
-      Triangle.new(r1, r2, r10, 0xffe84118),
-      Triangle.new(r2, r3, r10, 0xffc23616),
-      Triangle.new(r3, r4, r10, 0xffe84118),
-      Triangle.new(r4, r5, r10, 0xffc23616),
-      Triangle.new(r5, r6, r10, 0xffe84118),
-      Triangle.new(r6, r7, r10, 0xffc23616),
-      Triangle.new(r7, r8, r10, 0xffe84118),
-      Triangle.new(r8, r1, r10, 0xffc23616)
+      Triangle.new(r1, r2, r10, 0xffc0392b),
+      Triangle.new(r2, r3, r10, 0xffe74c3c),
+      Triangle.new(r3, r4, r10, 0xffc0392b),
+      Triangle.new(r4, r5, r10, 0xffe74c3c),
+      Triangle.new(r5, r6, r10, 0xffc0392b),
+      Triangle.new(r6, r7, r10, 0xffe74c3c),
+      Triangle.new(r7, r8, r10, 0xffc0392b),
+      Triangle.new(r8, r1, r10, 0xffe74c3c)
     ]
 
     return Modele.new(pointsRuby, trianglesRuby)
