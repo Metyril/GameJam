@@ -11,7 +11,7 @@ class Player < Element
         @angle = 0
         @vie = vie
         @arme = 0
-        @vitesse = 0.5
+        @vitesse = 1
         @puissance = puissance
         @items = Array.new()
     end
