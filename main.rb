@@ -57,8 +57,8 @@ class Fenetre < Gosu::Window
       #@listeModeleCellules.push(CreateModele::cellule("0111"))
     end
 
-    #               SUD                         NORD                           EST                           OUEST
-    @mursHitBox = [MurHitBox.new("S"), MurHitBox.new("N"), MurHitBox.new(@cell_size), MurHitBox.new(@cell_size)]
+    #               SUD                 NORD                EST                           OUEST
+    @mursHitBox = [MurHitBox.new("S"), MurHitBox.new("N"), MurHitBox.new("E"), MurHitBox.new("W")]
   end
 
   def button_down(id)
@@ -233,6 +233,16 @@ class Fenetre < Gosu::Window
       @mursHitBox[1].setPos(cible.getCelX*@cell_size, cible.getCelZ*@cell_size-(@cell_size/2))
       @mursHitBox[1].collision cible
     end
+
+    if (val & E) == 0
+      @mursHitBox[2].setPos(cible.getCelX*@cell_size+(@cell_size/2), cible.getCelZ*@cell_size)
+      @mursHitBox[2].collision cible
+    end
+
+    if (val & W) == 0
+      @mursHitBox[3].setPos(cible.getCelX*@cell_size-(@cell_size/2), cible.getCelZ*@cell_size)
+      @mursHitBox[3].collision cible
+    end
   end
 
   def draw
@@ -252,8 +262,8 @@ class Fenetre < Gosu::Window
     end
 
     @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)
-    @batte.draw(@camera, @mursHitBox[0].x, 0, @mursHitBox[0].z, 0, 0, 0)
-    @ruby.draw(@camera, @mursHitBox[1].x, 0, @mursHitBox[1].z, 0, 0, 0)
+    @batte.draw(@camera, @mursHitBox[2].x, 0, @mursHitBox[0].z, 0, 0, 0)
+    @ruby.draw(@camera, @mursHitBox[3].x, 0, @mursHitBox[1].z, 0, 0, 0)
     Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
     #@map.draw
   end
