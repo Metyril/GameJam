@@ -122,10 +122,6 @@ class Fenetre < Gosu::Window
     end
 
 
-
-
-
-
     #@camera.rotation.x += Math.cos(angle) * dist
     #@camera.rotation.y += Math.sin(angle) * dist
 
