@@ -40,7 +40,7 @@ class Fenetre < Gosu::Window
       @ennemis << Ennemi.new(@map)
     end
 
-    @camera = Camera.new(@player.x,@player.y-20,@player.z-20)
+    @camera = Camera.new(@player.x,@player.y-20,@player.z-50.5)
 
     @batte = CreateModele::batte
 
@@ -76,16 +76,18 @@ class Fenetre < Gosu::Window
     @camera.rotation.x -= 0.02 if Gosu.button_down? Gosu::KB_UP
     @camera.rotation.x += 0.02 if Gosu.button_down? Gosu::KB_DOWN
     if Gosu.button_down? Gosu::KB_LEFT
-      @camera.rotation.y -= 0.02
-      @player.changementAngle(@camera.rotation.y)
-    end
-    if Gosu.button_down? Gosu::KB_RIGHT
       @camera.rotation.y += 0.02
       @player.changementAngle(@camera.rotation.y)
+      @camera.position.x -= Math.cos(@camera.rotation.y)
+      @camera.position.z += Math.sin(@camera.rotation.y)
+    end
+    if Gosu.button_down? Gosu::KB_RIGHT
+      @camera.rotation.y -= 0.02
+      @player.changementAngle(@camera.rotation.y)
+      @camera.position.x += Math.cos(@camera.rotation.y)
+      @camera.position.z -= Math.sin(@camera.rotation.y)
     end
 
-    @camera.position.x += Math.sin(@camera.rotation.y) * frontal + Math.cos(-@camera.rotation.y) * lateral
-    @camera.position.z += Math.cos(@camera.rotation.y) * frontal + Math.sin(-@camera.rotation.y) * lateral
 
     if @camera.rotation.x > DEMIPI
       @camera.rotation.x = DEMIPI
@@ -132,8 +134,8 @@ class Fenetre < Gosu::Window
   end
 
   def draw
-    #self.drawMapClip
-    self.drawMapTotal
+    self.drawMapClip
+    #self.drawMapTotal
     @playerModele.draw(@camera, @player.x, @player.y, @player.z, 0, -@player.angle, 0)
 
     @ennemis.each do |ennemi|
