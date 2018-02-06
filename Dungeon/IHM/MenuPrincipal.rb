@@ -10,13 +10,15 @@ class MenuPrincipal < Gosu::Window
       super
       @cursor = Gosu::Image.new('../../media/mouse.png')
       @titre = Gosu::Image.new('../../media/titre.png')
-      @bouton = Bouton.new(350,250,310,80,Gosu::Color::BLUE,"Jouer",3);
+      @bouton = Bouton.new(350,250,310,80,Gosu::Color::BLUE,"Jouer",3)
+      @music = Gosu::Song.new('../../media/little_apocalypse.ogg')
     end
 
     def draw
       @bouton.draw
       @titre.draw 200, 100, 2
       @cursor.draw self.mouse_x, self.mouse_y, 4
+      @music.play(true)
     end
 
     def button_down(id)
