@@ -3,26 +3,34 @@ require 'gosu'  # Librairie graphique Gosu
 require_relative 'Item.rb'
 
 class ItemPoing < Item
-      attr_accessor :vitesse,:range,:degats,:attaqueVit,:startAnime
-  def initialize(app,room,x,y,z,nom)
-    case nom
-    when "Batte"
+      attr_accessor :vitesse,:range,:degats,:attaqueVit,:startAnime,:nom
+  def initialize(app,room,x,y,z,oui = 0)
+    if oui == 2
+      rang = 2
+    else
+      rang = rand(3)
+    end
+    case rang
+    when 0
+      @nom = "Batte"
       @range = 8
       @attaqueVit = 2
       @degats = 2
       modele = CreateModele::batte
       itbox = 3
-    when "Tronconeuse"
+    when 1
+      @nom = "Hache"
       @range = 10
       @attaqueVit = 1
       @degats = 4
-      modele = CreateModele::batte
+      modele = CreateModele::hache
       itbox = 5
-    when "Main"
+    when 2
+      @nom = "Main"
       @range = 3
       @attaqueVit = 4
       @degats = 1
-      modele = CreateModele::batte
+      modele = CreateModele::sim
       itbox = 3
     end
       @vitesse = 0

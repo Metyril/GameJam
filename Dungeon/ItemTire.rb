@@ -3,36 +3,41 @@ require 'gosu'  # Librairie graphique Gosu
 require_relative 'Item.rb'
 
 class ItemTire < Item
-      attr_accessor :vitesse,:degats,:attaqueVit,:startAnime,:modeleTire,:room,:vitesseP
-  def initialize(app,room,x,y,z,nom)
+      attr_accessor :vitesse,:degats,:attaqueVit,:startAnime,:modeleTire,:room,:vitesseP,:nom
+  def initialize(app,room,x,y,z)
     @room = room
-    case nom
-    when "Pistolet"
-      @attaqueVit = 4
-      @vitesseP = 2
-      @degats = 1
-      @modeleTire = CreateModele::projectile
-      modele = CreateModele::pistolet
-      itbox = 1
-    when "Mitraillette"
-      @attaqueVit = 2
-      @vitesseP = 1
-      @degats = 2
-      @modeleTire = CreateModele::projetile
-      modele = CreateModele::batte
-      itbox = 3
-    when "Bazooka"
-      @attaqueVit = 1
-      @vitesseP = 1
-      @degats = 4
-      @modeleTire = CreateModele::projetile
-      modele = CreateModele::batte
-      itbox = 3
+    rang = rand(3)
+    case rang
+      when 0
+        @nom = "Pistolet"
+        @attaqueVit = 4
+        @vitesseP = 2
+        @degats = 1
+        @modeleTire = CreateModele::projectile
+        modele = CreateModele::pistolet
+        itbox = 1
+      when 1
+        @nom = "Mitraillette"
+        @attaqueVit = 6
+        @vitesseP = 2
+        @degats = 2
+        @modeleTire = CreateModele::projectile(0.5)
+        modele = CreateModele::pistolet
+        itbox = 3
+      when 2
+        @nom = "Bazooka"
+        @attaqueVit = 1
+        @vitesseP = 1
+        @degats = 4
+        @modeleTire = CreateModele::projectile(0.8)
+        modele = CreateModele::pistolet
+        itbox = 3
     end
-      @vitesse = 0
-      @app = app
-      @startAnime = false
-      super room , modele, itbox , x,y,z
+    @vitesse = 0
+    @app = app
+    @startAnime = false
+    itbox = 1
+    super room , modele, itbox , x,y,z
   end
 
   def attaque
@@ -44,6 +49,6 @@ class ItemTire < Item
   end
 
   def update
-    @vitesse -= @attaqueVit + @app.player.vitesseAt
+        @vitesse -= @attaqueVit + @app.player.vitesseAt
   end
 end

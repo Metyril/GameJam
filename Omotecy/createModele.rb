@@ -663,37 +663,37 @@ class CreateModele
 
 
   #Points Gros Octogone Rouge
-  p1r = Point.new(0*size,(0+hauteur)*size,0*size)
-  p2r = Point.new(-1*size,(1+hauteur)*size,0*size)
-  p3r = Point.new(-1*size,(3+hauteur)*size,0*size)
-  p4r = Point.new(0*size,(4+hauteur)*size,0*size)
-  p5r = Point.new(2*size,(4+hauteur)*size,0*size)
-  p6r = Point.new(3*size,(3+hauteur)*size,0*size)
-  p7r = Point.new(3*size,(1+hauteur)*size,0*size)
-  p8r = Point.new(2*size,(0+hauteur)*size,0*size)
-  pmilieur = Point.new(1*size,(2+hauteur)*size,-0.75*size)
+  p1r = Point.new(-1*size,(0+hauteur)*size,-4*size)
+  p2r = Point.new(-2*size,(1+hauteur)*size,-4*size)
+  p3r = Point.new(-2*size,(3+hauteur)*size,-4*size)
+  p4r = Point.new(-1*size,(4+hauteur)*size,-4*size)
+  p5r = Point.new(1*size,(4+hauteur)*size,-4*size)
+  p6r = Point.new(2*size,(3+hauteur)*size,-4*size)
+  p7r = Point.new(3*size,(1+hauteur)*size,-4*size)
+  p8r = Point.new(1*size,(0+hauteur)*size,-4*size)
+  pmilieur = Point.new(0*size,(2+hauteur)*size,-4.75*size)
 
   #Points Gros Octogone Milieu
-  p1m = Point.new(0*size,(0+hauteur)*size,4*size)
-  p2m = Point.new(-1*size,(1+hauteur)*size,4*size)
-  p3m = Point.new(-1*size,(3+hauteur)*size,4*size)
-  p4m = Point.new(0*size,(4+hauteur)*size,4*size)
-  p5m = Point.new(2*size,(4+hauteur)*size,4*size)
-  p6m = Point.new(3*size,(3+hauteur)*size,4*size)
-  p7m = Point.new(3*size,(1+hauteur)*size,4*size)
-  p8m = Point.new(2*size,(0+hauteur)*size,4*size)
-  pmilieum = Point.new(1*size,(2+hauteur)*size,4*size)
+  p1m = Point.new(-1*size,(0+hauteur)*size,0*size)
+  p2m = Point.new(-2*size,(1+hauteur)*size,0*size)
+  p3m = Point.new(-2*size,(3+hauteur)*size,0*size)
+  p4m = Point.new(-1*size,(4+hauteur)*size,0*size)
+  p5m = Point.new(1*size,(4+hauteur)*size,0*size)
+  p6m = Point.new(2*size,(3+hauteur)*size,0*size)
+  p7m = Point.new(2*size,(1+hauteur)*size,0*size)
+  p8m = Point.new(1*size,(0+hauteur)*size,0*size)
+  pmilieum = Point.new(0*size,(2+hauteur)*size,0*size)
 
   #Points Gros Octogone Cyan
-  p1c = Point.new(0*size,(0+hauteur)*size,8*size)
-  p2c = Point.new(-1*size,(1+hauteur)*size,8*size)
-  p3c = Point.new(-1*size,(3+hauteur)*size,8*size)
-  p4c = Point.new(0*size,(4+hauteur)*size,8*size)
-  p5c = Point.new(2*size,(4+hauteur)*size,8*size)
-  p6c = Point.new(3*size,(3+hauteur)*size,8*size)
-  p7c = Point.new(3*size,(1+hauteur)*size,8*size)
-  p8c = Point.new(2*size,(0+hauteur)*size,8*size)
-  pmilieuc = Point.new(1*size,(2+hauteur)*size,8.75*size)
+  p1c = Point.new(-1*size,(0+hauteur)*size,4*size)
+  p2c = Point.new(-2*size,(1+hauteur)*size,4*size)
+  p3c = Point.new(-2*size,(3+hauteur)*size,4*size)
+  p4c = Point.new(-1*size,(4+hauteur)*size,4*size)
+  p5c = Point.new(1*size,(4+hauteur)*size,4*size)
+  p6c = Point.new(2*size,(3+hauteur)*size,4*size)
+  p7c = Point.new(2*size,(1+hauteur)*size,4*size)
+  p8c = Point.new(1*size,(0+hauteur)*size,4*size)
+  pmilieuc = Point.new(0*size,(2+hauteur)*size,4.75*size)
 
   pointsPilule = [p1r, p2r, p3r, p4r, p5r, p6r, p7r, p8r, pmilieur,
                   p1m, p2m, p3m, p4m, p5m, p6m, p7m, p8m, pmilieum,
@@ -898,11 +898,11 @@ def self.croix
   return Modele.new(pointsCroix, trianglesCroix)
 end
 
-def self.projectile
+def self.projectile size = 0.3
 
   #Hauteur et Taille
   hauteur = 2
-  size = 0.3
+  #size = 0.3
 
   #Couleurs
   orangeClair = 0xFFEE5A24
