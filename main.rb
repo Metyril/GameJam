@@ -29,17 +29,17 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
-  attr_accessor :player, :ennemis, :projectiles
+  attr_accessor :player, :ennemis, :projectiles, :modeleParicule, :particules, :map
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
 
     Triangle.setRefSize(WIDTH, HEIGHT)
 
-    @map_width = 30         # Largeur de la Map
-    @map_height = 30        # Hauteur de la Map
+    @map_width = 40         # Largeur de la Map
+    @map_height = 40        # Hauteur de la Map
     @cell_size = 20         # Taille d'une cellule
     @wall_size = 5          # Largeur d'un mur
-    @nb_room = 5           # Nombre de salles
+    @nb_room = 10           # Nombre de salles
     @type_gen = 'random'    # Type de génération / 4 valeurs possibles : 'random', 'newest', 'middle', 'oldest'
 
     # MODELES
@@ -48,10 +48,12 @@ class Fenetre < Gosu::Window
     @modeleRuby = CreateModele::ruby
     @ennemisModele = CreateModele::player(true)
     @modPilule = CreateModele::pilule
+    @modeleParicule = CreateModele::sim
 
     # TELEPORTEUR
+    @playerInitPos = rand(0..@nb_room-1)
     @modeleTP = CreateModele::sim
-    @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
+    @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @playerInitPos, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
 
     # ATTRIBUTS
     @map = @teleporteur.allSet[:map]
@@ -62,56 +64,10 @@ class Fenetre < Gosu::Window
     @pilules = @teleporteur.allSet[:pilules]
     @drones = @teleporteur.allSet[:drones]
     @particules = @teleporteur.allSet[:particules]
+    @vies = @teleporteur.allSet[:vies]
 
     # AUTRES
-    playerInitPos = rand(0..@nb_room-1)
-    @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[playerInitPos],0,0,0,2))
-    @pilules = Array.new
-    @vies = Array.new
-    @projectiles = Array.new
-    @ramassablesArme = Array.new
-    @drones = Array.new
-    @particules = Array.new
-    @ennemis = Array.new
-    ennemisModele = CreateModele::player(true)
-    @ramassables = Array.new
-    modeleruby = CreateModele::ruby
-
-    @map.rooms.each_with_index do |room, r|
-      if r != playerInitPos
-        j = rand(2..10)
-        for i in 1..j
-          @ennemis << Ennemi.new(room, ennemisModele)
-        end
-      end
-      j = rand(2..10)
-      for i in 1..j
-        @ramassables << ObjetRamassable.new(room, modeleruby)
-      end
-      j = rand(2..5)
-      for i in 1..j
-        x = rand
-        if x < 0.2
-          @ramassablesArme << ItemPoing.new(self,@map.rooms[rand(0..@nb_room-1)],0,0,0)
-        end
-        if x > 0.9
-          @ramassablesArme << ItemTire.new(self,@map.rooms[rand(0..@nb_room-1)],0,0,0)
-        end
-        if (x > 0.2) && (x < 0.3)
-          @drones << DroneAt.new(self,room)
-        end
-        if (x > 0.3) && (x<0.5)
-          @pilules << Pilule.new(self,room,@modPilule)
-        end
-        if (x > 0.5 ) && (x < 0.6)
-          @vies << Vie.new(room)
-        end
-      end
-    end
-    # for i in 0..4
-    #   @ennemis << Ennemi.new(@map, ennemisModele)
-    # end
-
+    @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
 
 
@@ -241,7 +197,8 @@ class Fenetre < Gosu::Window
     end
 
     if self.dist(@player, @teleporteur) < (@player.itBox + @teleporteur.itBox)
-      @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
+      @playerInitPos = rand(0..@nb_room-1)
+      @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @playerInitPos, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
 
       @map = @teleporteur.allSet[:map]
       @projectiles = @teleporteur.allSet[:projectiles]
@@ -251,9 +208,9 @@ class Fenetre < Gosu::Window
       @pilules = @teleporteur.allSet[:pilules]
       @drones = @teleporteur.allSet[:drones]
       @particules = @teleporteur.allSet[:particules]
+      @vies = @teleporteur.allSet[:vies]
 
-      playerInitPos = rand(0..@nb_room-1)
-      room = @map.rooms[playerInitPos]
+      room = @map.rooms[@playerInitPos]
       @player.x, @player.z = rand(room.width), rand(room.height)
       @player.x = (@player.x + room.x_pos) * @cell_size
       @player.z = (@player.z + room.y_pos) * @cell_size
@@ -447,6 +404,12 @@ class Fenetre < Gosu::Window
       end
     end
     @projectiles.each do |ramassable|
+      if redraw?(ramassable.x, ramassable.z)
+        ramassable.draw(@camera)
+      end
+    end
+
+    @particules.each do |ramassable|
       if redraw?(ramassable.x, ramassable.z)
         ramassable.draw(@camera)
       end
