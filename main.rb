@@ -28,11 +28,11 @@ class Fenetre < Gosu::Window
     @freeCam = false
     @drawTotal = false
 
-    @map_width = 30         # Largeur de la Map
-    @map_height = 30        # Hauteur de la Map
+    @map_width = 50         # Largeur de la Map
+    @map_height = 50        # Hauteur de la Map
     @cell_size = 20         # Taille d'une cellule
     @wall_size = 5          # Largeur d'un mur
-    @nb_room = 3            # Nombre de salles
+    @nb_room = 10            # Nombre de salles
     @type_gen = 'random'    # Type de génération / 4 valeurs possibles : 'random', 'newest', 'middle', 'oldest'
 
     @map = Map.new(@map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen)   # Map à générer
@@ -147,6 +147,7 @@ class Fenetre < Gosu::Window
 
     @ennemis.each do |ennemi|
       ennemi.detruire if 1 > ennemi.vie
+      ennemi.jebouge(@player.x, @player.z)
     end
 
     @ramassables.each do |ramassable|

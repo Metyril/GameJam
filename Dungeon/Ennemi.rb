@@ -12,6 +12,22 @@ class Ennemi < Element
     end
 
 
+    def deplacements(xP, zP)
+        if xP >= @x - 2*20 && zP >= @z - 2*20
+            if @x > xP
+                @x -= 0.4
+            else
+                @x += 0.4
+            end
+            if @z > zP
+                @z -= 0.4
+            else
+                @z += 0.4
+            end
+        end
+    end
+
+
     #def draw
     #    Gosu.draw_rect(@x, @y, @cell_size, @cell_size, Gosu::Color.argb(0xff_0000ff), 1)
   #  end # Fin draw
