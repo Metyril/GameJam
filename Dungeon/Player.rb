@@ -60,11 +60,23 @@ class Player < Element
 
   def attaque
     @arme.attaque
+    @items.each do |item|
+      if item.is_a? DroneAt
+        item.tirer
+      end
+    end
   end
 
   def update
     if @arme.vitesse > 0
         @arme.update
+    end
+    @items.each do |item|
+      if item.is_a? DroneAt
+        if item.vitesse > 0
+            item.update
+        end
+      end
     end
   end
 
