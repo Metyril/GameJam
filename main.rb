@@ -21,7 +21,7 @@ DEMIPI = Math::PI/2
 class Fenetre < Gosu::Window
   attr_accessor :player, :ennemis
   def initialize
-    super WIDTH, HEIGHT, option = {fullscreen: false}
+    super WIDTH, HEIGHT, options = {fullscreen: false}
 
     Triangle.setRefSize(WIDTH, HEIGHT)
 
@@ -46,7 +46,8 @@ class Fenetre < Gosu::Window
     @batte = CreateModele::batte
     @ruby = CreateModele::ruby
 
-    @player = Player.new(@map.rooms[rand(0..@nb_room-1)], @playerModele, ItemPoing.new(self, @map.rooms[rand(0..@nb_room-1)],@batte,3,0,0,0))
+    playerInitPos = rand(0..@nb_room-1)
+    @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[playerInitPos],@batte,3,0,0,0))
 
 
     @ennemis = Array.new
@@ -54,10 +55,12 @@ class Fenetre < Gosu::Window
     @ramassables = Array.new
     modeleruby = CreateModele::ruby
 
-    @map.rooms.each do |room|
-      j = rand(2..10)
-      for i in 1..j
-        @ennemis << Ennemi.new(room, ennemisModele)
+    @map.rooms.each_with_index do |room, r|
+      if r != playerInitPos
+        j = rand(2..10)
+        for i in 1..j
+          @ennemis << Ennemi.new(room, ennemisModele)
+        end
       end
       j = rand(2..10)
       for i in 1..j
