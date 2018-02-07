@@ -37,10 +37,10 @@ class ItemPoing < Item
       @startAnime = true
 
         @app.ennemis.each do |ennemie|
-          x = Math.sin(@app.player.angle) * @range + @app.player.x
-          z = Math.cos(@app.player.angle) * @range + @app.player.z
+          x = Math.sin(@app.player.angle) * (@range+@app.player.range) + @app.player.x
+          z = Math.cos(@app.player.angle) * (@range+@app.player.range) + @app.player.z
           if Math.sqrt((ennemie.x - x)**2 + (ennemie.z - z)**2) < (@itBox + ennemie.itBox)
-            ennemie.vie -= @degats
+            ennemie.vie -= @degats+@app.player.degats
           end
         end
 
@@ -48,6 +48,6 @@ class ItemPoing < Item
   end
 
   def update
-    @vitesse -= @attaqueVit
+    @vitesse -= @attaqueVit + @app.player.vitesseAt
   end
 end

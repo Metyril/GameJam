@@ -38,11 +38,11 @@ class ItemTire < Item
   def attaque
     if @vitesse <= 0
       @vitesse = 140
-      @app.projectiles << Projectile.new(@app,@app.player.angle,@app.player.x,@app.player.y,@app.player.z,@itBox,@degats,@modeleTire,@room,@vitesseP)
+      @app.projectiles << Projectile.new(@app,@app.player.angle,@app.player.x,@app.player.y,@app.player.z,@itBox,@degats+@app.player.degats,@modeleTire,@room,@vitesseP)
     end
   end
 
   def update
-    @vitesse -= @attaqueVit
+    @vitesse -= @attaqueVit + @app.player.vitesseAt
   end
 end
