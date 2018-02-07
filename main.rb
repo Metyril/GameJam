@@ -41,7 +41,7 @@ class Fenetre < Gosu::Window
     ennemisModele = CreateModele::player(true)
     @ramassables = Array.new
     modeleruby = CreateModele::ruby
-
+    
     @map.rooms.each do |room|
       j = rand(2..10)
       for i in 1..j
@@ -232,4 +232,4 @@ class Fenetre < Gosu::Window
   end
 end
 
-#Fenetre.new.show
+Fenetre.new.show
