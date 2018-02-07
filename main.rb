@@ -97,6 +97,7 @@ class Fenetre < Gosu::Window
     @exit = Bouton.new(500,450,270,80,Gosu::Color::CYAN,"Quitter",2.8)
     @sound_btn = Bouton.new(1100,500,100,100,Gosu::Color::CYAN,"",2.8)
     @sound_image = Gosu::Image.new('../media/sound.png')
+    @music.play
   end
 
   def button_down(id)
@@ -182,10 +183,12 @@ class Fenetre < Gosu::Window
       projectile.detruire if self.murCollision projectile
     end
 
-
-    @ennemis.each do |ennemi|
-      ennemi.detruire if 1 > ennemi.vie
-      ennemi.deplacements(@player.x, @player.z)
+    if !@pause
+      @ennemis.each do |ennemi|
+        ennemi.detruire if 1 > ennemi.vie
+        ennemi.deplacements(@player.x, @player.z)
+        self.murCollision ennemi
+      end
     end
 
     @ramassables.each do |ramassable|
@@ -204,6 +207,26 @@ class Fenetre < Gosu::Window
     self.iter @ennemis
     self.iter @ramassables
     self.iter @ramassablesArme
+
+    #MENU PAUSE
+    @mouse_x = mouse_x.to_i+30
+    @mouse_y = mouse_y.to_i+10
+    if @bouton.isHover(@mouse_x,@mouse_y)
+      @bouton.color(Gosu::Color::YELLOW)
+    elsif @bouton.getColor == Gosu::Color::YELLOW
+      @bouton.color(Gosu::Color::CYAN)
+    end
+    if @exit.isHover(@mouse_x,@mouse_y)
+      @exit.color(Gosu::Color::YELLOW)
+    elsif @exit.getColor == Gosu::Color::YELLOW
+      @exit.color(Gosu::Color::CYAN)
+    end
+    if @sound_btn.isHover(@mouse_x,@mouse_y)
+      @sound_btn.color(Gosu::Color::YELLOW)
+    elsif @sound_btn.getColor == Gosu::Color::YELLOW
+      @sound_btn.color(Gosu::Color::CYAN)
+    end
+
   end
 
   def dist o1, o2

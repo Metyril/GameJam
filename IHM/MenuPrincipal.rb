@@ -53,6 +53,7 @@ class MenuPrincipal < Gosu::Window
       case id
       when Gosu::MsLeft
         if @bouton.isHover(@mouse_x,@mouse_y)
+          @music.stop
           close
           Fenetre.new.show
         end
