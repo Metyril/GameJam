@@ -898,11 +898,11 @@ def self.croix
   return Modele.new(pointsCroix, trianglesCroix)
 end
 
-def self.projectile
+def self.projectile size = 0.3
 
   #Hauteur et Taille
   hauteur = 2
-  size = 0.3
+  #size = 0.3
 
   #Couleurs
   orangeClair = 0xFFEE5A24

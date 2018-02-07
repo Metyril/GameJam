@@ -53,7 +53,7 @@ class Fenetre < Gosu::Window
     @ruby = CreateModele::ruby
     modPilule = CreateModele::pilule
     playerInitPos = rand(0..@nb_room-1)
-    @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemTire.new(self, @map.rooms[playerInitPos],0,0,0,"Pistolet"))
+    @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[playerInitPos],0,0,0,2))
     @pilules = Array.new
     @projectiles = Array.new
     @ramassablesArme = Array.new
@@ -86,8 +86,19 @@ class Fenetre < Gosu::Window
           @drones << DroneAt.new(self,room)
         end
       end
+      j = rand(2..4)
+      for i in 1..j
+        if rand < 0.1
+          @ramassablesArme << ItemPoing.new(self,@map.rooms[rand(0..@nb_room-1)],0,0,0)
+        end
+      end
+      j = rand(2..4)
+      for i in 1..j
+        if rand < 0.1
+          @ramassablesArme << ItemTire.new(self,@map.rooms[rand(0..@nb_room-1)],0,0,0)
+        end
+      end
     end
-    @ramassablesArme << ItemPoing.new(self,@map.rooms[rand(0..@nb_room-1)],0,0,0,"Tronconeuse")
     # for i in 0..4
     #   @ennemis << Ennemi.new(@map, ennemisModele)
     # end
@@ -144,7 +155,7 @@ class Fenetre < Gosu::Window
 
 
   def update
-    self.caption = "#{Gosu.fps} FPS / vitesse:#{@player.vitesse} Attaque:#{@player.degats} Range:#{@player.range} | VitesseAt:#{@player.vitesseAt} Pz:#{@map.map[@player.getCelZ][@player.getCelX]}"
+    self.caption = "#{Gosu.fps} FPS / vitesse:#{@player.vitesse} Attaque:#{@player.degats} Range:#{@player.range} | VitesseAt:#{@player.vitesseAt} Vie:#{@player.vie}"
     if !@pause
       frontal = 0
       lateral = 0
@@ -202,6 +213,10 @@ class Fenetre < Gosu::Window
       @ennemis.each do |ennemi|
         ennemi.detruire if 1 > ennemi.vie
         ennemi.deplacements(@player.x, @player.z)
+        if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable == 0
+          @player.vie -= 1
+          @player.invulnerable = 70
+        end
         self.murCollision ennemi
       end
     end
@@ -255,6 +270,11 @@ class Fenetre < Gosu::Window
     elsif @sound_btn.getColor == Gosu::Color::YELLOW
       @sound_btn.color(Gosu::Color::CYAN)
     end
+    if @player.vie <= 0
+      close
+      MenuPrincipal.new.show
+    end
+
 
   end
 

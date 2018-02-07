@@ -3,8 +3,8 @@ require 'gosu'
 require_relative './Element.rb'
 
 class Player < Element
-      attr_accessor :vie,:items , :puissance,:arme,:angle,:vitesse, :angle , :degats,:range,:vitesseAt, :animeDeplacement
-    def initialize(room, modele, arme, itbox=1, x=0, y=0, z=0, vie = 3, puissance =1)
+      attr_accessor :vie,:items , :puissance,:arme,:angle,:vitesse, :angle , :degats,:range,:vitesseAt, :animeDeplacement,:invulnerable
+    def initialize(room, modele, arme, itbox=1, x=0, y=0, z=0, vie = 15, puissance =1)
         super room, modele, itbox, x, y, z
         @angle = 0
         @vie = vie
@@ -13,10 +13,10 @@ class Player < Element
         @vitesseAt = 0
         #@arme = ItemPoing.new(room,modele,3,x,y,z)
         @arme = arme
-        @vitesse = 1
+        @vitesse = 3
         @puissance = puissance
         @items = Array.new()
-
+        @invulnerable = 0
         @animeDeplacement = false
         @velY = 0
 
@@ -68,6 +68,9 @@ class Player < Element
   end
 
   def update
+    if @invulnerable > 0
+      @invulnerable -= 1
+    end
     if @arme.vitesse > 0
         @arme.update
     end
