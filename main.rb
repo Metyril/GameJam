@@ -104,7 +104,7 @@ class Fenetre < Gosu::Window
       @pause = true
     elsif id == Gosu::KB_TAB
       @freeCam = !@freeCam
-      @drawTotal = !@drawTotal
+      #@drawTotal = !@drawTotal
     end
 
     #MENU PAUSE
@@ -140,6 +140,7 @@ class Fenetre < Gosu::Window
       @player.angle += 0.03 if Gosu.button_down? Gosu::KB_RIGHT
       @player.x += Math.sin(@player.angle) * frontal + Math.cos(-@player.angle) * lateral
       @player.z += Math.cos(@player.angle) * frontal + Math.sin(-@player.angle) * lateral
+      @player.animeDeplacement = (frontal != 0 || lateral != 0)
     end
 
     if !@freeCam && !@pause
