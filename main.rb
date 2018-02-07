@@ -11,6 +11,8 @@ require_relative 'Omotecy/projectModele.rb'
 
 require_relative 'Dungeon/MurHitBox.rb'
 require_relative 'Dungeon/ItemPoing.rb'
+require_relative 'Dungeon/ItemTire.rb'
+require_relative 'Dungeon/Projectile.rb'
 require_relative 'Dungeon/Item.rb'
 
 require_relative 'Dungeon/IHM/Bouton.rb'
@@ -21,7 +23,7 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
-  attr_accessor :player, :ennemis
+  attr_accessor :player, :ennemis, :projectiles
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
 
@@ -49,9 +51,9 @@ class Fenetre < Gosu::Window
     @ruby = CreateModele::ruby
 
     playerInitPos = rand(0..@nb_room-1)
-    @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[playerInitPos],@batte,3,0,0,0))
+    @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemTire.new(self, @map.rooms[playerInitPos],0,0,0,"Pistolet"))
 
-
+    @projectiles = Array.new
     @ramassablesArme = Array.new
     @ennemis = Array.new
     ennemisModele = CreateModele::player(true)
@@ -70,7 +72,7 @@ class Fenetre < Gosu::Window
         @ramassables << ObjetRamassable.new(room, modeleruby)
       end
     end
-    @ramassablesArme << ItemPoing.new(self,@map.rooms[rand(0..@nb_room-1)],@batte,0,0,0,"Tronconeuse")
+    @ramassablesArme << ItemPoing.new(self,@map.rooms[rand(0..@nb_room-1)],0,0,0,"Tronconeuse")
     # for i in 0..4
     #   @ennemis << Ennemi.new(@map, ennemisModele)
     # end
@@ -173,6 +175,10 @@ class Fenetre < Gosu::Window
 
     @player.update
     self.murCollision @player
+    @projectiles.each do |projectile|
+      projectile.avancer
+    end
+
 
     @ennemis.each do |ennemi|
       ennemi.detruire if 1 > ennemi.vie
@@ -187,11 +193,10 @@ class Fenetre < Gosu::Window
         ramassable.detruire
       end
     end
-
     # @ennemis.each do |ennemi|
     #   ennemi.detruire if self.dist(@player,ennemi) < (@player.itBox + ennemi.itBox)
     # end
-
+    self.iter @projectiles
     self.iter @ennemis
     self.iter @ramassables
     self.iter @ramassablesArme
@@ -293,6 +298,11 @@ class Fenetre < Gosu::Window
         ramassable.draw(@camera)
       end
     end
+    @projectiles.each do |ramassable|
+      if redraw?(ramassable.x, ramassable.z)
+        ramassable.draw(@camera)
+      end
+    end
 
     @ennemis.each do |ennemi|
       if redraw?(ennemi.x, ennemi.z)
@@ -321,6 +331,14 @@ class Fenetre < Gosu::Window
     end
 
     @ennemis.each do |ennemi|
+      ennemi.draw(@camera)
+    end
+
+    @projectiles.each do |ennemi|
+      ennemi.draw(@camera)
+    end
+
+    @ramassablesArme.each do |ennemi|
       ennemi.draw(@camera)
     end
   end

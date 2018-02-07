@@ -4,7 +4,7 @@ require 'gosu'  # Librairie graphique Gosu
 class Element
     attr_accessor :x, :y, :z, :itBox, :isDetruit, :modele
 
-    def initialize(room, modele,itbox=0,x=0,y=0,z=0)
+    def initialize(room, modele,itbox=0,x=0,y=0,z=0,rand=true)
       @room = room
       @modele = modele
       @cell_size = @room.cell_size
@@ -14,8 +14,9 @@ class Element
       @itBox = itbox
 
       @isDetruit = false
-
-      self.createElement
+      if rand
+        self.createElement
+      end
     end # Fin initialize
 
     def detruire
