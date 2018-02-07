@@ -23,6 +23,21 @@ class MenuPrincipal < Gosu::Window
       @music.play(true)
     end
 
+    def update
+      @mouse_x = mouse_x.to_i+30
+      @mouse_y = mouse_y.to_i+10
+      if @bouton.isHover(@mouse_x,@mouse_y)
+        @bouton.color(Gosu::Color::YELLOW)
+      elsif @bouton.getColor == Gosu::Color::YELLOW
+        @bouton.color(Gosu::Color::CYAN)
+      end
+      if @exit.isHover(@mouse_x,@mouse_y)
+        @exit.color(Gosu::Color::YELLOW)
+      elsif @exit.getColor == Gosu::Color::YELLOW
+        @exit.color(Gosu::Color::CYAN)
+      end
+    end
+
     def button_down(id)
       @mouse_x = mouse_x.to_i+30
       @mouse_y = mouse_y.to_i+10

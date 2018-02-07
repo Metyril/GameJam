@@ -50,6 +50,7 @@ class Fenetre < Gosu::Window
     @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[playerInitPos],@batte,3,0,0,0))
 
 
+    @ramassablesArme = Array.new
     @ennemis = Array.new
     ennemisModele = CreateModele::player(true)
     @ramassables = Array.new
@@ -67,6 +68,7 @@ class Fenetre < Gosu::Window
         @ramassables << ObjetRamassable.new(room, modeleruby)
       end
     end
+    @ramassablesArme << ItemPoing.new(self,@map.rooms[rand(0..@nb_room-1)],@batte,0,0,0,"Tronconeuse")
     # for i in 0..4
     #   @ennemis << Ennemi.new(@map, ennemisModele)
     # end
@@ -99,10 +101,10 @@ class Fenetre < Gosu::Window
 
     frontal = 0
     lateral = 0
-    frontal = -0.6 if Gosu.button_down? Gosu::KB_S
-    frontal = 0.6 if Gosu.button_down? Gosu::KB_W
-    lateral = -0.4 if Gosu.button_down? Gosu::KB_A
-    lateral = 0.4 if Gosu.button_down? Gosu::KB_D
+    frontal = -0.6*@player.vitesse if Gosu.button_down? Gosu::KB_S
+    frontal = 0.6*@player.vitesse if Gosu.button_down? Gosu::KB_W
+    lateral = -0.4*@player.vitesse if Gosu.button_down? Gosu::KB_A
+    lateral = 0.4*@player.vitesse if Gosu.button_down? Gosu::KB_D
     @player.angle += -0.03 if Gosu.button_down? Gosu::KB_LEFT
     @player.angle += 0.03 if Gosu.button_down? Gosu::KB_RIGHT
     @player.x += Math.sin(@player.angle) * frontal + Math.cos(-@player.angle) * lateral
@@ -143,10 +145,18 @@ class Fenetre < Gosu::Window
     @player.update
     self.murCollision @player
 
-
+    @ennemis.each do |ennemi|
+      ennemi.detruire if 1 > ennemi.vie
+    end
 
     @ramassables.each do |ramassable|
       ramassable.detruire if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+    end
+    @ramassablesArme.each do |ramassable|
+      if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+        @player.arme = ramassable
+        ramassable.detruire
+      end
     end
 
     # @ennemis.each do |ennemi|
@@ -155,6 +165,7 @@ class Fenetre < Gosu::Window
 
     self.iter @ennemis
     self.iter @ramassables
+    self.iter @ramassablesArme
   end
 
   def dist o1, o2
@@ -234,6 +245,11 @@ class Fenetre < Gosu::Window
     end
 
     @ramassables.each do |ramassable|
+      if redraw?(ramassable.x, ramassable.z)
+        ramassable.draw(@camera)
+      end
+    end
+    @ramassablesArme.each do |ramassable|
       if redraw?(ramassable.x, ramassable.z)
         ramassable.draw(@camera)
       end
