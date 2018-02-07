@@ -30,7 +30,11 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
+<<<<<<< HEAD
   attr_accessor :player, :ennemis, :projectiles,:modeleParicule, :particules, :map,:ramassablesArme,:ramassables,:pilules
+=======
+  attr_accessor :player, :ennemis, :projectiles, :modeleParicule, :particules, :map,:ramassablesArme,:ramassables,:pilules, :modeleParicule2
+>>>>>>> 5c264e11b98b73b759be9ed7fa1ac742a6ff4b68
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
 
@@ -42,6 +46,8 @@ class Fenetre < Gosu::Window
     @wall_size = 5          # Largeur d'un mur
     @nb_room = 10           # Nombre de salles
     @type_gen = 'random'    # Type de génération / 4 valeurs possibles : 'random', 'newest', 'middle', 'oldest'
+
+    @etage = 0
 
     # MODELES
     @playerModele = CreateModele::player
@@ -77,7 +83,7 @@ class Fenetre < Gosu::Window
 
     @listeModeleCellules = Array.new
     for i in (0..15)
-      @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), 3))
+      @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), 0))
       #@listeModeleCellules.push(CreateModele::cellule("0111"))
     end
 
