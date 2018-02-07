@@ -1,22 +1,3 @@
-####################################################################################################################################################################################
-#       Principe général :
-# Le but de ce programme est de générer un donjon inspiré des jeux Rogue-like
-# Pour se faire, un processus est utilisé pour permettre une génération optimale et aléatoire :
-#   - On place plusieurs salles dans le donjon
-#   - On crée un labyrinthe autour de ces salles
-#   - On ouvre les salles au labyrinthe
-#   - On retire un certain nombre de culs-de-sac
-# Ce processus a été pensé par Bob Nystrom et est disponible au complet ici : http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/
-# Il y développe son raisonnement clairement, avec des exemples des différentes étapes efficaces pour comprendre les différents mécanismes exploités
-#
-#       Principe de la classe :
-# GameWindow est une classe héritée de la fenêtre de jeu de la librairie Gosu
-# Elle permet donc de contrôler la globalité du jeu telles que les paramètres généraux, les IHM...
-# La fenêtre de Gosu intègre une boucle de jeu, il suffit donc de donner les opérations à update et à draw pour faire fonctionner le jeu
-####################################################################################################################################################################################
-
-
-
 # Dépendances Gems
 require 'gosu'  # Librairie graphique Gosu
 
@@ -173,9 +154,3 @@ window = GameWindow.new
 
 # Affichage
 window.show
-
-# ap = Map.new(20,20,10,2,2,'random')
-# map.showMap
-# puts
-# puts
-# map.showRooms

@@ -34,20 +34,27 @@ class Fenetre < Gosu::Window
     @map = Map.new(@map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen)   # Map à générer
 
     @playerModele = CreateModele::player
-    @player = Player.new(@map, @playerModele)
+    @player = Player.new(@map.rooms[rand(0..@nb_room-1)], @map, @playerModele)
 
 
     @ennemis = Array.new
     ennemisModele = CreateModele::player(true)
-    for i in 0..4
-      @ennemis << Ennemi.new(@map, ennemisModele)
-    end
-
-    modeleruby = CreateModele::ruby
     @ramassables = Array.new
-    for i in 1..20
-      @ramassables << ObjetRamassable.new(@map, modeleruby)
+    modeleruby = CreateModele::ruby
+    
+    @map.rooms.each do |room|
+      j = rand(2..10)
+      for i in 1..j
+        @ennemis << Ennemi.new(room, @map, ennemisModele)
+      end
+      j = rand(2..10)
+      for i in 1..j
+        @ramassables << ObjetRamassable.new(room, @map, modeleruby)
+      end
     end
+    # for i in 0..4
+    #   @ennemis << Ennemi.new(@map, ennemisModele)
+    # end
 
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
     @batte = CreateModele::batte
