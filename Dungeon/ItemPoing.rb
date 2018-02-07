@@ -4,22 +4,25 @@ require_relative 'Item.rb'
 
 class ItemPoing < Item
       attr_accessor :vitesse,:range,:degats,:attaqueVit,:startAnime
-  def initialize(app,room,modele,x,y,z,nom)
+  def initialize(app,room,x,y,z,nom)
     case nom
     when "Batte"
       @range = 8
       @attaqueVit = 2
       @degats = 2
+      modele = CreateModele::batte
       itbox = 3
     when "Tronconeuse"
       @range = 10
       @attaqueVit = 1
       @degats = 4
+      modele = CreateModele::batte
       itbox = 5
     when "Main"
       @range = 3
       @attaqueVit = 4
       @degats = 1
+      modele = CreateModele::batte
       itbox = 3
     end
       @vitesse = 0
