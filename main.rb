@@ -112,6 +112,7 @@ class Fenetre < Gosu::Window
     @exit = Bouton.new(500,450,270,80,Gosu::Color::CYAN,"Quitter",2.8)
     @sound_btn = Bouton.new(1100,500,100,100,Gosu::Color::CYAN,"",2.8)
     @sound_image = Gosu::Image.new('../media/sound.png')
+    @music.play
   end
 
   def button_down(id)
@@ -119,7 +120,7 @@ class Fenetre < Gosu::Window
       @pause = true
     elsif id == Gosu::KB_TAB
       @freeCam = !@freeCam
-      @drawTotal = !@drawTotal
+      #@drawTotal = !@drawTotal
     end
 
     #MENU PAUSE
@@ -155,6 +156,7 @@ class Fenetre < Gosu::Window
       @player.angle += 0.03 if Gosu.button_down? Gosu::KB_RIGHT
       @player.x += Math.sin(@player.angle) * frontal + Math.cos(-@player.angle) * lateral
       @player.z += Math.cos(@player.angle) * frontal + Math.sin(-@player.angle) * lateral
+      @player.animeDeplacement = (frontal != 0 || lateral != 0)
     end
 
     if !@freeCam && !@pause
@@ -200,6 +202,7 @@ class Fenetre < Gosu::Window
       @ennemis.each do |ennemi|
         ennemi.detruire if 1 > ennemi.vie
         ennemi.deplacements(@player.x, @player.z)
+        self.murCollision ennemi
       end
     end
 

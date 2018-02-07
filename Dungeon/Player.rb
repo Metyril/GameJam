@@ -3,7 +3,7 @@ require 'gosu'
 require_relative './Element.rb'
 
 class Player < Element
-      attr_accessor :vie,:items , :puissance,:arme,:angle,:vitesse, :angle , :degats,:range,:vitesseAt
+      attr_accessor :vie,:items , :puissance,:arme,:angle,:vitesse, :angle , :degats,:range,:vitesseAt, :animeDeplacement
     def initialize(room, modele, arme, itbox=1, x=0, y=0, z=0, vie = 3, puissance =1)
         super room, modele, itbox, x, y, z
         @angle = 0
@@ -16,6 +16,9 @@ class Player < Element
         @vitesse = 1
         @puissance = puissance
         @items = Array.new()
+
+        @animeDeplacement = false
+        @velY = 0
 
         @anime = 0
     end
@@ -78,7 +81,16 @@ class Player < Element
   end
 
   def draw cam
-    @modele.draw(cam, @x, @y, @z, 0, -@angle, 0)
+    y = Math.sin(@velY)
+
+    if @animeDeplacement || (y > 1)
+      @animeDeplacement = false
+      @velY += 0.4
+    else
+      @velY = 1
+    end
+
+    @modele.draw(cam, @x, @y + (y-1), @z, 0, -@angle, 0)
 
     if @arme.startAnime
       @arme.startAnime = false
