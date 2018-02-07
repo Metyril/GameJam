@@ -107,7 +107,7 @@ class Player < Element
     end
 
     if (@anime < DEMIPI)
-      @anime += 0.25
+      @anime += 0.15
     end
 
     #@arme.modele.draw(cam, @x - 5, @y - 2, @z - 5, 0, -@angle, 0.5)

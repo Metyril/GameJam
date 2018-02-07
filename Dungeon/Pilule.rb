@@ -7,6 +7,7 @@ class Pilule < Item
     def initialize(app,room,modele,x=0,y=0,z=0,itbox=1)
       super room,modele,itbox,x,y,z
       @app = app
+      @angle = rand(-3..3)
       case rand(7)
         when 0
           @nom = "Vitesse +"
@@ -63,4 +64,10 @@ class Pilule < Item
         end
       end
     end
+
+    def draw camera
+      #Gosu.draw_rect(@x, @z, @cell_size, @cell_size, Gosu::Color.argb(0xff_00ff00), 1)
+      @angle += 0.02
+      @modele.draw(camera, @x, @y, @z, 0, -@angle, 0)
+    end # Fin draw
 end # Fin Element

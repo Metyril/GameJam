@@ -36,6 +36,9 @@ class ItemPoing < Item
       @vitesse = 0
       @app = app
       @startAnime = false
+
+      @objetDeFrappe = Element.new(room, CreateModele::sim, 2)
+
       super room , modele, itbox , x,y,z
   end
 
@@ -45,10 +48,20 @@ class ItemPoing < Item
       @startAnime = true
 
         @app.ennemis.each do |ennemie|
-          x = Math.sin(@app.player.angle) * (@range+@app.player.range) + @app.player.x
-          z = Math.cos(@app.player.angle) * (@range+@app.player.range) + @app.player.z
-          if Math.sqrt((ennemie.x - x)**2 + (ennemie.z - z)**2) < (@itBox + ennemie.itBox)
+          @objetDeFrappe.x = Math.sin(@app.player.angle) + @app.player.x
+          @objetDeFrappe.z = Math.cos(@app.player.angle) + @app.player.z
+
+          if !@app.murCollision @objetDeFrappe
+            @objetDeFrappe.x = Math.sin(@app.player.angle) * (@range+@app.player.range) + @app.player.x
+            @objetDeFrappe.z = Math.cos(@app.player.angle) * (@range+@app.player.range) + @app.player.z
+          end
+
+          if Math.sqrt((ennemie.x - @objetDeFrappe.x)**2 + (ennemie.z - @objetDeFrappe.z)**2) < (@itBox + ennemie.itBox)
             ennemie.vie -= @degats+@app.player.degats
+            ennemie.recul
+            for i in (0...5)
+              @app.particules << Particule.new(@app.map.rooms[rand(0..0)], @app.modeleParicule2, ennemie.x, ennemie.y, ennemie.z)
+            end
           end
         end
 

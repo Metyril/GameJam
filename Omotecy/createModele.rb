@@ -1,5 +1,14 @@
 class CreateModele
-  def self.sim
+  def self.sim theme = 0
+
+    couleur1 = 0
+    couleur2 = 0
+
+    if theme == 1
+      couleur1 = 0xff218c74
+      couleur2 = 0xff33d9b2
+    end
+
     s1 = Point.new(-1, 0, -1)
     s2 = Point.new(-1, 0, 1)
     s3 = Point.new(0, -2, 0)
@@ -11,16 +20,16 @@ class CreateModele
 
     trianglesSim = [
       ### pyramide bas
-      Triangle.new(s1, s2, s3, 0xff2ecc71),
-      Triangle.new(s2, s4, s3, 0xfff39c12),
-      Triangle.new(s4, s5, s3, 0xff2980b9),
-      Triangle.new(s5, s1, s3, 0xffe74c3c),
+      Triangle.new(s1, s2, s3, couleur1 == 0 ? 0xff2ecc71 : couleur1),
+      Triangle.new(s2, s4, s3, couleur2 == 0 ? 0xfff39c12 : couleur2),
+      Triangle.new(s4, s5, s3, couleur1 == 0 ? 0xff2980b9 : couleur1),
+      Triangle.new(s5, s1, s3, couleur2 == 0 ? 0xffe74c3c : couleur2),
 
       ### pyramide haut
-      Triangle.new(s2, s1, s6, 0xff8e44ad),
-      Triangle.new(s4, s2, s6, 0xffecf0f1),
-      Triangle.new(s5, s4, s6, 0xffF03434),
-      Triangle.new(s1, s5, s6, 0xff95A5A6)
+      Triangle.new(s2, s1, s6, couleur2 == 0 ? 0xff8e44ad : couleur2),
+      Triangle.new(s4, s2, s6, couleur1 == 0 ? 0xffecf0f1 : couleur1),
+      Triangle.new(s5, s4, s6, couleur2 == 0 ? 0xffF03434 : couleur2),
+      Triangle.new(s1, s5, s6, couleur1 == 0 ? 0xff95A5A6 : couleur1)
     ]
 
     return Modele.new(pointsSim, trianglesSim)
@@ -196,6 +205,12 @@ class CreateModele
     if theme == 1
       couleur1 = 0xff34ace0
       couleur2 = 0xffe55039
+    elsif theme == 2
+      couleur1 = 0xff009432
+      couleur2 = 0xffffb142
+    elsif theme == 3
+      couleur1 = 0xff474787
+      couleur2 = 0xffcd6133
     end
 
     size = 10
@@ -550,7 +565,7 @@ class CreateModele
   p4r = Point.new(-1*size,(4+hauteur)*size,-4*size)
   p5r = Point.new(1*size,(4+hauteur)*size,-4*size)
   p6r = Point.new(2*size,(3+hauteur)*size,-4*size)
-  p7r = Point.new(3*size,(1+hauteur)*size,-4*size)
+  p7r = Point.new(2*size,(1+hauteur)*size,-4*size)
   p8r = Point.new(1*size,(0+hauteur)*size,-4*size)
   pmilieur = Point.new(0*size,(2+hauteur)*size,-4.75*size)
 
@@ -661,7 +676,8 @@ end
 def self.croix
 
   #Hauteur et Taille
-  hauteur = 2
+  #hauteur = 2
+  hauteur = -7
   size = 1
 
   #Couleurs
