@@ -16,6 +16,7 @@ require_relative 'Dungeon/Projectile.rb'
 require_relative 'Dungeon/Pilule.rb'
 require_relative 'Dungeon/Drone.rb'
 require_relative 'Dungeon/Item.rb'
+require_relative 'Dungeon/Particule.rb'
 
 require_relative 'IHM/Bouton.rb'
 
@@ -51,6 +52,8 @@ class Fenetre < Gosu::Window
 
     @batte = CreateModele::batte
     @ruby = CreateModele::ruby
+    @modeleParicule = CreateModele::cube
+
     modPilule = CreateModele::pilule
     playerInitPos = rand(0..@nb_room-1)
     @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemTire.new(self, @map.rooms[playerInitPos],0,0,0,"Pistolet"))
@@ -58,6 +61,7 @@ class Fenetre < Gosu::Window
     @projectiles = Array.new
     @ramassablesArme = Array.new
     @drones = Array.new
+    @particules = Array.new
     @ennemis = Array.new
     ennemisModele = CreateModele::player(true)
     @ramassables = Array.new
@@ -195,7 +199,12 @@ class Fenetre < Gosu::Window
     self.murCollision @player
     @projectiles.each do |projectile|
       projectile.avancer
-      projectile.detruire if self.murCollision projectile
+      if self.murCollision projectile
+        projectile.detruire
+        for i in (0...10)
+          @particules << Particule.new(@map.rooms[rand(0..0)], @modeleParicule, projectile.x, projectile.y, projectile.z)
+        end
+      end
     end
 
     if !@pause
@@ -236,6 +245,7 @@ class Fenetre < Gosu::Window
     self.iter @ennemis
     self.iter @ramassables
     self.iter @ramassablesArme
+    self.iter @particules
 
     #MENU PAUSE
     @mouse_x = mouse_x.to_i+30
