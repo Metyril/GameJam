@@ -50,7 +50,7 @@ class Fenetre < Gosu::Window
     end
 
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
-    @batte = CreateModele::batte
+    @batte = CreateModele::pilule
     @ruby = CreateModele::ruby
 
     @listeModeleCellules = Array.new
@@ -180,7 +180,7 @@ class Fenetre < Gosu::Window
     end
 
     @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)
-    #@batte.draw(@camera, @mursHitBox[2].x, 0, @mursHitBox[0].z, 0, 0, 0)
+    @batte.draw(@camera, 0, 0, 0, 0, 0, 0)
     #@ruby.draw(@camera, @mursHitBox[3].x, 0, @mursHitBox[1].z, 0, 0, 0)
     Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
     #@map.draw
