@@ -43,7 +43,7 @@ class Fenetre < Gosu::Window
     #@player.arme = ItemPoing.new(self, @map,@batte,3,0,0,0)
 
 
-    @batte = CreateModele::batte
+    @batte = CreateModele::projectile
     @ruby = CreateModele::ruby
 
     @player = Player.new(@map.rooms[rand(0..@nb_room-1)], @playerModele, ItemPoing.new(self, @map.rooms[rand(0..@nb_room-1)],@batte,3,0,0,0))
