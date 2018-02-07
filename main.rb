@@ -15,7 +15,7 @@ require_relative 'Dungeon/ItemTire.rb'
 require_relative 'Dungeon/Projectile.rb'
 require_relative 'Dungeon/Item.rb'
 
-require_relative 'Dungeon/IHM/Bouton.rb'
+require_relative 'IHM/Bouton.rb'
 
 WIDTH = 1280
 HEIGHT = 720
@@ -90,13 +90,13 @@ class Fenetre < Gosu::Window
 
     #MENU pause
     @pause = false
-    @music = Gosu::Song.new('../../media/little_apocalypse.ogg')
-    @cursor = Gosu::Image.new('../../media/mouse.png')
-    @titre = Gosu::Image.new('../../media/Omotecy - Titre Final.png')
+    @music = Gosu::Song.new('../media/little_apocalypse.ogg')
+    @cursor = Gosu::Image.new('../media/mouse.png')
+    @titre = Gosu::Image.new('../media/Omotecy - Titre Final.png')
     @bouton = Bouton.new(500,350,270,80,Gosu::Color::CYAN,"Jouer",3)
     @exit = Bouton.new(500,450,270,80,Gosu::Color::CYAN,"Quitter",2.8)
     @sound_btn = Bouton.new(1100,500,100,100,Gosu::Color::CYAN,"",2.8)
-    @sound_image = Gosu::Image.new('../../media/sound.png')
+    @sound_image = Gosu::Image.new('../media/sound.png')
   end
 
   def button_down(id)
@@ -184,7 +184,7 @@ class Fenetre < Gosu::Window
 
     @ennemis.each do |ennemi|
       ennemi.detruire if 1 > ennemi.vie
-      ennemi.jebouge(@player.x, @player.z)
+      ennemi.deplacements(@player.x, @player.z)
     end
 
     @ramassables.each do |ramassable|
@@ -354,4 +354,4 @@ class Fenetre < Gosu::Window
   end
 end
 
-Fenetre.new.show
+#Fenetre.new.show
