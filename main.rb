@@ -47,7 +47,7 @@ class Fenetre < Gosu::Window
     @ruby = CreateModele::ruby
 
     playerInitPos = rand(0..@nb_room-1)
-    @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[playerInitPos],@batte,3,0,0,0))
+    @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[playerInitPos],@batte,0,0,0,"Main"))
 
 
     @ramassablesArme = Array.new

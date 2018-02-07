@@ -3,7 +3,7 @@ require 'gosu'  # Librairie graphique Gosu
 require_relative 'Item.rb'
 
 class ItemPoing < Item
-      attr_accessor :vitesse, :isAttaque,:range,:degats,:attaqueVit,:startAnime
+      attr_accessor :vitesse,:range,:degats,:attaqueVit,:startAnime
   def initialize(app,room,modele,x,y,z,nom)
     case nom
     when "Batte"
