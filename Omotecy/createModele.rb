@@ -263,125 +263,6 @@ class CreateModele
     return Modele.new(pointsCellule, trianglesCellule)
   end
 
-
-
-  # def self.player(ennemi=false)
-  #   if ennemi
-  #     body_color = 0xffccae62
-  #     head_color = 0xffbadc58
-  #   else
-  #     body_color = 0xff2ecc71
-  #     head_color = 0xffffeaa7
-  #   end
-
-  #   p1 = Point.new(-1, 0, -1)
-  #   p2 = Point.new(-1, -4, -1)
-  #   p3 = Point.new(1, 0, -1)
-  #   p4 = Point.new(1, -4, -1)
-  #   p5 = Point.new(-1, -4, 1)
-  #   p6 = Point.new(-1, 0, 1)
-  #   p7 = Point.new(1, 0, 1)
-  #   p8 = Point.new(1, -4, 1)
-
-  #   p9 = Point.new(-1, -5, -2)
-  #   p10 = Point.new(-1, -6, -2)
-  #   p11 = Point.new(-1, -7, -1)
-  #   p12 = Point.new(-1, -5, 2)
-  #   p13 = Point.new(-1, -6, 2)
-  #   p14 = Point.new(-1, -7, 1)
-
-  #   p15 = Point.new(1, -5, -2)
-  #   p16 = Point.new(1, -6, -2)
-  #   p17 = Point.new(1, -7, -1)
-  #   p18 = Point.new(1, -5, 2)
-  #   p19 = Point.new(1, -6, 2)
-  #   p20 = Point.new(1, -7, 1)
-
-  #   pointsPlayer = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
-
-  #   trianglesPlayer = [
-  #     # devant corps
-  #     Triangle.new(p1, p2, p3, body_color),
-  #     Triangle.new(p3, p2, p4, body_color),
-  #     #---
-
-  #     # deriere corps
-  #     Triangle.new(p5, p6, p7, body_color),
-  #     Triangle.new(p8, p5, p7, body_color),
-  #     #---
-
-  #     # haut corps
-  #     Triangle.new(p6, p1, p7, body_color),
-  #     Triangle.new(p1, p3, p7, body_color),
-  #     #---
-
-  #     # droite corps
-  #     Triangle.new(p4, p8, p7, body_color),
-  #     Triangle.new(p3, p4, p7, body_color),
-  #     #---
-
-  #     # gauche corps
-  #     Triangle.new(p5, p2, p6, body_color),
-  #     Triangle.new(p2, p1, p6, body_color),
-  #     #---
-
-  #     # arrière tete
-  #     Triangle.new(p8, p19, p18, head_color),
-  #     Triangle.new(p8, p20, p19, head_color),
-  #     Triangle.new(p8, p17, p20, head_color),
-  #     Triangle.new(p8, p16, p17, head_color),
-  #     Triangle.new(p8, p15, p16, head_color),
-  #     Triangle.new(p8, p4, p15, head_color),
-  #     #---
-
-  #     # avant tete
-  #     Triangle.new(p5, p12, p13, head_color),
-  #     Triangle.new(p5, p13, p14, head_color),
-  #     Triangle.new(p5, p14, p11, head_color),
-  #     Triangle.new(p5, p11, p10, head_color),
-  #     Triangle.new(p5, p10, p9, head_color),
-  #     Triangle.new(p5, p9, p2, head_color),
-  #     #---
-
-  #     # face 1 tete
-  #     Triangle.new(p11, p14, p20, head_color),
-  #     Triangle.new(p20, p17, p11, head_color),
-  #     #--
-
-  #     # face 2 tete
-  #     Triangle.new(p14, p19, p20, head_color),
-  #     Triangle.new(p14, p13, p19, head_color),
-  #     #--
-
-  #     # face 3 tete
-  #     Triangle.new(p13, p12, p19, head_color),
-  #     Triangle.new(p19, p12, p18, head_color),
-  #     #--
-
-  #     # face 4 tete
-  #     Triangle.new(p18, p12, p8, head_color),
-  #     Triangle.new(p12, p5, p8, head_color),
-  #     #--
-
-  #     # face 5 tete
-  #     Triangle.new(p16, p10, p17, head_color),
-  #     Triangle.new(p10, p11, p17, head_color),
-  #     #--
-
-  #     # face 6 tete
-  #     Triangle.new(p16, p15, p9, head_color),
-  #     Triangle.new(p9, p10, p16, head_color),
-  #     #--
-
-  #     # face 7 tete
-  #     Triangle.new(p15, p4, p2, head_color),
-  #     Triangle.new(p2, p9, p15, head_color)
-  #     #--
-  #   ]
-
-  #   return Modele.new(pointsPlayer, trianglesPlayer)
-  # end
-
   def self.batte
     size = 2
 
@@ -652,7 +533,7 @@ class CreateModele
   def self.pilule
 
   #Hauteur et Taille
-  hauteur = 2
+  hauteur = -4.5
   size = 0.75
 
   #Couleurs
@@ -663,37 +544,37 @@ class CreateModele
 
 
   #Points Gros Octogone Rouge
-  p1r = Point.new(0*size,(0+hauteur)*size,0*size)
-  p2r = Point.new(-1*size,(1+hauteur)*size,0*size)
-  p3r = Point.new(-1*size,(3+hauteur)*size,0*size)
-  p4r = Point.new(0*size,(4+hauteur)*size,0*size)
-  p5r = Point.new(2*size,(4+hauteur)*size,0*size)
-  p6r = Point.new(3*size,(3+hauteur)*size,0*size)
-  p7r = Point.new(3*size,(1+hauteur)*size,0*size)
-  p8r = Point.new(2*size,(0+hauteur)*size,0*size)
-  pmilieur = Point.new(1*size,(2+hauteur)*size,-0.75*size)
+  p1r = Point.new(-1*size,(0+hauteur)*size,-4*size)
+  p2r = Point.new(-2*size,(1+hauteur)*size,-4*size)
+  p3r = Point.new(-2*size,(3+hauteur)*size,-4*size)
+  p4r = Point.new(-1*size,(4+hauteur)*size,-4*size)
+  p5r = Point.new(1*size,(4+hauteur)*size,-4*size)
+  p6r = Point.new(2*size,(3+hauteur)*size,-4*size)
+  p7r = Point.new(3*size,(1+hauteur)*size,-4*size)
+  p8r = Point.new(1*size,(0+hauteur)*size,-4*size)
+  pmilieur = Point.new(0*size,(2+hauteur)*size,-4.75*size)
 
   #Points Gros Octogone Milieu
-  p1m = Point.new(0*size,(0+hauteur)*size,4*size)
-  p2m = Point.new(-1*size,(1+hauteur)*size,4*size)
-  p3m = Point.new(-1*size,(3+hauteur)*size,4*size)
-  p4m = Point.new(0*size,(4+hauteur)*size,4*size)
-  p5m = Point.new(2*size,(4+hauteur)*size,4*size)
-  p6m = Point.new(3*size,(3+hauteur)*size,4*size)
-  p7m = Point.new(3*size,(1+hauteur)*size,4*size)
-  p8m = Point.new(2*size,(0+hauteur)*size,4*size)
-  pmilieum = Point.new(1*size,(2+hauteur)*size,4*size)
+  p1m = Point.new(-1*size,(0+hauteur)*size,0*size)
+  p2m = Point.new(-2*size,(1+hauteur)*size,0*size)
+  p3m = Point.new(-2*size,(3+hauteur)*size,0*size)
+  p4m = Point.new(-1*size,(4+hauteur)*size,0*size)
+  p5m = Point.new(1*size,(4+hauteur)*size,0*size)
+  p6m = Point.new(2*size,(3+hauteur)*size,0*size)
+  p7m = Point.new(2*size,(1+hauteur)*size,0*size)
+  p8m = Point.new(1*size,(0+hauteur)*size,0*size)
+  pmilieum = Point.new(0*size,(2+hauteur)*size,0*size)
 
   #Points Gros Octogone Cyan
-  p1c = Point.new(0*size,(0+hauteur)*size,8*size)
-  p2c = Point.new(-1*size,(1+hauteur)*size,8*size)
-  p3c = Point.new(-1*size,(3+hauteur)*size,8*size)
-  p4c = Point.new(0*size,(4+hauteur)*size,8*size)
-  p5c = Point.new(2*size,(4+hauteur)*size,8*size)
-  p6c = Point.new(3*size,(3+hauteur)*size,8*size)
-  p7c = Point.new(3*size,(1+hauteur)*size,8*size)
-  p8c = Point.new(2*size,(0+hauteur)*size,8*size)
-  pmilieuc = Point.new(1*size,(2+hauteur)*size,8.75*size)
+  p1c = Point.new(-1*size,(0+hauteur)*size,4*size)
+  p2c = Point.new(-2*size,(1+hauteur)*size,4*size)
+  p3c = Point.new(-2*size,(3+hauteur)*size,4*size)
+  p4c = Point.new(-1*size,(4+hauteur)*size,4*size)
+  p5c = Point.new(1*size,(4+hauteur)*size,4*size)
+  p6c = Point.new(2*size,(3+hauteur)*size,4*size)
+  p7c = Point.new(2*size,(1+hauteur)*size,4*size)
+  p8c = Point.new(1*size,(0+hauteur)*size,4*size)
+  pmilieuc = Point.new(0*size,(2+hauteur)*size,4.75*size)
 
   pointsPilule = [p1r, p2r, p3r, p4r, p5r, p6r, p7r, p8r, pmilieur,
                   p1m, p2m, p3m, p4m, p5m, p6m, p7m, p8m, pmilieum,
@@ -898,11 +779,11 @@ def self.croix
   return Modele.new(pointsCroix, trianglesCroix)
 end
 
-def self.projectile
+def self.projectile size = 0.3
 
   #Hauteur et Taille
   hauteur = 2
-  size = 2
+  #size = 0.3
 
   #Couleurs
   orangeClair = 0xFFEE5A24
@@ -998,6 +879,208 @@ def self.projectile
   ]
 
   return Modele.new(pointsProj, trianglesProj)
+end
+
+def self.hache
+
+#Taille
+size = 0.25
+sizeMancheBois = 25
+sizeMancheAcier = 2
+sizeMancheBout = 1
+
+#Couleurs
+colorBoisFonce = 0xFF955628
+colorBoisClair = 0xFFCD853F
+colorAcier = 0xFFAFAFAF
+
+#Points Manche Hache
+#Octogones classés de Bas en Haut avec Lettres
+
+#Points Octogone A
+octa1 = Point.new(0*size,0*size,0*size)
+octa2 = Point.new(-1*size,0*size,1*size)
+octa3 = Point.new(-1*size,0*size,3*size)
+octa4 = Point.new(0*size,0*size,4*size)
+octa5 = Point.new(2*size,0*size,4*size)
+octa6 = Point.new(3*size,0*size,3*size)
+octa7 = Point.new(3*size,0*size,1*size)
+octa8 = Point.new(2*size,0*size,0*size)
+octam = Point.new(1*size,0*size,2*size)
+
+#Points Octogone B
+octb1 = Point.new(0*size,-sizeMancheBois*size,0*size)
+octb2 = Point.new(-1*size,-sizeMancheBois*size,1*size)
+octb3 = Point.new(-1*size,-sizeMancheBois*size,3*size)
+octb4 = Point.new(0*size,-sizeMancheBois*size,4*size)
+octb5 = Point.new(2*size,-sizeMancheBois*size,4*size)
+octb6 = Point.new(3*size,-sizeMancheBois*size,3*size)
+octb7 = Point.new(3*size,-sizeMancheBois*size,1*size)
+octb8 = Point.new(2*size,-sizeMancheBois*size,0*size)
+octbm = Point.new(1*size,-sizeMancheBois*size,2*size)
+
+#Points Octogone C
+octc1 = Point.new(0*size,(-sizeMancheBois-sizeMancheAcier)*size,0*size)
+octc2 = Point.new(-1*size,(-sizeMancheBois-sizeMancheAcier)*size,1*size)
+octc3 = Point.new(-1*size,(-sizeMancheBois-sizeMancheAcier)*size,3*size)
+octc4 = Point.new(0*size,(-sizeMancheBois-sizeMancheAcier)*size,4*size)
+octc5 = Point.new(2*size,(-sizeMancheBois-sizeMancheAcier)*size,4*size)
+octc6 = Point.new(3*size,(-sizeMancheBois-sizeMancheAcier)*size,3*size)
+octc7 = Point.new(3*size,(-sizeMancheBois-sizeMancheAcier)*size,1*size)
+octc8 = Point.new(2*size,(-sizeMancheBois-sizeMancheAcier)*size,0*size)
+octcm = Point.new(1*size,(-sizeMancheBois-sizeMancheAcier)*size,2*size)
+
+#Points Octogone D
+octd1 = Point.new(0*size,(-sizeMancheBois-sizeMancheAcier-sizeMancheBout)*size,0*size)
+octd2 = Point.new(-1*size,(-sizeMancheBois-sizeMancheAcier-sizeMancheBout)*size,1*size)
+octd3 = Point.new(-1*size,(-sizeMancheBois-sizeMancheAcier-sizeMancheBout)*size,3*size)
+octd4 = Point.new(0*size,(-sizeMancheBois-sizeMancheAcier-sizeMancheBout)*size,4*size)
+octd5 = Point.new(2*size,(-sizeMancheBois-sizeMancheAcier-sizeMancheBout)*size,4*size)
+octd6 = Point.new(3*size,(-sizeMancheBois-sizeMancheAcier-sizeMancheBout)*size,3*size)
+octd7 = Point.new(3*size,(-sizeMancheBois-sizeMancheAcier-sizeMancheBout)*size,1*size)
+octd8 = Point.new(2*size,(-sizeMancheBois-sizeMancheAcier-sizeMancheBout)*size,0*size)
+octdm = Point.new(1*size,(-sizeMancheBois-sizeMancheAcier-sizeMancheBout)*size,2*size)
+
+#Points Lame Hache
+#Points Lame Bas - Niveau Octogone B
+plamebas1 = Point.new(0*size,(-sizeMancheBois/2)*size,10*size)
+plamebas2 = Point.new(2*size,(-sizeMancheBois/2)*size,10*size)
+
+#Points Lame Haut - Niveau Octogone C
+plamehaut1 = Point.new(0*size,(-sizeMancheBois-sizeMancheAcier)*size,12*size)
+plamehaut2 = Point.new(2*size,(-sizeMancheBois-sizeMancheAcier)*size,12*size)
+
+pointsHache = [octa1,octa2,octa3,octa4,octa5,octa6,octa7,octa8,octam,
+               octb1,octb2,octb3,octb4,octb5,octb6,octb7,octb8,octbm,
+               octc1,octc2,octc3,octc4,octc5,octc6,octc7,octc8,octcm,
+               octd1,octd2,octd3,octd4,octd5,octd6,octd7,octd8,octdm,
+               plamebas1,plamebas2,plamehaut1,plamehaut2]
+
+
+trianglesHache = [
+
+  #Manche
+  #Triangles reliant Octogone A
+  Triangle.new(octam,octa2,octa1,colorBoisClair),
+  Triangle.new(octam,octa3,octa2,colorBoisClair),
+  Triangle.new(octam,octa4,octa3,colorBoisClair),
+  Triangle.new(octam,octa5,octa4,colorBoisClair),
+  Triangle.new(octam,octa6,octa5,colorBoisClair),
+  Triangle.new(octam,octa7,octa6,colorBoisClair),
+  Triangle.new(octam,octa8,octa7,colorBoisClair),
+  Triangle.new(octam,octa1,octa8,colorBoisClair),
+
+  #Triangles reliant Octogone A et B
+  Triangle.new(octa1,octb2,octb1,colorBoisFonce),
+  Triangle.new(octa1,octa2,octb2,colorBoisFonce),
+
+  Triangle.new(octa2,octb3,octb2,colorBoisFonce),
+  Triangle.new(octa2,octa3,octb3,colorBoisFonce),
+
+  Triangle.new(octa3,octb4,octb3,colorBoisFonce),
+  Triangle.new(octa3,octa4,octb4,colorBoisFonce),
+
+  Triangle.new(octa4,octb5,octb4,colorBoisFonce),
+  Triangle.new(octa4,octa5,octb5,colorBoisFonce),
+
+  Triangle.new(octa5,octb6,octb5,colorBoisFonce),
+  Triangle.new(octa5,octa6,octb6,colorBoisFonce),
+
+  Triangle.new(octa6,octb7,octb6,colorBoisFonce),
+  Triangle.new(octa6,octa7,octb7,colorBoisFonce),
+
+  Triangle.new(octa7,octb8,octb7,colorBoisFonce),
+  Triangle.new(octa7,octa8,octb8,colorBoisFonce),
+
+  Triangle.new(octa8,octb1,octb8,colorBoisFonce),
+  Triangle.new(octa8,octa1,octb1,colorBoisFonce),
+
+  #Triangles reliant Octogone B et C
+  Triangle.new(octb1,octc2,octc1,colorAcier),
+  Triangle.new(octb1,octb2,octc2,colorAcier),
+
+  Triangle.new(octb2,octc3,octc2,colorAcier),
+  Triangle.new(octb2,octb3,octc3,colorAcier),
+
+  Triangle.new(octb3,octc4,octc3,colorAcier),
+  Triangle.new(octb3,octb4,octc4,colorAcier),
+
+  Triangle.new(octb4,octc5,octc4,colorAcier),
+  Triangle.new(octb4,octb5,octc5,colorAcier),
+
+  Triangle.new(octb5,octc6,octc5,colorAcier),
+  Triangle.new(octb5,octb6,octc6,colorAcier),
+
+  Triangle.new(octb6,octc7,octc6,colorAcier),
+  Triangle.new(octb6,octb7,octc7,colorAcier),
+
+  Triangle.new(octb7,octc8,octc7,colorAcier),
+  Triangle.new(octb7,octb8,octc8,colorAcier),
+
+  Triangle.new(octb8,octc1,octc8,colorAcier),
+  Triangle.new(octb8,octb1,octc1,colorAcier),
+
+  #Triangles reliant Octogone C et D
+  Triangle.new(octc1,octd2,octd1,colorBoisFonce),
+  Triangle.new(octc1,octc2,octd2,colorBoisFonce),
+
+  Triangle.new(octc2,octd3,octd2,colorBoisFonce),
+  Triangle.new(octc2,octc3,octd3,colorBoisFonce),
+
+  Triangle.new(octc3,octd4,octd3,colorBoisFonce),
+  Triangle.new(octc3,octc4,octd4,colorBoisFonce),
+
+  Triangle.new(octc4,octd5,octd4,colorBoisFonce),
+  Triangle.new(octc4,octc5,octd5,colorBoisFonce),
+
+  Triangle.new(octc5,octd6,octd5,colorBoisFonce),
+  Triangle.new(octc5,octc6,octd6,colorBoisFonce),
+
+  Triangle.new(octc6,octd7,octd6,colorBoisFonce),
+  Triangle.new(octc6,octa7,octd7,colorBoisFonce),
+
+  Triangle.new(octc7,octd8,octd7,colorBoisFonce),
+  Triangle.new(octc7,octc8,octd8,colorBoisFonce),
+
+  Triangle.new(octc8,octd1,octd8,colorBoisFonce),
+  Triangle.new(octc8,octc1,octd1,colorBoisFonce),
+
+  #Triangles reliant Octogone D
+  Triangle.new(octdm,octd1,octd2,colorBoisClair),
+  Triangle.new(octdm,octd2,octd3,colorBoisClair),
+  Triangle.new(octdm,octd3,octd4,colorBoisClair),
+  Triangle.new(octdm,octd4,octd5,colorBoisClair),
+  Triangle.new(octdm,octd5,octd6,colorBoisClair),
+  Triangle.new(octdm,octd6,octd7,colorBoisClair),
+  Triangle.new(octdm,octd7,octd8,colorBoisClair),
+  Triangle.new(octdm,octd8,octd1,colorBoisClair),
+
+
+  #Lame Hache
+  #Points Carrés Attache Lame Manche
+  #Carré Bas - Niveau Octogone B
+  Triangle.new(plamebas2,plamebas1,octb5,colorAcier),
+  Triangle.new(plamebas1,octb4,octb5,colorAcier),
+
+
+  #Carré Haut - Niveau Octogone C
+  Triangle.new(plamehaut2,octc5,plamehaut1,colorAcier),
+  Triangle.new(plamehaut1,octc5,octc4,colorAcier),
+
+  #Bout Lame -pas bon pd
+  Triangle.new(plamebas2,plamehaut2,plamehaut1,colorAcier),
+  Triangle.new(plamehaut1,plamebas1,plamebas2,colorAcier),
+
+  #Coté Lame 1- pas bon pd
+  Triangle.new(plamehaut1,octc4,plamebas1,colorAcier),
+  Triangle.new(octc4,octb4,plamebas1,colorAcier),
+
+  #Coté Lame 2
+  Triangle.new(octc5,plamebas2,octb5,colorAcier),
+  Triangle.new(plamehaut2,plamebas2,octc5,colorAcier)
+  ]
+
+return Modele.new(pointsHache, trianglesHache)
 end
 
 end
