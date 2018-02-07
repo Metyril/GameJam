@@ -66,7 +66,6 @@ class Fenetre < Gosu::Window
     # AUTRES
     playerInitPos = rand(0..@nb_room-1)
     @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[playerInitPos],0,0,0,2))
-<<<<<<< HEAD
     @pilules = Array.new
     @vies = Array.new
     @projectiles = Array.new
@@ -102,7 +101,7 @@ class Fenetre < Gosu::Window
           @drones << DroneAt.new(self,room)
         end
         if (x > 0.3) && (x<0.5)
-          @pilules << Pilule.new(self,room,modPilule)
+          @pilules << Pilule.new(self,room,@modPilule)
         end
         if (x > 0.5 ) && (x < 0.6)
           @vies << Vie.new(room)
@@ -113,8 +112,6 @@ class Fenetre < Gosu::Window
     #   @ennemis << Ennemi.new(@map, ennemisModele)
     # end
 
-=======
->>>>>>> 251fc5e5f15d826c4a6c91a842c11ed2396b1b26
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
 
 
