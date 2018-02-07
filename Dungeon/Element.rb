@@ -14,9 +14,9 @@ class Element
       @itBox = itbox
 
       @isDetruit = false
-      if rand
-        self.createElement
-      end
+      # if rand
+        self.createElement(@room)
+      # end
     end # Fin initialize
 
     def detruire
@@ -31,7 +31,7 @@ class Element
       return (@z / @cell_size).round
     end
 
-    def createElement
+    def createElement(room)
       @x, @z = rand(@room.width), rand(@room.height)
       @x = (@x + @room.x_pos) * @cell_size
       @z = (@z + @room.y_pos) * @cell_size
