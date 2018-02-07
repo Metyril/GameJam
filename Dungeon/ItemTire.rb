@@ -38,6 +38,7 @@ class ItemTire < Item
   def attaque
     if @vitesse <= 0
       @vitesse = 140
+      @startAnime = true
       @app.projectiles << Projectile.new(@app,@app.player.angle,@app.player.x,@app.player.y,@app.player.z,@itBox,@degats+@app.player.degats,@modeleTire,@room,@vitesseP)
     end
   end

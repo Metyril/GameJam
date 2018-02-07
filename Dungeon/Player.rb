@@ -87,6 +87,8 @@ class Player < Element
 
     if @arme.is_a? ItemPoing
       @arme.modele.draw(cam, @x - Math.sin(@angle - DEMIPI)*3, @y - 2, @z - Math.cos(@angle - DEMIPI)*3, @anime > DEMIPI ? 0 : @anime, -@angle, 0)
+    else
+      @arme.modele.draw(cam, @x - Math.sin(@angle - DEMIPI)*3, @y - 2.5, @z - Math.cos(@angle - DEMIPI)*3, @anime > DEMIPI ? 0 : -@anime, -@angle, 0)
     end
 
     if (@anime < DEMIPI)

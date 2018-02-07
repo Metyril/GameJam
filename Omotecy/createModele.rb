@@ -902,7 +902,7 @@ def self.projectile
 
   #Hauteur et Taille
   hauteur = 2
-  size = 2
+  size = 0.3
 
   #Couleurs
   orangeClair = 0xFFEE5A24
