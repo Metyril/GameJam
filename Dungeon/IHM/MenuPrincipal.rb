@@ -6,7 +6,7 @@ require_relative '../../main.rb'
 
 class MenuPrincipal < Gosu::Window
 
-    def initialize(width=1280, height=720, options={:fullscreen => true})     # options facultatif / update_interval est en ms
+    def initialize(width=1280, height=720, options={:fullscreen => false})     # options facultatif / update_interval est en ms
       super
       @cursor = Gosu::Image.new('../../media/mouse.png')
       @titre = Gosu::Image.new('../../media/Omotecy - Titre Final.png')
@@ -53,11 +53,11 @@ class MenuPrincipal < Gosu::Window
       case id
       when Gosu::MsLeft
         if @bouton.isHover(@mouse_x,@mouse_y)
-          self.close!
+          close
           Fenetre.new.show
         end
         if @exit.isHover(@mouse_x,@mouse_y)
-          self.close!
+          close
         end
         if @sound_btn.isHover(@mouse_x,@mouse_y) && @music.playing?
           @music.pause
@@ -73,4 +73,4 @@ end
 window = MenuPrincipal.new
 
 # Affichage
-window.show
+#window.show
