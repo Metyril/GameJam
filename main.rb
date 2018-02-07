@@ -30,11 +30,7 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
-<<<<<<< HEAD
-  attr_accessor :player, :ennemis, :projectiles,:modeleParicule, :particules, :map,:ramassablesArme,:ramassables,:pilules
-=======
   attr_accessor :player, :ennemis, :projectiles, :modeleParicule, :particules, :map,:ramassablesArme,:ramassables,:pilules, :modeleParicule2
->>>>>>> 5c264e11b98b73b759be9ed7fa1ac742a6ff4b68
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
 
