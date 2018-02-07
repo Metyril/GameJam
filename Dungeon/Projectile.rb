@@ -9,6 +9,7 @@ class Projectile < Element
       @app = app
       @ennemie = Array.new
       @vitesse = vitesse
+      @range = 20 + 3*@app.player.range 
       @angle = angle
       @degats = degats
       @y = -5
@@ -17,12 +18,16 @@ class Projectile < Element
     def avancer()
       @x += Math.sin(@angle)* @vitesse
       @z += Math.cos(@angle)* @vitesse
+      @range -= 1
       @app.ennemis.each do |ennemie|
           if Math.sqrt((ennemie.x - @x)**2 + (ennemie.z - @z)**2) < (@itBox + ennemie.itBox)
             ennemie.vie -= @degats
             @ennemie << ennemie
             self.detruire
           end
+      end
+      if @range < 0
+        self.detruire
       end
     end
 
