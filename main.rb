@@ -17,6 +17,7 @@ require_relative 'Dungeon/Pilule.rb'
 require_relative 'Dungeon/Drone.rb'
 require_relative 'Dungeon/Item.rb'
 require_relative 'Dungeon/Vie.rb'
+require_relative 'Dungeon/MegaPilule.rb'
 require_relative 'Dungeon/Particule.rb'
 
 require_relative 'Dungeon/Teleporteur.rb'
@@ -29,7 +30,7 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
-  attr_accessor :player, :ennemis, :projectiles, :modeleParicule, :particules, :map
+  attr_accessor :player, :ennemis, :projectiles, :modeleParicule, :particules, :map,:ramassablesArme,:ramassables,:pilules
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
 
@@ -69,6 +70,8 @@ class Fenetre < Gosu::Window
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
+    @pilules << MegaPilule.new(self,@map.rooms[@playerInitPos],0)
+    @pilules << MegaPilule.new(self,@map.rooms[@playerInitPos],1)
 
 
     @listeModeleCellules = Array.new

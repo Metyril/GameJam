@@ -5,7 +5,7 @@ require_relative './Element.rb'
 
 
 class Ennemi < Element
-  attr_accessor :vie
+  attr_accessor :vie,:room
     def initialize(room, modele, itbox=3,x=0,y=0,z=0)
         super
         @vie = 3
@@ -31,7 +31,7 @@ class Ennemi < Element
 
             @angle = Math.atan2((xP - @x), (zP - @z))
 
-            
+
         else
 
             @angle += @dirAngle

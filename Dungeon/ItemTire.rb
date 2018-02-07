@@ -4,13 +4,9 @@ require_relative 'Item.rb'
 
 class ItemTire < Item
       attr_accessor :vitesse,:degats,:attaqueVit,:startAnime,:modeleTire,:room,:vitesseP,:nom
-  def initialize(app,room,x,y,z, oui = 0)
+  def initialize(app,room,x=0,y=0,z=0)
     @room = room
-    if oui == 2
-      rang = 1
-    else
-      rang = rand(3)
-    end
+    rang = rand(3)
     case rang
       when 0
         @nom = "Pistolet"
@@ -18,7 +14,6 @@ class ItemTire < Item
         @vitesseP = 3
         @degats = 1
         @modeleTire = CreateModele::projectile
-        modele = CreateModele::pistolet
         itbox = 1
       when 1
         @nom = "Mitraillette"
@@ -26,7 +21,6 @@ class ItemTire < Item
         @vitesseP = 2
         @degats = 2
         @modeleTire = CreateModele::projectile(0.5)
-        modele = CreateModele::pistolet
         itbox = 3
       when 2
         @nom = "Bazooka"
@@ -34,12 +28,8 @@ class ItemTire < Item
         @vitesseP = 1
         @degats = 4
         @modeleTire = CreateModele::projectile(0.8)
-        modele = CreateModele::pistolet
         itbox = 3
-      when 3
-        nom = "FusilApompe"
-        @attaqueVit = 2
-        @vitesseP = 1
+
     end
     @vitesse = 0
     @app = app

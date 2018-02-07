@@ -4,7 +4,7 @@ require_relative 'Item.rb'
 
 class ItemPoing < Item
       attr_accessor :vitesse,:range,:degats,:attaqueVit,:startAnime,:nom
-  def initialize(app,room,x,y,z,oui = 0)
+  def initialize(app,room,x=0,y=0,z=0,oui = 0)
     if oui == 2
       rang = 2
     else
