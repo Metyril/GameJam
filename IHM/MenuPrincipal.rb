@@ -12,7 +12,7 @@ class MenuPrincipal < Gosu::Window
       @titre = Gosu::Image.new('../media/Omotecy - Titre Final.png')
       @bouton = Bouton.new(500,350,270,80,Gosu::Color::CYAN,"Jouer",3)
       @exit = Bouton.new(500,450,270,80,Gosu::Color::CYAN,"Quitter",2.8)
-      @music = Gosu::Song.new('../media/little_apocalypse.ogg')
+      @music = Gosu::Song.new('../media/warm_welcome_to_hell_o.ogg')
       @sound_btn = Bouton.new(1100,500,100,100,Gosu::Color::CYAN,"",2.8)
       @sound_image = Gosu::Image.new('../media/sound.png')
       @music.play(true)
