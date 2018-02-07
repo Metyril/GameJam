@@ -42,6 +42,8 @@ class Fenetre < Gosu::Window
     @nb_room = 10           # Nombre de salles
     @type_gen = 'random'    # Type de génération / 4 valeurs possibles : 'random', 'newest', 'middle', 'oldest'
 
+    @etage = 0
+
     # MODELES
     @playerModele = CreateModele::player
     @batte = CreateModele::batte
@@ -74,7 +76,7 @@ class Fenetre < Gosu::Window
 
     @listeModeleCellules = Array.new
     for i in (0..15)
-      @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), 3))
+      @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), 0))
       #@listeModeleCellules.push(CreateModele::cellule("0111"))
     end
 
