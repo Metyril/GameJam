@@ -20,6 +20,9 @@ class Bouton
     @color = new_color
   end
 
+  def getColor
+    return @color
+  end
   def draw
       @font.draw(@text,@x+@x/10+10,@y+10,3,@font_length,@font_length,Gosu::Color::BLACK)
       Gosu.draw_rect(@x, @y, @width, @height, @color, 2)
