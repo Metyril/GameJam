@@ -4,11 +4,10 @@ require 'gosu'  # Librairie graphique Gosu
 class Element
     attr_accessor :x, :y, :z, :itBox, :isDetruit
 
-    def initialize(room, map, modele,itbox=0,x=0,y=0,z=0)
+    def initialize(room, modele,itbox=0,x=0,y=0,z=0)
       @room = room
-      @map = map
       @modele = modele
-      @cell_size = @map.cell_size
+      @cell_size = @room.cell_size
       @x = x
       @y = y
       @z = z
@@ -29,10 +28,6 @@ class Element
 
     def getCelZ
       return (@z / @cell_size).round
-    end
-
-    def getCelVal
-      return @map.map[self.getCelZ][self.getCelX]
     end
 
     def createElement

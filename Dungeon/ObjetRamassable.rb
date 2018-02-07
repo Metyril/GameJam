@@ -1,5 +1,5 @@
 class ObjetRamassable < Element
-  def initialize room, map,modele,itbox=2,x=0,y=0,z=0
+  def initialize room,modele,itbox=2,x=0,y=0,z=0
     super
 
     @angle = rand 1

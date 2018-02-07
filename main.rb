@@ -34,7 +34,7 @@ class Fenetre < Gosu::Window
     @map = Map.new(@map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen)   # Map à générer
 
     @playerModele = CreateModele::player
-    @player = Player.new(@map.rooms[rand(0..@nb_room-1)], @map, @playerModele)
+    @player = Player.new(@map.rooms[rand(0..@nb_room-1)], @playerModele)
 
 
     @ennemis = Array.new
@@ -45,11 +45,11 @@ class Fenetre < Gosu::Window
     @map.rooms.each do |room|
       j = rand(2..10)
       for i in 1..j
-        @ennemis << Ennemi.new(room, @map, ennemisModele)
+        @ennemis << Ennemi.new(room, ennemisModele)
       end
       j = rand(2..10)
       for i in 1..j
-        @ramassables << ObjetRamassable.new(room, @map, modeleruby)
+        @ramassables << ObjetRamassable.new(room, modeleruby)
       end
     end
     # for i in 0..4
@@ -81,7 +81,7 @@ class Fenetre < Gosu::Window
 
 
   def update
-    self.caption = "#{Gosu.fps} FPS / x:#{@camera.position.x.round} y:#{@camera.position.y.round} z:#{@camera.position.z.round} | Px:#{@player.getCelX} Pz:#{@player.getCelZ} PVal:#{@player.getCelVal}"
+    self.caption = "#{Gosu.fps} FPS / x:#{@camera.position.x.round} y:#{@camera.position.y.round} z:#{@camera.position.z.round} | Px:#{@player.getCelX} Pz:#{@map.map[@player.getCelZ][@player.getCelX]}"
 
     frontal = 0
     lateral = 0
@@ -148,7 +148,7 @@ class Fenetre < Gosu::Window
   end
 
   def murCollision cible
-    val = cible.getCelVal
+    val = @map.map[cible.getCelZ][cible.getCelX]
     if (val & S) == 0
       @mursHitBox[0].setPos(cible.getCelX*@cell_size, cible.getCelZ*@cell_size+(@cell_size/2))
       @mursHitBox[0].collision cible

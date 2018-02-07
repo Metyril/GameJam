@@ -1,7 +1,7 @@
 class Room
 
     # Getters
-    attr_accessor :width, :height, :x_pos, :y_pos, :room
+    attr_accessor :width, :height, :x_pos, :y_pos, :cell_size, :room
 
     def initialize(map_width, map_height, cell_size)
         @width = rand(3..10)     # Largeur de la Room
