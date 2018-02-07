@@ -205,7 +205,12 @@ class Fenetre < Gosu::Window
       @drones = @teleporteur.allSet[:drones]
       @particules = @teleporteur.allSet[:particules]
 
-      @player.createElement
+      playerInitPos = rand(0..@nb_room-1)
+      room = @map.rooms[playerInitPos]
+      @player.x, @player.z = rand(room.width), rand(room.height)
+      @player.x = (@player.x + room.x_pos) * @cell_size
+      @player.z = (@player.z + room.y_pos) * @cell_size
+
       @camera = Camera.new(@player.x, @player.y,@player.z-30)
     end
 
