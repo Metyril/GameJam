@@ -10,6 +10,8 @@ require_relative 'Omotecy/createModele.rb'
 require_relative 'Omotecy/projectModele.rb'
 
 require_relative 'Dungeon/MurHitBox.rb'
+require_relative 'Dungeon/ItemPoing.rb'
+require_relative 'Dungeon/Item.rb'
 
 WIDTH = 1280
 HEIGHT = 720
@@ -17,6 +19,7 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
+  attr_accessor :player, :ennemis
   def initialize
     super WIDTH, HEIGHT, option = {fullscreen: false}
 
@@ -34,7 +37,10 @@ class Fenetre < Gosu::Window
     @map = Map.new(@map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen)   # Map à générer
 
     @playerModele = CreateModele::player
+    @batte = CreateModele::batte
+    @ruby = CreateModele::ruby
     @player = Player.new(@map, @playerModele)
+    @player.arme = ItemPoing.new(self, @map,@batte,3,0,0,0)
 
 
     @ennemis = Array.new
@@ -50,8 +56,7 @@ class Fenetre < Gosu::Window
     end
 
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
-    @batte = CreateModele::batte
-    @ruby = CreateModele::ruby
+
 
     @listeModeleCellules = Array.new
     for i in (0..15)
@@ -117,13 +122,20 @@ class Fenetre < Gosu::Window
     #################################
     #update des objets
 
+    @player.attaque if Gosu.button_down? Gosu::KB_SPACE
+
     @player.update
     self.murCollision @player
+
 
 
     @ramassables.each do |ramassable|
       ramassable.detruire if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
     end
+
+    # @ennemis.each do |ennemi|
+    #   ennemi.detruire if self.dist(@player,ennemi) < (@player.itBox + ennemi.itBox)
+    # end
 
     self.iter @ennemis
     self.iter @ramassables

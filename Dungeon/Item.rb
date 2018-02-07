@@ -3,7 +3,7 @@ require 'gosu'  # Librairie graphique Gosu
 
 class Item < Element
 
-  def initialize(map, cell_size,itbox,x,y)
+  def initialize(map,modele,itbox,x,y,z)
       super
   end
 end

@@ -2,7 +2,7 @@
 require 'gosu'  # Librairie graphique Gosu
 
 class Element
-    attr_accessor :x, :y, :z, :itBox, :isDetruit
+    attr_accessor :x, :y, :z, :itBox, :isDetruit, :modele
 
     def initialize(map,modele,itbox=0,x=0,y=0,z=0)
       @modele = modele
