@@ -1099,4 +1099,207 @@ trianglesHache = [
 return Modele.new(pointsHache, trianglesHache)
 end
 
+def self.pointInterrogation
+  c1 = Point.new(-1/2, 0/2, -1)
+  c2 = Point.new(-1/2, -2/2, -1)
+  c3 = Point.new(1/2, 0/2, -1)
+  c4 = Point.new(1/2, -2/2, -1)
+  c5 = Point.new(-1/2, -2/2, 1)
+  c6 = Point.new(-1/2, 0/2, 1)
+  c7 = Point.new(1/2, 0/2, 1)
+  c8 = Point.new(1/2, -2/2, 1)
+
+  c9 = Point.new(-1/2, -3/2, -1)
+  c10 = Point.new(-1/2, -5/2, -1)
+  c11 = Point.new(1/2, -3/2, -1)
+  c12 = Point.new(1/2, -5/2, -1)
+  c13 = Point.new(-1/2, -5/2, 1)
+  c14 = Point.new(-1/2, -3/2, 1)
+  c15 = Point.new(1/2, -3/2, 1)
+  c16 = Point.new(1/2, -5/2, 1)
+
+  c17 = Point.new(-1/2, -5/2, -1)
+  c18 = Point.new(-1/2, -9/2, -1)
+  c19 = Point.new(3/2, -5/2, -1)
+  c20 = Point.new(3/2, -9/2, -1)
+  c21 = Point.new(-1/2, -9/2, 1)
+  c22 = Point.new(-1/2, -5/2, 1)
+  c23 = Point.new(3/2, -5/2, 1)
+  c24 = Point.new(3/2, -9/2, 1)
+
+  c25 = Point.new(-5/2, -7/2, -1)
+  c26 = Point.new(-5/2, -9/2, -1)
+  c27 = Point.new(-1/2, -7/2, -1)
+  c28 = Point.new(-1/2, -9/2, -1)
+  c29 = Point.new(-5/2, -9/2, 1)
+  c30 = Point.new(-5/2, -7/2, 1)
+  c31 = Point.new(-1/2, -7/2, 1)
+  c32 = Point.new(-1/2, -9/2, 1)
+
+  c33 = Point.new(-5/2, -5/2, -1)
+  c34 = Point.new(-5/2, -7/2, -1)
+  c35 = Point.new(-3/2, -5/2, -1)
+  c36 = Point.new(-3/2, -7/2, -1)
+  c37 = Point.new(-5/2, -7/2, 1)
+  c38 = Point.new(-5/2, -5/2, 1)
+  c39 = Point.new(-3/2, -5/2, 1)
+  c40 = Point.new(-3/2, -7/2, 1)
+
+  pointsCube = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31, c32, c33, c34, c35, c36, c37, c38, c39, c40]
+
+  trianglesCube = [
+    # devant cube point
+    Triangle.new(c1, c2, c3, 0xff2ecc71),
+    Triangle.new(c3, c2, c4, 0xff2ecc71),
+    #---
+
+    # deriere cube point
+    Triangle.new(c5, c6, c7, 0xfff39c12),
+    Triangle.new(c8, c5, c7, 0xfff39c12),
+    #---
+
+    # haut cube point
+    Triangle.new(c6, c1, c7, 0xff2980b9),
+    Triangle.new(c1, c3, c7, 0xff2980b9),
+    #---
+
+    # bas cube point
+    Triangle.new(c2, c5, c8, 0xffe74c3c),
+    Triangle.new(c4, c2, c8, 0xffe74c3c),
+    #---
+
+    # droite cube point
+    Triangle.new(c4, c8, c7, 0xff8e44ad),
+    Triangle.new(c3, c4, c7, 0xff8e44ad),
+    #---
+
+    # gauche cube point
+    Triangle.new(c5, c2, c6, 0xffecf0f1),
+    Triangle.new(c2, c1, c6, 0xffecf0f1),
+    #---
+
+    # devant cube bas
+    Triangle.new(c9, c10, c11, 0xff2ecc71),
+    Triangle.new(c11, c10, c12, 0xff2ecc71),
+    #---
+
+    # deriere cube bas
+    Triangle.new(c13, c14, c15, 0xfff39c12),
+    Triangle.new(c16, c13, c15, 0xfff39c12),
+    #---
+
+    # haut cube bas
+    Triangle.new(c14, c9, c15, 0xff2980b9),
+    Triangle.new(c9, c11, c15, 0xff2980b9),
+    #---
+
+    # bas cube bas
+    Triangle.new(c10, c13, c16, 0xffe74c3c),
+    Triangle.new(c12, c10, c16, 0xffe74c3c),
+    #---
+
+    # droite cube bas
+    Triangle.new(c12, c16, c15, 0xff8e44ad),
+    Triangle.new(c11, c12, c15, 0xff8e44ad),
+    #---
+
+    # gauche cube bas
+    Triangle.new(c13, c10, c14, 0xffecf0f1),
+    Triangle.new(c10, c9, c14, 0xffecf0f1),
+    #---
+
+    # devant cube haut
+    Triangle.new(c17, c18, c19, 0xff2ecc71),
+    Triangle.new(c19, c18, c20, 0xff2ecc71),
+    #---
+
+    # deriere cube haut
+    Triangle.new(c21, c22, c23, 0xfff39c12),
+    Triangle.new(c24, c21, c23, 0xfff39c12),
+    #---
+
+    # haut cube haut
+    Triangle.new(c22, c17, c23, 0xff2980b9),
+    Triangle.new(c17, c19, c23, 0xff2980b9),
+    #---
+
+    # bas cube haut
+    Triangle.new(c18, c21, c24, 0xffe74c3c),
+    Triangle.new(c20, c18, c24, 0xffe74c3c),
+    #---
+
+    # droite cube haut
+    Triangle.new(c20, c24, c23, 0xff8e44ad),
+    Triangle.new(c19, c20, c23, 0xff8e44ad),
+    #---
+
+    # gauche cube haut
+    Triangle.new(c21, c18, c22, 0xffecf0f1),
+    Triangle.new(c18, c17, c22, 0xffecf0f1),
+    #---
+
+    # devant cube gauche
+    Triangle.new(c25, c26, c27, 0xff2ecc71),
+    Triangle.new(c27, c26, c28, 0xff2ecc71),
+    #---
+
+    # deriere cube gauche
+    Triangle.new(c29, c30, c31, 0xfff39c12),
+    Triangle.new(c32, c29, c31, 0xfff39c12),
+    #---
+
+    # haut cube gauche
+    Triangle.new(c30, c25, c31, 0xff2980b9),
+    Triangle.new(c25, c27, c31, 0xff2980b9),
+    #---
+
+    # bas cube gauche
+    Triangle.new(c26, c29, c32, 0xffe74c3c),
+    Triangle.new(c28, c26, c32, 0xffe74c3c),
+    #---
+
+    # droite cube gauche
+    Triangle.new(c28, c32, c31, 0xff8e44ad),
+    Triangle.new(c27, c28, c31, 0xff8e44ad),
+    #---
+
+    # gauche cube gauche
+    Triangle.new(c29, c26, c30, 0xffecf0f1),
+    Triangle.new(c26, c25, c30, 0xffecf0f1),
+    #---
+
+    # devant cube vertical
+    Triangle.new(c33, c34, c35, 0xff2ecc71),
+    Triangle.new(c35, c34, c36, 0xff2ecc71),
+    #---
+
+    # deriere cube vertical
+    Triangle.new(c37, c38, c39, 0xfff39c12),
+    Triangle.new(c40, c37, c39, 0xfff39c12),
+    #---
+
+    # haut cube vertical
+    Triangle.new(c38, c33, c39, 0xff2980b9),
+    Triangle.new(c33, c35, c39, 0xff2980b9),
+    #---
+
+    # bas cube vertical
+    Triangle.new(c34, c37, c40, 0xffe74c3c),
+    Triangle.new(c36, c34, c40, 0xffe74c3c),
+    #---
+
+    # droite cube vertical
+    Triangle.new(c36, c40, c39, 0xff8e44ad),
+    Triangle.new(c35, c36, c39, 0xff8e44ad),
+    #---
+
+    # gauche cube vertical
+    Triangle.new(c37, c34, c38, 0xffecf0f1),
+    Triangle.new(c34, c33, c38, 0xffecf0f1)
+    #---
+  ]
+
+  return Modele.new(pointsCube, trianglesCube)
+end
+
 end
