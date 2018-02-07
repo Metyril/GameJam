@@ -1,12 +1,13 @@
 # Dépendances Gems
 require 'gosu'  # Librairie graphique Gosu
 
-class Projectile < Element
+class Pilule < Item
     attr_accessor :app,:nom
 
-    def initialize(app,x,y,z,itbox)
+    def initialize(app,room,modele,x=0,y=0,z=0,itbox=1)
       super room,modele,itbox,x,y,z
-      case rand(4)
+      @app = app
+      case rand(7)
         when 0
           @nom = "Vitesse +"
         when 1
@@ -30,12 +31,12 @@ class Projectile < Element
       case @nom
       when "Vitesse +"
         if @app.player.vitesse < 3
-          @app.player.vitesse += 0.2
+          @app.player.vitesse += 0.5
           @app.player.ajouterItem(self)
         end
       when "Vitesse -"
-        if @app.player.vitesse > 0.4
-          @app.player.vitesse -= 0.2
+        if @app.player.vitesse > 0.5
+          @app.player.vitesse -= 0.5
           @app.player.ajouterItem(self)
         end
       when "Attaque +"
@@ -60,5 +61,6 @@ class Projectile < Element
           @app.player.vitesseAt -= 0.5
           @app.player.ajouterItem(self)
         end
+      end
     end
 end # Fin Element
