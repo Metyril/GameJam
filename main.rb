@@ -23,6 +23,7 @@ class Fenetre < Gosu::Window
     Triangle.setRefSize(WIDTH, HEIGHT)
 
     @freeCam = false
+    @drawTotal = false
 
     @map_width = 30         # Largeur de la Map
     @map_height = 30        # Hauteur de la Map
@@ -75,6 +76,7 @@ class Fenetre < Gosu::Window
       close
     elsif id == Gosu::KB_TAB
       @freeCam = !@freeCam
+      @drawTotal = !@drawTotal
     end
   end
 
@@ -171,20 +173,15 @@ class Fenetre < Gosu::Window
   end
 
   def draw
-    self.drawMapClip
-    #self.drawMapTotal
+    if @drawTotal
+      self.drawMapTotal
+    else
+      self.drawMapClip
+    end
+    
     #@playerModele.draw(@camera, @player.x, @player.y, @player.z, 0, -@player.angle, 0)
 
     @player.draw(@camera)
-
-    @ennemis.each do |ennemi|
-      #@ennemisModele.draw(@camera, ennemi.x, ennemi.y, ennemi.z, 0, 0, 0)
-      ennemi.draw(@camera)
-    end
-
-    @ramassables.each do |ramassable|
-      ramassable.draw(@camera)
-    end
 
     @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)
     @batte.draw(@camera, 0, 0, 0, 0, 0, 0)
@@ -193,18 +190,21 @@ class Fenetre < Gosu::Window
     #@map.draw
   end
 
-  def drawMapClip
+  def redraw?(x, z)
     cibleX = @camera.position.x
     cibleZ = @camera.position.z
-    size = 10 * 20
+    size = 10 * @cell_size
+    return (x >= cibleX - size && x <= cibleX + size) && (z >= cibleZ - size && z <= cibleZ + size)
+  end
 
+  def drawMapClip
     z = 0
     x = 0
 
     @map.map.each do |row|
       row.each do |cel|
         if cel != 0
-          if (x >= cibleX - size && x <= cibleX + size) && (z >= cibleZ - size && z <= cibleZ + size)
+          if redraw?(x, z)
             @listeModeleCellules[cel].draw(@camera, x, 0, z, 0, 0, 0)
           end
         end
@@ -212,6 +212,18 @@ class Fenetre < Gosu::Window
       end
       z += 20
       x = 0
+    end
+
+    @ramassables.each do |ramassable|
+      if redraw?(ramassable.x, ramassable.z)
+        ramassable.draw(@camera)
+      end
+    end
+
+    @ennemis.each do |ennemi|
+      if redraw?(ennemi.x, ennemi.z)
+        ennemi.draw(@camera)
+      end
     end
   end
 
@@ -228,6 +240,14 @@ class Fenetre < Gosu::Window
       end
       z += 20
       x = 0
+    end
+
+    @ramassables.each do |ramassable|
+      ramassable.draw(@camera)
+    end
+
+    @ennemis.each do |ennemi|
+      ennemi.draw(@camera)
     end
   end
 end
