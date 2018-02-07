@@ -5,8 +5,10 @@ require_relative './Element.rb'
 
 
 class Ennemi < Element
+  attr_accessor :vie
     def initialize(room, modele, itbox=3,x=0,y=0,z=0)
         super
+        @vie = 3
     end
 
 
