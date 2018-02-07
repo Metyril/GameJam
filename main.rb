@@ -43,7 +43,10 @@ class Fenetre < Gosu::Window
     #@player.arme = ItemPoing.new(self, @map,@batte,3,0,0,0)
 
 
-    @player = Player.new(@map.rooms[rand(0..@nb_room-1)], @playerModele)
+    @batte = CreateModele::batte
+    @ruby = CreateModele::ruby
+
+    @player = Player.new(@map.rooms[rand(0..@nb_room-1)], @playerModele, ItemPoing.new(self, @map.rooms[rand(0..@nb_room-1)],@batte,3,0,0,0))
 
 
     @ennemis = Array.new
@@ -66,8 +69,6 @@ class Fenetre < Gosu::Window
     # end
 
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
-    @batte = CreateModele::pilule
-    @ruby = CreateModele::ruby
 
     @listeModeleCellules = Array.new
     for i in (0..15)

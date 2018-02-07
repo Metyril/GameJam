@@ -4,8 +4,8 @@ require_relative 'Item.rb'
 
 class ItemPoing < Item
       attr_accessor :vitesse, :isAttaque
-  def initialize(app,map,modele,itbox,x,y,z)
-      super map , modele, itbox , x,y,z
+  def initialize(app,room,modele,itbox,x,y,z)
+      super room , modele, itbox , x,y,z
       @vitesse = 0
       @app = app
   end
