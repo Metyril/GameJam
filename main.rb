@@ -184,7 +184,8 @@ class Fenetre < Gosu::Window
 
     @ennemis.each do |ennemi|
       ennemi.detruire if 1 > ennemi.vie
-      ennemi.jebouge(@player.x, @player.z)
+      ennemi.deplacements(@player.x, @player.z)
+      self.murCollision ennemi
     end
 
     @ramassables.each do |ramassable|
