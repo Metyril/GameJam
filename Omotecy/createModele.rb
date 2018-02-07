@@ -902,36 +902,36 @@ def self.projectile
 
   #Hauteur et Taille
   hauteur = 2
-  size = 0.75
+  size = 2
 
   #Couleurs
   orangeClair = 0xFFEE5A24
   orangeFonce = 0xFFCE4D1E
 
   #Pointe Projectile
-  ppointe = Point.new(1*size,(2+hauteur)*size,7*size)
+  ppointe = Point.new(0*size,(0+hauteur)*size,7*size)
 
   #Points Octogone Avant
-  p1a = Point.new(0*size,(0+hauteur)*size,3*size)
-  p2a = Point.new(-1*size,(1+hauteur)*size,3*size)
-  p3a = Point.new(-1*size,(3+hauteur)*size,3*size)
-  p4a = Point.new(0*size,(4+hauteur)*size,3*size)
-  p5a = Point.new(2*size,(4+hauteur)*size,3*size)
-  p6a = Point.new(3*size,(3+hauteur)*size,3*size)
-  p7a = Point.new(3*size,(1+hauteur)*size,3*size)
-  p8a = Point.new(2*size,(0+hauteur)*size,3*size)
-  pmilieua = Point.new(1*size,(2+hauteur)*size,3*size)
+  p1a = Point.new(-1*size,(-2+hauteur)*size,3*size)
+  p2a = Point.new(-2*size,(-1+hauteur)*size,3*size)
+  p3a = Point.new(-2*size,(1+hauteur)*size,3*size)
+  p4a = Point.new(-1*size,(2+hauteur)*size,3*size)
+  p5a = Point.new(1*size,(2+hauteur)*size,3*size)
+  p6a = Point.new(2*size,(1+hauteur)*size,3*size)
+  p7a = Point.new(2*size,(-1+hauteur)*size,3*size)
+  p8a = Point.new(1*size,(-2+hauteur)*size,3*size)
+  pmilieua = Point.new(0*size,(0+hauteur)*size,3*size)
 
   #Points Octogone Arrière
-  p1r = Point.new(0*size,(0+hauteur)*size,-2*size)
-  p2r = Point.new(-1*size,(1+hauteur)*size,-2*size)
-  p3r = Point.new(-1*size,(3+hauteur)*size,-2*size)
-  p4r = Point.new(0*size,(4+hauteur)*size,-2*size)
-  p5r = Point.new(2*size,(4+hauteur)*size,-2*size)
-  p6r = Point.new(3*size,(3+hauteur)*size,-2*size)
-  p7r = Point.new(3*size,(1+hauteur)*size,-2*size)
-  p8r = Point.new(2*size,(0+hauteur)*size,-2*size)
-  pmilieur = Point.new(1*size,(2+hauteur)*size,0*size)
+  p1r = Point.new(-1*size,(-2+hauteur)*size,-2*size)
+  p2r = Point.new(-2*size,(-1+hauteur)*size,-2*size)
+  p3r = Point.new(-2*size,(1+hauteur)*size,-2*size)
+  p4r = Point.new(-1*size,(2+hauteur)*size,-2*size)
+  p5r = Point.new(1*size,(2+hauteur)*size,-2*size)
+  p6r = Point.new(2*size,(1+hauteur)*size,-2*size)
+  p7r = Point.new(2*size,(-1+hauteur)*size,-2*size)
+  p8r = Point.new(1*size,(-2+hauteur)*size,-2*size)
+  pmilieur = Point.new(0*size,(0+hauteur)*size,-2*size)
 
 
   pointsProj = [p1r, p2r, p3r, p4r, p5r, p6r, p7r, p8r, pmilieur,

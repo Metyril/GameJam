@@ -11,7 +11,11 @@ require_relative 'Omotecy/projectModele.rb'
 
 require_relative 'Dungeon/MurHitBox.rb'
 require_relative 'Dungeon/ItemPoing.rb'
+require_relative 'Dungeon/ItemTire.rb'
+require_relative 'Dungeon/Projectile.rb'
 require_relative 'Dungeon/Item.rb'
+
+require_relative 'Dungeon/IHM/Bouton.rb'
 
 WIDTH = 1280
 HEIGHT = 720
@@ -19,7 +23,7 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
-  attr_accessor :player, :ennemis
+  attr_accessor :player, :ennemis, :projectiles
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
 
@@ -32,7 +36,7 @@ class Fenetre < Gosu::Window
     @map_height = 50        # Hauteur de la Map
     @cell_size = 20         # Taille d'une cellule
     @wall_size = 5          # Largeur d'un mur
-    @nb_room = 10            # Nombre de salles
+    @nb_room = 10           # Nombre de salles
     @type_gen = 'random'    # Type de génération / 4 valeurs possibles : 'random', 'newest', 'middle', 'oldest'
 
     @map = Map.new(@map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen)   # Map à générer
@@ -47,9 +51,9 @@ class Fenetre < Gosu::Window
     @ruby = CreateModele::ruby
 
     playerInitPos = rand(0..@nb_room-1)
-    @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[playerInitPos],@batte,3,0,0,0))
+    @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemTire.new(self, @map.rooms[playerInitPos],0,0,0,"Pistolet"))
 
-
+    @projectiles = Array.new
     @ramassablesArme = Array.new
     @ennemis = Array.new
     ennemisModele = CreateModele::player(true)
@@ -68,7 +72,7 @@ class Fenetre < Gosu::Window
         @ramassables << ObjetRamassable.new(room, modeleruby)
       end
     end
-    @ramassablesArme << ItemPoing.new(self,@map.rooms[rand(0..@nb_room-1)],@batte,0,0,0,"Tronconeuse")
+    @ramassablesArme << ItemPoing.new(self,@map.rooms[rand(0..@nb_room-1)],0,0,0,"Tronconeuse")
     # for i in 0..4
     #   @ennemis << Ennemi.new(@map, ennemisModele)
     # end
@@ -83,14 +87,41 @@ class Fenetre < Gosu::Window
 
     #               SUD                 NORD                EST                           OUEST
     @mursHitBox = [MurHitBox.new("S"), MurHitBox.new("N"), MurHitBox.new("E"), MurHitBox.new("W")]
+
+    #MENU pause
+    @pause = false
+    @music = Gosu::Song.new('../../media/little_apocalypse.ogg')
+    @cursor = Gosu::Image.new('../../media/mouse.png')
+    @titre = Gosu::Image.new('../../media/Omotecy - Titre Final.png')
+    @bouton = Bouton.new(500,350,270,80,Gosu::Color::CYAN,"Jouer",3)
+    @exit = Bouton.new(500,450,270,80,Gosu::Color::CYAN,"Quitter",2.8)
+    @sound_btn = Bouton.new(1100,500,100,100,Gosu::Color::CYAN,"",2.8)
+    @sound_image = Gosu::Image.new('../../media/sound.png')
   end
 
   def button_down(id)
     if id == Gosu::KbEscape
-      close
+      @pause = true
     elsif id == Gosu::KB_TAB
       @freeCam = !@freeCam
       @drawTotal = !@drawTotal
+    end
+
+    #MENU PAUSE
+    if id == Gosu::MsLeft
+      @mouse_x = mouse_x.to_i+30
+      @mouse_y = mouse_y.to_i+10
+      if @bouton.isHover(@mouse_x,@mouse_y)
+        @pause = false
+      end
+      if @exit.isHover(@mouse_x,@mouse_y)
+        close
+      end
+      if @sound_btn.isHover(@mouse_x,@mouse_y) && @music.playing?
+        @music.pause
+      elsif @sound_btn.isHover(@mouse_x,@mouse_y) && !@music.playing?
+        @music.play(true)
+      end
     end
   end
 
@@ -144,6 +175,11 @@ class Fenetre < Gosu::Window
 
     @player.update
     self.murCollision @player
+    @projectiles.each do |projectile|
+      projectile.avancer
+      projectile.detruire if self.murCollision projectile
+    end
+
 
     @ennemis.each do |ennemi|
       ennemi.detruire if 1 > ennemi.vie
@@ -159,11 +195,10 @@ class Fenetre < Gosu::Window
         ramassable.detruire
       end
     end
-
     # @ennemis.each do |ennemi|
     #   ennemi.detruire if self.dist(@player,ennemi) < (@player.itBox + ennemi.itBox)
     # end
-
+    self.iter @projectiles
     self.iter @ennemis
     self.iter @ramassables
     self.iter @ramassablesArme
@@ -182,25 +217,32 @@ class Fenetre < Gosu::Window
 
   def murCollision cible
     val = @map.map[cible.getCelZ][cible.getCelX]
+    hit1 = false
+    hit2 = false
+    hit3 = false
+    hit4 = false
+
     if (val & S) == 0
       @mursHitBox[0].setPos(cible.getCelX*@cell_size, cible.getCelZ*@cell_size+(@cell_size/2))
-      @mursHitBox[0].collision cible
+      hit1 = @mursHitBox[0].collision cible
     end
 
     if (val & N) == 0
       @mursHitBox[1].setPos(cible.getCelX*@cell_size, cible.getCelZ*@cell_size-(@cell_size/2))
-      @mursHitBox[1].collision cible
+      hit2 = @mursHitBox[1].collision cible
     end
 
     if (val & E) == 0
       @mursHitBox[2].setPos(cible.getCelX*@cell_size+(@cell_size/2), cible.getCelZ*@cell_size)
-      @mursHitBox[2].collision cible
+      hit3 = @mursHitBox[2].collision cible
     end
 
     if (val & W) == 0
       @mursHitBox[3].setPos(cible.getCelX*@cell_size-(@cell_size/2), cible.getCelZ*@cell_size)
-      @mursHitBox[3].collision cible
+      hit4 = @mursHitBox[3].collision cible
     end
+
+    return hit1 || hit2 || hit3 || hit4
   end
 
   def draw
@@ -219,6 +261,16 @@ class Fenetre < Gosu::Window
     #@ruby.draw(@camera, @mursHitBox[3].x, 0, @mursHitBox[1].z, 0, 0, 0)
     Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
     #@map.draw
+
+    #MENU PAUSE
+    if @pause
+      @bouton.draw
+      @exit.draw
+      @sound_btn.draw
+      @titre.draw 50, 100, 2
+      @cursor.draw self.mouse_x, self.mouse_y, 4
+      @sound_image.draw 1110, 510, 2
+    end
   end
 
   def redraw?(x, z)
@@ -255,6 +307,11 @@ class Fenetre < Gosu::Window
         ramassable.draw(@camera)
       end
     end
+    @projectiles.each do |ramassable|
+      if redraw?(ramassable.x, ramassable.z)
+        ramassable.draw(@camera)
+      end
+    end
 
     @ennemis.each do |ennemi|
       if redraw?(ennemi.x, ennemi.z)
@@ -283,6 +340,14 @@ class Fenetre < Gosu::Window
     end
 
     @ennemis.each do |ennemi|
+      ennemi.draw(@camera)
+    end
+
+    @projectiles.each do |ennemi|
+      ennemi.draw(@camera)
+    end
+
+    @ramassablesArme.each do |ennemi|
       ennemi.draw(@camera)
     end
   end
