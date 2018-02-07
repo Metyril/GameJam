@@ -3,9 +3,10 @@ require 'gosu'  # Librairie graphique Gosu
 require_relative 'Item.rb'
 
 class ItemTire < Item
-      attr_accessor :vitesse,:degats,:attaqueVit,:startAnime,:modeleTire,:room,:vitesseP,:nom
+      attr_accessor :vitesse,:degats,:attaqueVit,:startAnime,:modeleTire,:room,:vitesseP,:nom,:vraiMod
   def initialize(app,room,x=0,y=0,z=0)
     @room = room
+
     rang = rand(3)
     case rang
       when 0
@@ -14,6 +15,7 @@ class ItemTire < Item
         @vitesseP = 3
         @degats = 1
         @modeleTire = CreateModele::projectile
+        @vraiMod  = CreateModele::pistolet
         itbox = 1
       when 1
         @nom = "Mitraillette"
@@ -21,6 +23,7 @@ class ItemTire < Item
         @vitesseP = 2
         @degats = 2
         @modeleTire = CreateModele::projectile(0.5)
+        @vraiMod  = CreateModele::pistolet
         itbox = 3
       when 2
         @nom = "Bazooka"
@@ -28,6 +31,7 @@ class ItemTire < Item
         @vitesseP = 1
         @degats = 4
         @modeleTire = CreateModele::projectile(0.8)
+        @vraiMod  = CreateModele::pistolet
         itbox = 3
 
     end
@@ -35,7 +39,7 @@ class ItemTire < Item
     @app = app
     @startAnime = false
     itbox = 1
-    super room , modele, itbox , x,y,z
+    super room ,CreateModele::pointInterrogation, itbox , x,y,z
   end
 
   def attaque
@@ -44,6 +48,10 @@ class ItemTire < Item
       @startAnime = true
       @app.projectiles << Projectile.new(@app,@app.player.angle,@app.player.x,@app.player.y,@app.player.z,@itBox,@degats+@app.player.degats,@modeleTire,@room,@vitesseP)
     end
+  end
+
+  def equiper
+    @modele = @vraiMod
   end
 
   def update

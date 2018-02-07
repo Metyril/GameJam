@@ -3,8 +3,9 @@ require 'gosu'  # Librairie graphique Gosu
 require_relative 'Item.rb'
 
 class ItemPoing < Item
-      attr_accessor :vitesse,:range,:degats,:attaqueVit,:startAnime,:nom
+      attr_accessor :vitesse,:range,:degats,:attaqueVit,:startAnime,:nom,:vraiMod
   def initialize(app,room,x=0,y=0,z=0,oui = 0)
+    modele = CreateModele::pointInterrogation
     if oui == 2
       rang = 2
     else
@@ -16,24 +17,24 @@ class ItemPoing < Item
       @range = 8
       @attaqueVit = 2
       @degats = 2
-      modele = CreateModele::batte
+      @vraiMod = CreateModele::batte
       itbox = 3
     when 1
       @nom = "Hache"
       @range = 10
       @attaqueVit = 1
       @degats = 4
-      modele = CreateModele::hache
+      @vraiMod = CreateModele::hache
       itbox = 5
     when 2
       @nom = "Main"
       @range = 3
       @attaqueVit = 4
       @degats = 1
-      modele = CreateModele::cube
+      modele =  CreateModele::cube
       itbox = 3
     end
-      @vitesse = 0
+      @vitesse = 0qz 
       @app = app
       @startAnime = false
 
@@ -66,6 +67,10 @@ class ItemPoing < Item
         end
 
       end
+  end
+
+  def equiper
+    @modele = @vraiMod
   end
 
   def update
