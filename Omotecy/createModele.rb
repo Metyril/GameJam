@@ -777,4 +777,126 @@ class CreateModele
   return Modele.new(pointsPilule, trianglesPilule)
 end
 
+def self.croix
+
+  #Hauteur et Taille
+  hauteur = 2
+  size = 1
+
+  #Couleurs
+  vertClair = 0xFF00AD3A
+  vertFonce = 0xFF01842D
+  vertFonce2 = 0xFF009432
+
+  #Points Croix Avant
+  p1a = Point.new(0*size,(0+hauteur)*size,0*size)
+  p2a = Point.new(0*size,(2+hauteur)*size,0*size)
+  p3a = Point.new(-2*size,(2+hauteur)*size,0*size)
+  p4a = Point.new(-2*size,(3+hauteur)*size,0*size)
+  p5a = Point.new(0*size,(3+hauteur)*size,0*size)
+  p6a = Point.new(0*size,(5+hauteur)*size,0*size)
+  p7a = Point.new(1*size,(5+hauteur)*size,0*size)
+  p8a = Point.new(1*size,(3+hauteur)*size,0*size)
+  p9a = Point.new(3*size,(3+hauteur)*size,0*size)
+  p10a = Point.new(3*size,(2+hauteur)*size,0*size)
+  p11a = Point.new(1*size,(2+hauteur)*size,0*size)
+  p12a = Point.new(1*size,(0+hauteur)*size,0*size)
+
+  #Points Croix Arrière
+  p1r = Point.new(0*size,(0+hauteur)*size,1*size)
+  p2r = Point.new(0*size,(2+hauteur)*size,1*size)
+  p3r = Point.new(-2*size,(2+hauteur)*size,1*size)
+  p4r = Point.new(-2*size,(3+hauteur)*size,1*size)
+  p5r = Point.new(0*size,(3+hauteur)*size,1*size)
+  p6r = Point.new(0*size,(5+hauteur)*size,1*size)
+  p7r = Point.new(1*size,(5+hauteur)*size,1*size)
+  p8r = Point.new(1*size,(3+hauteur)*size,1*size)
+  p9r = Point.new(3*size,(3+hauteur)*size,1*size)
+  p10r = Point.new(3*size,(2+hauteur)*size,1*size)
+  p11r = Point.new(1*size,(2+hauteur)*size,1*size)
+  p12r = Point.new(1*size,(0+hauteur)*size,1*size)
+
+  pointsCroix = [p1a, p2a, p3a, p4a, p5a, p6a, p7a, p8a, p9a, p10a, p11a, p12a,
+                 p1r, p2r, p3r, p4r, p5r, p6r, p7r, p8r, p9r, p10r, p11r, p12r]
+
+  trianglesCroix = [
+
+    #Triangles Cotés Croix Avant
+    Triangle.new(p1a,p11a,p2a,vertClair),
+    Triangle.new(p1a,p12a,p11a,vertClair),
+
+    Triangle.new(p3a,p5a,p4a,vertClair),
+    Triangle.new(p3a,p2a,p5a,vertClair),
+
+    Triangle.new(p5a,p7a,p6a,vertClair),
+    Triangle.new(p5a,p8a,p7a,vertClair),
+
+    Triangle.new(p11a,p9a,p8a,vertClair),
+    Triangle.new(p11a,p10a,p9a,vertClair),
+
+    #Triangles Milieu Croix Avant
+    Triangle.new(p2a,p8a,p5a,vertClair),
+    Triangle.new(p2a,p11a,p8a,vertClair),
+
+    #Triangles Cotés Croix Arrière
+    Triangle.new(p1r,p2r,p11r,vertClair),
+    Triangle.new(p1r,p11r,p12r,vertClair),
+
+    Triangle.new(p3r,p4r,p5r,vertClair),
+    Triangle.new(p3r,p5r,p2r,vertClair),
+
+    Triangle.new(p5r,p6r,p7r,vertClair),
+    Triangle.new(p5r,p7r,p8r,vertClair),
+
+    Triangle.new(p11r,p8r,p9r,vertClair),
+    Triangle.new(p11r,p9r,p10r,vertClair),
+
+    #Triangles Milieu Croix Arrière
+    Triangle.new(p2r,p5r,p8r,vertClair),
+    Triangle.new(p2r,p8r,p11r,vertClair),
+
+    #Triangles reliant les Deux Croix
+    #Face 1
+    Triangle.new(p1a,p2r,p1r,vertFonce),
+    Triangle.new(p1a,p2a,p2r,vertFonce),
+    #Face 2
+    Triangle.new(p2a,p3r,p2r,vertFonce2),
+    Triangle.new(p2a,p3a,p3r,vertFonce2),
+    #Face 3
+    Triangle.new(p3a,p4r,p3r,vertFonce),
+    Triangle.new(p3a,p4a,p4r,vertFonce),
+    #Face 4
+    Triangle.new(p4a,p5r,p4r,vertFonce2),
+    Triangle.new(p4a,p5a,p5r,vertFonce2),
+    #Face 5
+    Triangle.new(p5a,p6r,p5r,vertFonce),
+    Triangle.new(p5a,p6a,p6r,vertFonce),
+    #Face 6
+    Triangle.new(p6a,p7r,p6r,vertFonce2),
+    Triangle.new(p6a,p7a,p7r,vertFonce2),
+    #Face 7
+    Triangle.new(p7a,p8r,p7r,vertFonce),
+    Triangle.new(p7a,p8a,p8r,vertFonce),
+    #Face 8
+    Triangle.new(p8a,p9r,p8r,vertFonce2),
+    Triangle.new(p8a,p9a,p9r,vertFonce2),
+    #Face 9
+    Triangle.new(p9a,p10r,p9r,vertFonce),
+    Triangle.new(p9a,p10a,p10r,vertFonce),
+    #Face 10
+    Triangle.new(p10a,p11r,p10r,vertFonce2),
+    Triangle.new(p10a,p11a,p11r,vertFonce2),
+    #Face 11
+    Triangle.new(p11a,p12r,p11r,vertFonce),
+    Triangle.new(p11a,p12a,p12r,vertFonce),
+    #Face 12
+    Triangle.new(p12a,p1r,p12r,vertFonce2),
+    Triangle.new(p12a,p1a,p1r,vertFonce2),
+
+    ]
+
+  return Modele.new(pointsCroix, trianglesCroix)
+end
+
+
 end
