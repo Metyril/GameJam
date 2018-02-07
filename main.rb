@@ -50,6 +50,7 @@ class Fenetre < Gosu::Window
     @ennemisModele = CreateModele::player(true)
     @modPilule = CreateModele::pilule
     @modeleParicule = CreateModele::sim
+    @modeleParicule2 = CreateModele::sim 1
 
     # TELEPORTEUR
     @playerInitPos = rand(0..@nb_room-1)
@@ -76,7 +77,7 @@ class Fenetre < Gosu::Window
 
     @listeModeleCellules = Array.new
     for i in (0..15)
-      @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), 0))
+      @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), 3))
       #@listeModeleCellules.push(CreateModele::cellule("0111"))
     end
 
@@ -104,7 +105,7 @@ class Fenetre < Gosu::Window
       @pause = true
     elsif id == Gosu::KB_TAB
       @freeCam = !@freeCam
-      @drawTotal = !@drawTotal
+      #@drawTotal = !@drawTotal
     end
 
     #MENU PAUSE

@@ -12,6 +12,7 @@ class Ennemi < Element
         @angle = 0
         @dirAngle = 0
         @vitesse = rand(0.5..1.2)
+        @velRecul = 1
     end
 
 
@@ -39,8 +40,16 @@ class Ennemi < Element
             @dirAngle = rand(-0.4..0.4) if rand(5) > 3
         end
 
-        @x += Math.sin(@angle) * (0.3 * @vitesse)
-        @z += Math.cos(@angle) * (0.3 * @vitesse)
+        @x += Math.sin(@angle) * (0.3 * @vitesse) * @velRecul
+        @z += Math.cos(@angle) * (0.3 * @vitesse) * @velRecul
+    end
+
+    def recul
+      @velRecul = -1
+    end
+
+    def update
+      @velRecul += 0.04 if @velRecul < 1
     end
 
     def draw camera
