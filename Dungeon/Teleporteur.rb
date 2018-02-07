@@ -11,9 +11,9 @@ class Teleporteur < Element
 
     def setAll fenetre, map_width, map_height, cell_size, wall_size, nb_room, type_gen, playerInitPos, batte, modeleRuby, ennemisModele, modeleTP, modPilule
         map = Map.new(map_width, map_height, cell_size, wall_size, nb_room, type_gen)   # Map à générer
-    
+
         # playerInitPos = rand(0..nb_room-1)
-    
+
         projectiles = Array.new
         ramassablesArme = Array.new
         ennemis = Array.new
@@ -48,8 +48,10 @@ class Teleporteur < Element
           end
           j = rand(2..4)
           for i in 1..j
-            if rand < 0.1
-              ramassablesArme << ItemPoing.new(fenetre,map.rooms[rand(0..nb_room-1)],0,0,0)
+            if rand < 0.5
+              ramassablesArme << ItemPoing.new(fenetre,map.rooms[rand(0..nb_room-1)])
+            else rand> 0.5
+              ramassablesArme << ItemTire.new(fenetre,map.rooms[rand(0..nb_room-1)])
             end
           end
           j = rand(2..4)
