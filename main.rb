@@ -10,6 +10,8 @@ require_relative 'Omotecy/createModele.rb'
 require_relative 'Omotecy/projectModele.rb'
 
 require_relative 'Dungeon/MurHitBox.rb'
+require_relative 'Dungeon/ItemPoing.rb'
+require_relative 'Dungeon/Item.rb'
 
 WIDTH = 1280
 HEIGHT = 720
@@ -17,12 +19,14 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
+  attr_accessor :player, :ennemis
   def initialize
     super WIDTH, HEIGHT, option = {fullscreen: false}
 
     Triangle.setRefSize(WIDTH, HEIGHT)
 
     @freeCam = false
+    @drawTotal = false
 
     @map_width = 30         # Largeur de la Map
     @map_height = 30        # Hauteur de la Map
@@ -34,6 +38,11 @@ class Fenetre < Gosu::Window
     @map = Map.new(@map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen)   # Map à générer
 
     @playerModele = CreateModele::player
+
+    #@player = Player.new(@map, @playerModele)
+    #@player.arme = ItemPoing.new(self, @map,@batte,3,0,0,0)
+
+
     @player = Player.new(@map.rooms[rand(0..@nb_room-1)], @playerModele)
 
 
@@ -41,7 +50,7 @@ class Fenetre < Gosu::Window
     ennemisModele = CreateModele::player(true)
     @ramassables = Array.new
     modeleruby = CreateModele::ruby
-    
+
     @map.rooms.each do |room|
       j = rand(2..10)
       for i in 1..j
@@ -75,6 +84,7 @@ class Fenetre < Gosu::Window
       close
     elsif id == Gosu::KB_TAB
       @freeCam = !@freeCam
+      @drawTotal = !@drawTotal
     end
   end
 
@@ -124,13 +134,20 @@ class Fenetre < Gosu::Window
     #################################
     #update des objets
 
+    @player.attaque if Gosu.button_down? Gosu::KB_SPACE
+
     @player.update
     self.murCollision @player
+
 
 
     @ramassables.each do |ramassable|
       ramassable.detruire if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
     end
+
+    # @ennemis.each do |ennemi|
+    #   ennemi.detruire if self.dist(@player,ennemi) < (@player.itBox + ennemi.itBox)
+    # end
 
     self.iter @ennemis
     self.iter @ramassables
@@ -171,20 +188,15 @@ class Fenetre < Gosu::Window
   end
 
   def draw
-    self.drawMapClip
-    #self.drawMapTotal
+    if @drawTotal
+      self.drawMapTotal
+    else
+      self.drawMapClip
+    end
+
     #@playerModele.draw(@camera, @player.x, @player.y, @player.z, 0, -@player.angle, 0)
 
     @player.draw(@camera)
-
-    @ennemis.each do |ennemi|
-      #@ennemisModele.draw(@camera, ennemi.x, ennemi.y, ennemi.z, 0, 0, 0)
-      ennemi.draw(@camera)
-    end
-
-    @ramassables.each do |ramassable|
-      ramassable.draw(@camera)
-    end
 
     @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)
     @batte.draw(@camera, 0, 0, 0, 0, 0, 0)
@@ -193,18 +205,21 @@ class Fenetre < Gosu::Window
     #@map.draw
   end
 
-  def drawMapClip
+  def redraw?(x, z)
     cibleX = @camera.position.x
     cibleZ = @camera.position.z
-    size = 10 * 20
+    size = 10 * @cell_size
+    return (x >= cibleX - size && x <= cibleX + size) && (z >= cibleZ - size && z <= cibleZ + size)
+  end
 
+  def drawMapClip
     z = 0
     x = 0
 
     @map.map.each do |row|
       row.each do |cel|
         if cel != 0
-          if (x >= cibleX - size && x <= cibleX + size) && (z >= cibleZ - size && z <= cibleZ + size)
+          if redraw?(x, z)
             @listeModeleCellules[cel].draw(@camera, x, 0, z, 0, 0, 0)
           end
         end
@@ -212,6 +227,18 @@ class Fenetre < Gosu::Window
       end
       z += 20
       x = 0
+    end
+
+    @ramassables.each do |ramassable|
+      if redraw?(ramassable.x, ramassable.z)
+        ramassable.draw(@camera)
+      end
+    end
+
+    @ennemis.each do |ennemi|
+      if redraw?(ennemi.x, ennemi.z)
+        ennemi.draw(@camera)
+      end
     end
   end
 
@@ -228,6 +255,14 @@ class Fenetre < Gosu::Window
       end
       z += 20
       x = 0
+    end
+
+    @ramassables.each do |ramassable|
+      ramassable.draw(@camera)
+    end
+
+    @ennemis.each do |ennemi|
+      ennemi.draw(@camera)
     end
   end
 end
