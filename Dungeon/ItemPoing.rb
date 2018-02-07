@@ -34,7 +34,7 @@ class ItemPoing < Item
       modele =  CreateModele::cube
       itbox = 3
     end
-      @vitesse = 0qz 
+      @vitesse = 0
       @app = app
       @startAnime = false
 
