@@ -4,8 +4,8 @@ require_relative './Element.rb'
 
 class Player < ElementRoom
       attr_accessor :vie,:items , :puissance,:arme,:angle,:vitesse, :angle
-    def initialize(map, modele, itbox=1, x=0, y=0, z=0, vie = 3, puissance =1)
-        super map, modele, itbox, x, y, z
+    def initialize(room, modele, itbox=1, x=0, y=0, z=0, vie = 3, puissance =1)
+        super room, modele, itbox, x, y, z
         @angle = 0
         @vie = vie
 

@@ -83,7 +83,6 @@ class Map
     end # Fin createMap
 
 
-    # Source : https://gist.github.com/jamis/760749
     def createMaze  # Méthode pour générer le Maze contenu dans la Map
         # Début du Maze
         x, y = rand(@width), rand(@height)
@@ -130,33 +129,6 @@ class Map
             cells.delete_at(index) if index
         end
     end # Fin createMaze
-
-
-    def lol
-        @rooms.each do |room|
-            x = room.x_pos + rand(0..room.width-1)
-            y = room.y_pos + rand(0..room.height-1)
-
-            while @map[y][x] < 15
-                x = room.x_pos + rand(0..room.width-1)
-                y = room.y_pos + rand(0..room.height-1)
-            end
-
-            if @map[y][x-1] < 15
-                @map[y][x] |= W
-                @map[y][x-1] |= E
-            elsif @map[y][x+1] < 15
-                @map[y][x] |= E
-                @map[y][x+1] |= W
-            elsif @map[y-1][x] < 15
-                @map[y][x] |= N
-                @map[y-1][x] |= S
-            elsif @map[y+1][x] < 15
-                @map[y][x] |= S
-                @map[y+1][x] |= N
-            end
-        end
-    end # Fin openRoom
 
 
     def openRoom
@@ -255,31 +227,5 @@ class Map
             x = 0
         end
     end # Fin draw
-
-
-    def showMap
-        @map.each do |row|
-            row.each do |cell|
-                print cell
-                print "\t"
-            end
-            puts
-        end
-    end # Fin showMap
-
-
-    def showRooms
-        @rooms.each do |r|
-            r.room.each do |row|
-                row.each do |cell|
-                    print cell
-                    print "\t"
-                end
-                puts
-            end
-            puts
-            puts
-        end
-    end # Fin showRooms
 
 end # Fin Map

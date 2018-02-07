@@ -5,7 +5,7 @@ require_relative './Element.rb'
 
 
 class Ennemi < Element
-    def initialize(map, modele, itbox=3,x=0,y=0,z=0)
+    def initialize(room, modele, itbox=3,x=0,y=0,z=0)
         super
     end
 

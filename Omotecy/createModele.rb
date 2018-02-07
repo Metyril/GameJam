@@ -651,124 +651,127 @@ class CreateModele
 
   def self.pilule
 
-  #Hauteur
+  #Hauteur et Taille
   hauteur = 2
+  size = 0.75
 
   #Couleurs
-  rouge = 0xFFEA2027
-  cyan = 0xFF12CBC4
+  rougeClair = 0xFFEA2027
+  rougeFonce = 0xFFCE1A21
+  cyanClair = 0xFF12CBC4
+  cyanFonce = 0xFF11AAA5
+
 
   #Points Gros Octogone Rouge
-  p1r = Point.new(0,0+hauteur,0)
-  p2r = Point.new(-1,1+hauteur,0)
-  p3r = Point.new(-1,3+hauteur,0)
-  p4r = Point.new(0,4+hauteur,0)
-  p5r = Point.new(2,4+hauteur,0)
-  p6r = Point.new(3,3+hauteur,0)
-  p7r = Point.new(3,1+hauteur,0)
-  p8r = Point.new(2,0+hauteur,0)
+  p1r = Point.new(0*size,(0+hauteur)*size,0*size)
+  p2r = Point.new(-1*size,(1+hauteur)*size,0*size)
+  p3r = Point.new(-1*size,(3+hauteur)*size,0*size)
+  p4r = Point.new(0*size,(4+hauteur)*size,0*size)
+  p5r = Point.new(2*size,(4+hauteur)*size,0*size)
+  p6r = Point.new(3*size,(3+hauteur)*size,0*size)
+  p7r = Point.new(3*size,(1+hauteur)*size,0*size)
+  p8r = Point.new(2*size,(0+hauteur)*size,0*size)
+  pmilieur = Point.new(1*size,(2+hauteur)*size,-0.75*size)
 
   #Points Gros Octogone Milieu
-  p1m = Point.new(0,0+hauteur,4)
-  p2m = Point.new(-1,1+hauteur,4)
-  p3m = Point.new(-1,3+hauteur,4)
-  p4m = Point.new(0,4+hauteur,4)
-  p5m = Point.new(2,4+hauteur,4)
-  p6m = Point.new(3,3+hauteur,4)
-  p7m = Point.new(3,1+hauteur,4)
-  p8m = Point.new(2,0+hauteur,4)
+  p1m = Point.new(0*size,(0+hauteur)*size,4*size)
+  p2m = Point.new(-1*size,(1+hauteur)*size,4*size)
+  p3m = Point.new(-1*size,(3+hauteur)*size,4*size)
+  p4m = Point.new(0*size,(4+hauteur)*size,4*size)
+  p5m = Point.new(2*size,(4+hauteur)*size,4*size)
+  p6m = Point.new(3*size,(3+hauteur)*size,4*size)
+  p7m = Point.new(3*size,(1+hauteur)*size,4*size)
+  p8m = Point.new(2*size,(0+hauteur)*size,4*size)
+  pmilieum = Point.new(1*size,(2+hauteur)*size,4*size)
 
   #Points Gros Octogone Cyan
-  p1c = Point.new(0,0+hauteur,8)
-  p2c = Point.new(-1,1+hauteur,8)
-  p3c = Point.new(-1,3+hauteur,8)
-  p4c = Point.new(0,4+hauteur,8)
-  p5c = Point.new(2,4+hauteur,8)
-  p6c = Point.new(3,3+hauteur,8)
-  p7c = Point.new(3,1+hauteur,8)
-  p8c = Point.new(2,0+hauteur,8)
+  p1c = Point.new(0*size,(0+hauteur)*size,8*size)
+  p2c = Point.new(-1*size,(1+hauteur)*size,8*size)
+  p3c = Point.new(-1*size,(3+hauteur)*size,8*size)
+  p4c = Point.new(0*size,(4+hauteur)*size,8*size)
+  p5c = Point.new(2*size,(4+hauteur)*size,8*size)
+  p6c = Point.new(3*size,(3+hauteur)*size,8*size)
+  p7c = Point.new(3*size,(1+hauteur)*size,8*size)
+  p8c = Point.new(2*size,(0+hauteur)*size,8*size)
+  pmilieuc = Point.new(1*size,(2+hauteur)*size,8.75*size)
 
-  pointsPilule = [p1r, p2r, p3r, p4r, p5r, p6r, p7r,
-                  p1m, p2m, p3m, p4m, p5m, p6m, p7m,
-                  p1c, p2c, p3c, p4r, p5c, p6c, p7c]
+  pointsPilule = [p1r, p2r, p3r, p4r, p5r, p6r, p7r, p8r, pmilieur,
+                  p1m, p2m, p3m, p4m, p5m, p6m, p7m, p8m, pmilieum,
+                  p1c, p2c, p3c, p4c, p5c, p6c, p7c, p8c, pmilieuc]
 
   trianglesPilule = [
 
   #Triangles Gros Octogone Rouge
-  Triangle.new(p1r,p2r,p3r,rouge),
-  Triangle.new(p1r,p3r,p4r,rouge),
-  Triangle.new(p1r,p4r,p5r,rouge),
-  Triangle.new(p1r,p5r,p6r,rouge),
-  Triangle.new(p1r,p6r,p7r,rouge),
-  Triangle.new(p1r,p7r,p8r,rouge),
-
-  #Triangles Gros Octogone Milieu
-  Triangle.new(p1m,p2m,p3m,rouge),
-  Triangle.new(p1m,p3m,p4m,rouge),
-  Triangle.new(p1m,p4m,p5m,rouge),
-  Triangle.new(p1m,p5m,p6m,rouge),
-  Triangle.new(p1m,p6m,p7m,rouge),
-  Triangle.new(p1m,p7m,p8m,rouge),
+  Triangle.new(pmilieur,p2r,p1r,rougeClair),
+  Triangle.new(pmilieur,p3r,p2r,rougeFonce),
+  Triangle.new(pmilieur,p4r,p3r,rougeClair),
+  Triangle.new(pmilieur,p5r,p4r,rougeFonce),
+  Triangle.new(pmilieur,p6r,p5r,rougeClair),
+  Triangle.new(pmilieur,p7r,p6r,rougeFonce),
+  Triangle.new(pmilieur,p8r,p7r,rougeClair),
+  Triangle.new(pmilieur,p1r,p8r,rougeFonce),
 
   #Triangles Gros Octogone Cyan
-  Triangle.new(p1c,p2c,p3c,cyan),
-  Triangle.new(p1c,p3c,p4c,cyan),
-  Triangle.new(p1c,p4c,p5c,cyan),
-  Triangle.new(p1c,p5c,p6c,cyan),
-  Triangle.new(p1c,p6c,p7c,cyan),
-  Triangle.new(p1c,p7c,p8c,cyan),
+  Triangle.new(pmilieuc,p1c,p2c,cyanFonce),
+  Triangle.new(pmilieuc,p2c,p3c,cyanClair),
+  Triangle.new(pmilieuc,p3c,p4c,cyanFonce),
+  Triangle.new(pmilieuc,p4c,p5c,cyanClair),
+  Triangle.new(pmilieuc,p5c,p6c,cyanFonce),
+  Triangle.new(pmilieuc,p6c,p7c,cyanClair),
+  Triangle.new(pmilieuc,p7c,p8c,cyanFonce),
+  Triangle.new(pmilieuc,p8c,p1c,cyanClair),
 
   #Triangles reliant Gros Octogone Rouge et Milieu
   #Face 1
-  Triangle.new(p1r,p1m,p2m,rouge),
-  Triangle.new(p1r,p2r,p2m,rouge),
+  Triangle.new(p1r,p2m,p1m,rougeFonce),
+  Triangle.new(p1r,p2r,p2m,rougeFonce),
   #Face 2
-  Triangle.new(p2r,p2m,p3m,rouge),
-  Triangle.new(p2r,p3r,p3m,rouge),
+  Triangle.new(p2r,p3m,p2m,rougeClair),
+  Triangle.new(p2r,p3r,p3m,rougeClair),
   #Face 3
-  Triangle.new(p3r,p3m,p4m,rouge),
-  Triangle.new(p3r,p4r,p4m,rouge),
+  Triangle.new(p3r,p4m,p3m,rougeFonce),
+  Triangle.new(p3r,p4r,p4m,rougeFonce),
   #Face 4
-  Triangle.new(p4r,p4m,p5m,rouge),
-  Triangle.new(p4r,p5r,p5m,rouge),
+  Triangle.new(p4r,p5m,p4m,rougeClair),
+  Triangle.new(p4r,p5r,p5m,rougeClair),
   #Face 5
-  Triangle.new(p5r,p5m,p6m,rouge),
-  Triangle.new(p5r,p6r,p6m,rouge),
+  Triangle.new(p5r,p6m,p5m,rougeFonce),
+  Triangle.new(p5r,p6r,p6m,rougeFonce),
   #Face 6
-  Triangle.new(p6r,p6m,p7m,rouge),
-  Triangle.new(p6r,p7r,p7m,rouge),
+  Triangle.new(p6r,p7m,p6m,rougeClair),
+  Triangle.new(p6r,p7r,p7m,rougeClair),
   #Face 7
-  Triangle.new(p7r,p7m,p8m,rouge),
-  Triangle.new(p7r,p8r,p8m,rouge),
+  Triangle.new(p7r,p8m,p7m,rougeFonce),
+  Triangle.new(p7r,p8r,p8m,rougeFonce),
   #Face 8
-  Triangle.new(p8r,p8m,p1m,rouge),
-  Triangle.new(p8r,p1r,p1m,rouge),
+  Triangle.new(p8r,p1m,p8m,rougeClair),
+  Triangle.new(p8r,p1r,p1m,rougeClair),
 
   #Triangles reliant Gros Octogone Cyan et Milieu
   #Face 1
-  Triangle.new(p1c,p1m,p2m,cyan),
-  Triangle.new(p1c,p2c,p2m,cyan),
+  Triangle.new(p1c,p1m,p2m,cyanClair),
+  Triangle.new(p1c,p2m,p2c,cyanClair),
   #Face 2
-  Triangle.new(p2c,p2m,p3m,cyan),
-  Triangle.new(p2c,p3c,p3m,cyan),
+  Triangle.new(p2c,p2m,p3m,cyanFonce),
+  Triangle.new(p2c,p3m,p3c,cyanFonce),
   #Face 3
-  Triangle.new(p3c,p3m,p4m,cyan),
-  Triangle.new(p3c,p4c,p4m,cyan),
+  Triangle.new(p3c,p3m,p4m,cyanClair),
+  Triangle.new(p3c,p4m,p4c,cyanClair),
   #Face 4
-  Triangle.new(p4c,p4m,p5m,cyan),
-  Triangle.new(p4c,p5c,p5m,cyan),
+  Triangle.new(p4c,p4m,p5m,cyanFonce),
+  Triangle.new(p4c,p5m,p5c,cyanFonce),
   #Face 5
-  Triangle.new(p5c,p5m,p6m,cyan),
-  Triangle.new(p5c,p6c,p6m,cyan),
+  Triangle.new(p5c,p5m,p6m,cyanClair),
+  Triangle.new(p5c,p6m,p6c,cyanClair),
   #Face 6
-  Triangle.new(p6c,p6m,p7m,cyan),
-  Triangle.new(p6c,p7c,p7m,cyan),
+  Triangle.new(p6c,p6m,p7m,cyanFonce),
+  Triangle.new(p6c,p7m,p7c,cyanFonce),
   #Face 7
-  Triangle.new(p7c,p7m,p8m,cyan),
-  Triangle.new(p7c,p8c,p8m,cyan),
+  Triangle.new(p7c,p7m,p8m,cyanClair),
+  Triangle.new(p7c,p8m,p8c,cyanClair),
   #Face 8
-  Triangle.new(p8c,p8m,p1m,cyan),
-  Triangle.new(p8c,p1c,p1m,cyan)
+  Triangle.new(p8c,p8m,p1m,cyanFonce),
+  Triangle.new(p8c,p1m,p1c,cyanFonce)
   ]
 
   return Modele.new(pointsPilule, trianglesPilule)
