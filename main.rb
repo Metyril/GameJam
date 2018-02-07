@@ -34,7 +34,7 @@ class Fenetre < Gosu::Window
     @map_height = 30        # Hauteur de la Map
     @cell_size = 20         # Taille d'une cellule
     @wall_size = 5          # Largeur d'un mur
-    @nb_room = 3            # Nombre de salles
+    @nb_room = 10           # Nombre de salles
     @type_gen = 'random'    # Type de génération / 4 valeurs possibles : 'random', 'newest', 'middle', 'oldest'
 
     @map = Map.new(@map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen)   # Map à générer
@@ -148,6 +148,7 @@ class Fenetre < Gosu::Window
     self.murCollision @player
     @projectiles.each do |projectile|
       projectile.avancer
+      projectile.detruire if self.murCollision projectile
     end
 
 
@@ -186,25 +187,32 @@ class Fenetre < Gosu::Window
 
   def murCollision cible
     val = @map.map[cible.getCelZ][cible.getCelX]
+    hit1 = false
+    hit2 = false
+    hit3 = false
+    hit4 = false
+
     if (val & S) == 0
       @mursHitBox[0].setPos(cible.getCelX*@cell_size, cible.getCelZ*@cell_size+(@cell_size/2))
-      @mursHitBox[0].collision cible
+      hit1 = @mursHitBox[0].collision cible
     end
 
     if (val & N) == 0
       @mursHitBox[1].setPos(cible.getCelX*@cell_size, cible.getCelZ*@cell_size-(@cell_size/2))
-      @mursHitBox[1].collision cible
+      hit2 = @mursHitBox[1].collision cible
     end
 
     if (val & E) == 0
       @mursHitBox[2].setPos(cible.getCelX*@cell_size+(@cell_size/2), cible.getCelZ*@cell_size)
-      @mursHitBox[2].collision cible
+      hit3 = @mursHitBox[2].collision cible
     end
 
     if (val & W) == 0
       @mursHitBox[3].setPos(cible.getCelX*@cell_size-(@cell_size/2), cible.getCelZ*@cell_size)
-      @mursHitBox[3].collision cible
+      hit4 = @mursHitBox[3].collision cible
     end
+
+    return hit1 || hit2 || hit3 || hit4
   end
 
   def draw
