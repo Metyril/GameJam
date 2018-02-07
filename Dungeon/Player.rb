@@ -93,7 +93,7 @@ class Player < Element
       @velY = 1
     end
 
-    @modele.draw(cam, @x, @y + (y-1), @z, 0, -@angle, 0)
+    @modele.draw(cam, @x, @y + (y-1), @z, 0, -@angle, 0) if @invulnerable%2 == 0
 
     if @arme.startAnime
       @arme.startAnime = false

@@ -28,7 +28,7 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
-  attr_accessor :player, :ennemis, :projectiles
+  attr_accessor :player, :ennemis, :projectiles, :modeleParicule, :particules, :map
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
 
@@ -47,6 +47,7 @@ class Fenetre < Gosu::Window
     @modeleRuby = CreateModele::ruby
     @ennemisModele = CreateModele::player(true)
     @modPilule = CreateModele::pilule
+    @modeleParicule = CreateModele::sim
 
     # TELEPORTEUR
     @modeleTP = CreateModele::sim
@@ -64,7 +65,7 @@ class Fenetre < Gosu::Window
 
     # AUTRES
     playerInitPos = rand(0..@nb_room-1)
-    @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[playerInitPos],0,0,0,2))
+    @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemTire.new(self, @map.rooms[playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
 
 
@@ -388,6 +389,12 @@ class Fenetre < Gosu::Window
       end
     end
     @projectiles.each do |ramassable|
+      if redraw?(ramassable.x, ramassable.z)
+        ramassable.draw(@camera)
+      end
+    end
+
+    @particules.each do |ramassable|
       if redraw?(ramassable.x, ramassable.z)
         ramassable.draw(@camera)
       end

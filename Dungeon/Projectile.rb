@@ -9,7 +9,7 @@ class Projectile < Element
       @app = app
       @ennemie = Array.new
       @vitesse = vitesse
-      @range = 20 + 10*@app.player.range 
+      @range = 20 + 10*@app.player.range
       @angle = angle
       @degats = degats
       @y = -5
@@ -24,6 +24,11 @@ class Projectile < Element
             ennemie.vie -= @degats
             @ennemie << ennemie
             self.detruire
+
+            room = @app.map.rooms[rand(0..0)]
+            for i in (0...5)
+              @app.particules << Particule.new(room, @app.modeleParicule, @x, @y, @z)
+            end
           end
       end
       if @range < 0

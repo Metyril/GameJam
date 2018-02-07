@@ -4,9 +4,13 @@ require_relative 'Item.rb'
 
 class ItemTire < Item
       attr_accessor :vitesse,:degats,:attaqueVit,:startAnime,:modeleTire,:room,:vitesseP,:nom
-  def initialize(app,room,x,y,z)
+  def initialize(app,room,x,y,z, oui = 0)
     @room = room
-    rang = rand(3)
+    if oui == 2
+      rang = 1
+    else
+      rang = rand(3)
+    end
     case rang
       when 0
         @nom = "Pistolet"
