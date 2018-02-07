@@ -652,7 +652,7 @@ class CreateModele
   def self.pilule
 
   #Hauteur et Taille
-  hauteur = 1
+  hauteur = -4.5
   size = 0.75
 
   #Couleurs
