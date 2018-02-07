@@ -19,7 +19,7 @@ class DroneAt < Item
     def tirer
       if @vitesse <= 0
         @vitesse = 140
-        @app.projectiles << Projectile.new(@app,@app.player.angle,@app.player.x+rand(5..10),@app.player.y,@app.player.z+rand(5..10),@itBox,@degats,CreateModele::projectile,@room,@vitesseP)
+        @app.projectiles << Projectile.new(@app,@app.player.angle,@app.player.x+rand(2..4),@app.player.y,@app.player.z+rand(2..4),@itBox,@degats,CreateModele::projectile,@room,@vitesseP)
       end
     end
     def update
