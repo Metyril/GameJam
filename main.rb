@@ -97,6 +97,7 @@ class Fenetre < Gosu::Window
     @exit = Bouton.new(500,450,270,80,Gosu::Color::CYAN,"Quitter",2.8)
     @sound_btn = Bouton.new(1100,500,100,100,Gosu::Color::CYAN,"",2.8)
     @sound_image = Gosu::Image.new('../media/sound.png')
+    @music.play
   end
 
   def button_down(id)
