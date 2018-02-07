@@ -15,6 +15,8 @@ class Player < Element
         @vitesse = 1
         @puissance = puissance
         @items = Array.new()
+
+        @anime = 0
     end
 
 #Gestion de la vie du joueur
@@ -65,7 +67,20 @@ class Player < Element
   def draw cam
     @modele.draw(cam, @x, @y, @z, 0, -@angle, 0)
 
-    @arme.modele.draw(cam, @x - Math.sin(@angle)*5, @y - 2, @z - Math.cos(@angle)*5, 0, -@angle, 0.5)
+    if @arme.startAnime
+      @arme.startAnime = false
+      @anime = 0
+    end
+
+    if @arme.is_a? ItemPoing
+      @arme.modele.draw(cam, @x - Math.sin(@angle - DEMIPI)*3, @y - 2, @z - Math.cos(@angle - DEMIPI)*3, @anime > DEMIPI ? 0 : @anime, -@angle, 0)
+    end
+
+    if (@anime < DEMIPI)
+      @anime += 0.25
+    end
+
+    #@arme.modele.draw(cam, @x - 5, @y - 2, @z - 5, 0, -@angle, 0.5)
       #Gosu.draw_rect(@x, @y, @cell_size, @cell_size, Gosu::Color.argb(0xff_ff0000), 2)
   end # Fin draw
 end # Fin Player

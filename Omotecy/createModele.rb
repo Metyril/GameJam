@@ -898,5 +898,106 @@ def self.croix
   return Modele.new(pointsCroix, trianglesCroix)
 end
 
+def self.projectile
+
+  #Hauteur et Taille
+  hauteur = 2
+  size = 0.75
+
+  #Couleurs
+  orangeClair = 0xFFEE5A24
+  orangeFonce = 0xFFCE4D1E
+
+  #Pointe Projectile
+  ppointe = Point.new(1*size,(2+hauteur)*size,7*size)
+
+  #Points Octogone Avant
+  p1a = Point.new(0*size,(0+hauteur)*size,3*size)
+  p2a = Point.new(-1*size,(1+hauteur)*size,3*size)
+  p3a = Point.new(-1*size,(3+hauteur)*size,3*size)
+  p4a = Point.new(0*size,(4+hauteur)*size,3*size)
+  p5a = Point.new(2*size,(4+hauteur)*size,3*size)
+  p6a = Point.new(3*size,(3+hauteur)*size,3*size)
+  p7a = Point.new(3*size,(1+hauteur)*size,3*size)
+  p8a = Point.new(2*size,(0+hauteur)*size,3*size)
+  pmilieua = Point.new(1*size,(2+hauteur)*size,3*size)
+
+  #Points Octogone Arrière
+  p1r = Point.new(0*size,(0+hauteur)*size,-2*size)
+  p2r = Point.new(-1*size,(1+hauteur)*size,-2*size)
+  p3r = Point.new(-1*size,(3+hauteur)*size,-2*size)
+  p4r = Point.new(0*size,(4+hauteur)*size,-2*size)
+  p5r = Point.new(2*size,(4+hauteur)*size,-2*size)
+  p6r = Point.new(3*size,(3+hauteur)*size,-2*size)
+  p7r = Point.new(3*size,(1+hauteur)*size,-2*size)
+  p8r = Point.new(2*size,(0+hauteur)*size,-2*size)
+  pmilieur = Point.new(1*size,(2+hauteur)*size,0*size)
+
+
+  pointsProj = [p1r, p2r, p3r, p4r, p5r, p6r, p7r, p8r, pmilieur,
+                p1a, p2a, p3a, p4a, p5a, p6a, p7a, p8a, pmilieua, ppointe]
+
+  trianglesProj = [
+
+  #Triangles Octogone Arrière
+  Triangle.new(pmilieur,p2r,p1r,orangeClair),
+  Triangle.new(pmilieur,p3r,p2r,orangeFonce),
+  Triangle.new(pmilieur,p4r,p3r,orangeClair),
+  Triangle.new(pmilieur,p5r,p4r,orangeFonce),
+  Triangle.new(pmilieur,p6r,p5r,orangeClair),
+  Triangle.new(pmilieur,p7r,p6r,orangeFonce),
+  Triangle.new(pmilieur,p8r,p7r,orangeClair),
+  Triangle.new(pmilieur,p1r,p8r,orangeFonce),
+
+  #Triangles Octogone Avant
+  Triangle.new(pmilieua,p1a,p2a,orangeFonce),
+  Triangle.new(pmilieua,p2a,p3a,orangeClair),
+  Triangle.new(pmilieua,p3a,p4a,orangeFonce),
+  Triangle.new(pmilieua,p4a,p5a,orangeClair),
+  Triangle.new(pmilieua,p5a,p6a,orangeFonce),
+  Triangle.new(pmilieua,p6a,p7a,orangeClair),
+  Triangle.new(pmilieua,p7a,p8a,orangeFonce),
+  Triangle.new(pmilieua,p8a,p1a,orangeClair),
+
+  #Triangles reliant Octogone Avant et Pointe
+  Triangle.new(ppointe,p1a,p2a,orangeClair),
+  Triangle.new(ppointe,p2a,p3a,orangeFonce),
+  Triangle.new(ppointe,p3a,p4a,orangeClair),
+  Triangle.new(ppointe,p4a,p5a,orangeFonce),
+  Triangle.new(ppointe,p5a,p6a,orangeClair),
+  Triangle.new(ppointe,p6a,p7a,orangeFonce),
+  Triangle.new(ppointe,p7a,p8a,orangeClair),
+  Triangle.new(ppointe,p8a,p1a,orangeFonce),
+
+  #Triangles reliant Octogones Avant et Arrière
+  #Face 1
+  Triangle.new(p1r,p2a,p1a,orangeFonce),
+  Triangle.new(p1r,p2r,p2a,orangeFonce),
+  #Face 2
+  Triangle.new(p2r,p3a,p2a,orangeClair),
+  Triangle.new(p2r,p3r,p3a,orangeClair),
+  #Face 3
+  Triangle.new(p3r,p4a,p3a,orangeFonce),
+  Triangle.new(p3r,p4r,p4a,orangeFonce),
+  #Face 4
+  Triangle.new(p4r,p5a,p4a,orangeClair),
+  Triangle.new(p4r,p5r,p5a,orangeClair),
+  #Face 5
+  Triangle.new(p5r,p6a,p5a,orangeFonce),
+  Triangle.new(p5r,p6r,p6a,orangeFonce),
+  #Face 6
+  Triangle.new(p6r,p7a,p6a,orangeClair),
+  Triangle.new(p6r,p7r,p7a,orangeClair),
+  #Face 7
+  Triangle.new(p7r,p8a,p7a,orangeFonce),
+  Triangle.new(p7r,p8r,p8a,orangeFonce),
+  #Face 8
+  Triangle.new(p8r,p1a,p8a,orangeClair),
+  Triangle.new(p8r,p1r,p1a,orangeClair),
+
+  ]
+
+  return Modele.new(pointsProj, trianglesProj)
+end
 
 end
