@@ -6,11 +6,11 @@ require_relative '../../main.rb'
 
 class MenuPrincipal < Gosu::Window
 
-    def initialize(width=1000, height=600, options={:fullscreen => false, :update_interval => 75})     # options facultatif / update_interval est en ms
+    def initialize(width=1280, height=720, options={:fullscreen => true})     # options facultatif / update_interval est en ms
       super
       @cursor = Gosu::Image.new('../../media/mouse.png')
       @titre = Gosu::Image.new('../../media/titre.png')
-      @bouton = Bouton.new(350,250,310,80,Gosu::Color::BLUE,"Jouer",3)
+      @bouton = Bouton.new(350,250,310,80,Gosu::Color::CYAN,"Jouer",3)
       @music = Gosu::Song.new('../../media/little_apocalypse.ogg')
     end
 
