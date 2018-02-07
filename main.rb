@@ -16,6 +16,7 @@ require_relative 'Dungeon/Projectile.rb'
 require_relative 'Dungeon/Pilule.rb'
 require_relative 'Dungeon/Drone.rb'
 require_relative 'Dungeon/Item.rb'
+require_relative 'Dungeon/Vie.rb'
 require_relative 'Dungeon/Particule.rb'
 
 require_relative 'Dungeon/Teleporteur.rb'
@@ -34,11 +35,11 @@ class Fenetre < Gosu::Window
 
     Triangle.setRefSize(WIDTH, HEIGHT)
 
-    @map_width = 30         # Largeur de la Map
-    @map_height = 30        # Hauteur de la Map
+    @map_width = 40         # Largeur de la Map
+    @map_height = 40        # Hauteur de la Map
     @cell_size = 20         # Taille d'une cellule
     @wall_size = 5          # Largeur d'un mur
-    @nb_room = 5           # Nombre de salles
+    @nb_room = 10           # Nombre de salles
     @type_gen = 'random'    # Type de génération / 4 valeurs possibles : 'random', 'newest', 'middle', 'oldest'
 
     # MODELES
@@ -50,8 +51,9 @@ class Fenetre < Gosu::Window
     @modeleParicule = CreateModele::sim
 
     # TELEPORTEUR
+    @playerInitPos = rand(0..@nb_room-1)
     @modeleTP = CreateModele::sim
-    @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
+    @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @playerInitPos, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
 
     # ATTRIBUTS
     @map = @teleporteur.allSet[:map]
@@ -62,10 +64,10 @@ class Fenetre < Gosu::Window
     @pilules = @teleporteur.allSet[:pilules]
     @drones = @teleporteur.allSet[:drones]
     @particules = @teleporteur.allSet[:particules]
+    @vies = @teleporteur.allSet[:vies]
 
     # AUTRES
-    playerInitPos = rand(0..@nb_room-1)
-    @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemTire.new(self, @map.rooms[playerInitPos],0,0,0,2))
+    @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
 
 
@@ -195,7 +197,8 @@ class Fenetre < Gosu::Window
     end
 
     if self.dist(@player, @teleporteur) < (@player.itBox + @teleporteur.itBox)
-      @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
+      @playerInitPos = rand(0..@nb_room-1)
+      @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @playerInitPos, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
 
       @map = @teleporteur.allSet[:map]
       @projectiles = @teleporteur.allSet[:projectiles]
@@ -205,9 +208,9 @@ class Fenetre < Gosu::Window
       @pilules = @teleporteur.allSet[:pilules]
       @drones = @teleporteur.allSet[:drones]
       @particules = @teleporteur.allSet[:particules]
+      @vies = @teleporteur.allSet[:vies]
 
-      playerInitPos = rand(0..@nb_room-1)
-      room = @map.rooms[playerInitPos]
+      room = @map.rooms[@playerInitPos]
       @player.x, @player.z = rand(room.width), rand(room.height)
       @player.x = (@player.x + room.x_pos) * @cell_size
       @player.z = (@player.z + room.y_pos) * @cell_size
@@ -217,6 +220,12 @@ class Fenetre < Gosu::Window
 
     @ramassables.each do |ramassable|
       ramassable.detruire if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+    end
+    @vies.each do |ramassable|
+      if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+        @player.vie += 1
+        ramassable.detruire
+      end
     end
     @pilules.each do |pilule|
       if self.dist(@player, pilule) < (@player.itBox + pilule.itBox)
@@ -239,6 +248,7 @@ class Fenetre < Gosu::Window
     # @ennemis.each do |ennemi|
     #   ennemi.detruire if self.dist(@player,ennemi) < (@player.itBox + ennemi.itBox)
     # end
+    self.iter @vies
     self.iter @drones
     self.iter @pilules
     self.iter @projectiles
@@ -369,6 +379,11 @@ class Fenetre < Gosu::Window
     end
 
     @ramassables.each do |ramassable|
+      if redraw?(ramassable.x, ramassable.z)
+        ramassable.draw(@camera)
+      end
+    end
+    @vies.each do |ramassable|
       if redraw?(ramassable.x, ramassable.z)
         ramassable.draw(@camera)
       end
