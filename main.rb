@@ -181,10 +181,11 @@ class Fenetre < Gosu::Window
       projectile.detruire if self.murCollision projectile
     end
 
-
-    @ennemis.each do |ennemi|
-      ennemi.detruire if 1 > ennemi.vie
-      ennemi.deplacements(@player.x, @player.z)
+    if !@pause
+      @ennemis.each do |ennemi|
+        ennemi.detruire if 1 > ennemi.vie
+        ennemi.deplacements(@player.x, @player.z)
+      end
     end
 
     @ramassables.each do |ramassable|
@@ -205,7 +206,6 @@ class Fenetre < Gosu::Window
     self.iter @ramassablesArme
 
     #MENU PAUSE
-
     @mouse_x = mouse_x.to_i+30
     @mouse_y = mouse_y.to_i+10
     if @bouton.isHover(@mouse_x,@mouse_y)
