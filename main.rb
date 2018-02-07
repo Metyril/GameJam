@@ -16,6 +16,7 @@ require_relative 'Dungeon/Projectile.rb'
 require_relative 'Dungeon/Pilule.rb'
 require_relative 'Dungeon/Drone.rb'
 require_relative 'Dungeon/Item.rb'
+require_relative 'Dungeon/Vie.rb'
 require_relative 'Dungeon/Particule.rb'
 
 require_relative 'IHM/Bouton.rb'
@@ -58,6 +59,7 @@ class Fenetre < Gosu::Window
     playerInitPos = rand(0..@nb_room-1)
     @player = Player.new(@map.rooms[playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[playerInitPos],0,0,0,2))
     @pilules = Array.new
+    @vies = Array.new
     @projectiles = Array.new
     @ramassablesArme = Array.new
     @drones = Array.new
@@ -78,28 +80,23 @@ class Fenetre < Gosu::Window
       for i in 1..j
         @ramassables << ObjetRamassable.new(room, modeleruby)
       end
-      j = rand(2..4)
+      j = rand(2..5)
       for i in 1..j
-        if rand < 0.2
-          @pilules << Pilule.new(self,room,modPilule)
-        end
-      end
-      j = rand(2..4)
-      for i in 1..j
-        if rand < 0.1
-          @drones << DroneAt.new(self,room)
-        end
-      end
-      j = rand(2..4)
-      for i in 1..j
-        if rand < 0.1
+        x = rand
+        if x < 0.2
           @ramassablesArme << ItemPoing.new(self,@map.rooms[rand(0..@nb_room-1)],0,0,0)
         end
-      end
-      j = rand(2..4)
-      for i in 1..j
-        if rand < 0.1
+        if x > 0.9
           @ramassablesArme << ItemTire.new(self,@map.rooms[rand(0..@nb_room-1)],0,0,0)
+        end
+        if (x > 0.2) && (x < 0.3)
+          @drones << DroneAt.new(self,room)
+        end
+        if (x > 0.3) && (x<0.5)
+          @pilules << Pilule.new(self,room,modPilule)
+        end
+        if (x > 0.5 ) && (x < 0.6)
+          @vies << Vie.new(room)
         end
       end
     end
@@ -233,6 +230,12 @@ class Fenetre < Gosu::Window
     @ramassables.each do |ramassable|
       ramassable.detruire if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
     end
+    @vies.each do |ramassable|
+      if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+        @player.vie += 1
+        ramassable.detruire
+      end
+    end
     @pilules.each do |pilule|
       if self.dist(@player, pilule) < (@player.itBox + pilule.itBox)
         pilule.activeEffet
@@ -254,6 +257,7 @@ class Fenetre < Gosu::Window
     # @ennemis.each do |ennemi|
     #   ennemi.detruire if self.dist(@player,ennemi) < (@player.itBox + ennemi.itBox)
     # end
+    self.iter @vies
     self.iter @drones
     self.iter @pilules
     self.iter @projectiles
@@ -382,6 +386,11 @@ class Fenetre < Gosu::Window
     end
 
     @ramassables.each do |ramassable|
+      if redraw?(ramassable.x, ramassable.z)
+        ramassable.draw(@camera)
+      end
+    end
+    @vies.each do |ramassable|
       if redraw?(ramassable.x, ramassable.z)
         ramassable.draw(@camera)
       end

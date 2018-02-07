@@ -4,7 +4,7 @@ require_relative './Element.rb'
 
 class Player < Element
       attr_accessor :vie,:items , :puissance,:arme,:angle,:vitesse, :angle , :degats,:range,:vitesseAt, :animeDeplacement,:invulnerable
-    def initialize(room, modele, arme, itbox=1, x=0, y=0, z=0, vie = 15, puissance =1)
+    def initialize(room, modele, arme, itbox=1, x=0, y=0, z=0, vie = 3, puissance =1)
         super room, modele, itbox, x, y, z
         @angle = 0
         @vie = vie
@@ -13,7 +13,7 @@ class Player < Element
         @vitesseAt = 0
         #@arme = ItemPoing.new(room,modele,3,x,y,z)
         @arme = arme
-        @vitesse = 3
+        @vitesse = 1
         @puissance = puissance
         @items = Array.new()
         @invulnerable = 0

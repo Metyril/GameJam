@@ -30,7 +30,7 @@ class ItemPoing < Item
       @range = 3
       @attaqueVit = 4
       @degats = 1
-      modele = CreateModele::sim
+      modele = CreateModele::cube
       itbox = 3
     end
       @vitesse = 0
