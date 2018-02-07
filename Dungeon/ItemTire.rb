@@ -15,7 +15,7 @@ class ItemTire < Item
       when 0
         @nom = "Pistolet"
         @attaqueVit = 4
-        @vitesseP = 2
+        @vitesseP = 3
         @degats = 1
         @modeleTire = CreateModele::projectile
         modele = CreateModele::pistolet
@@ -36,6 +36,10 @@ class ItemTire < Item
         @modeleTire = CreateModele::projectile(0.8)
         modele = CreateModele::pistolet
         itbox = 3
+      when 3
+        nom = "FusilApompe"
+        @attaqueVit = 2
+        @vitesseP = 1
     end
     @vitesse = 0
     @app = app

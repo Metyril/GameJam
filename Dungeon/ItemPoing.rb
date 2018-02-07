@@ -8,7 +8,7 @@ class ItemPoing < Item
     if oui == 2
       rang = 2
     else
-      rang = rand(3)
+      rang = rand(1)
     end
     case rang
     when 0
