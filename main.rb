@@ -129,19 +129,20 @@ class Fenetre < Gosu::Window
 
   def update
     self.caption = "#{Gosu.fps} FPS / x:#{@camera.position.x.round} y:#{@camera.position.y.round} z:#{@camera.position.z.round} | Px:#{@player.getCelX} Pz:#{@map.map[@player.getCelZ][@player.getCelX]}"
+    if !@pause
+      frontal = 0
+      lateral = 0
+      frontal = -0.6*@player.vitesse if Gosu.button_down? Gosu::KB_S
+      frontal = 0.6*@player.vitesse if Gosu.button_down? Gosu::KB_W
+      lateral = -0.4*@player.vitesse if Gosu.button_down? Gosu::KB_A
+      lateral = 0.4*@player.vitesse if Gosu.button_down? Gosu::KB_D
+      @player.angle += -0.03 if Gosu.button_down? Gosu::KB_LEFT
+      @player.angle += 0.03 if Gosu.button_down? Gosu::KB_RIGHT
+      @player.x += Math.sin(@player.angle) * frontal + Math.cos(-@player.angle) * lateral
+      @player.z += Math.cos(@player.angle) * frontal + Math.sin(-@player.angle) * lateral
+    end
 
-    frontal = 0
-    lateral = 0
-    frontal = -0.6*@player.vitesse if Gosu.button_down? Gosu::KB_S
-    frontal = 0.6*@player.vitesse if Gosu.button_down? Gosu::KB_W
-    lateral = -0.4*@player.vitesse if Gosu.button_down? Gosu::KB_A
-    lateral = 0.4*@player.vitesse if Gosu.button_down? Gosu::KB_D
-    @player.angle += -0.03 if Gosu.button_down? Gosu::KB_LEFT
-    @player.angle += 0.03 if Gosu.button_down? Gosu::KB_RIGHT
-    @player.x += Math.sin(@player.angle) * frontal + Math.cos(-@player.angle) * lateral
-    @player.z += Math.cos(@player.angle) * frontal + Math.sin(-@player.angle) * lateral
-
-    if !@freeCam
+    if !@freeCam && !@pause
       @camera.position.x = -Math.sin(@player.angle) * 30 + @player.x
       @camera.position.z = -Math.cos(@player.angle) * 25 + @player.z
 
