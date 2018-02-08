@@ -73,8 +73,6 @@ class Fenetre < Gosu::Window
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
-    @pilules << MegaPilule.new(self,@map.rooms[@playerInitPos],0)
-    @pilules << MegaPilule.new(self,@map.rooms[@playerInitPos],1)
 
 
     @listeModeleCellules = Array.new
@@ -179,6 +177,9 @@ class Fenetre < Gosu::Window
     @player.attaque if Gosu.button_down? Gosu::KB_SPACE
 
     @player.update
+    @ennemis.each do |ennemi|
+      ennemi.attaque
+    end
     self.murCollision @player
     @projectiles.each do |projectile|
       projectile.avancer

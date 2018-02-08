@@ -6,13 +6,16 @@ require_relative './Element.rb'
 
 class Ennemi < Element
   attr_accessor :vie,:room
-    def initialize(room, modele, itbox=3,x=0,y=0,z=0)
-        super
+    def initialize(room, modele, itbox=3,x=0,y=0,z=0,cracheur = false,app = 0)
+        super room, modele , itbox, x,y,z
         @vie = 3
         @angle = 0
         @dirAngle = 0
         @vitesse = rand(0.5..1.2)
         @velRecul = 1
+        @vitesseAt = 0
+        @cracheur = cracheur
+        @app = app
     end
 
 
@@ -50,6 +53,16 @@ class Ennemi < Element
 
     def update
       @velRecul += 0.04 if @velRecul < 1
+    end
+
+    def attaque
+      if @cracheur
+        if @vitesseAt <= 0
+          @vitesseAt = 140
+          @app.projectiles << Projectile.new(@app,@angle,@x,@y,@z,3,1,CreateModele::projectile,@room,1,true)
+        end
+        @vitesseAt -= 1
+      end
     end
 
     def draw camera
