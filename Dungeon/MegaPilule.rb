@@ -14,7 +14,7 @@ class MegaPilule < Item
           @nom = "Zombie"
         when 1
           @nom = "Explosion"
-          @boom = Gosu::Sample.new('../media/divers/teleporteur.wav')
+          @boom = Gosu::Sample.new('../media/divers/boom.wav')
         when 2
           @nom = "Armement"
         when 3
