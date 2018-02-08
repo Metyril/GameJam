@@ -85,6 +85,9 @@ class Fenetre < Gosu::Window
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
 
+    @sonFin = Gosu::Sample.new('../media/divers/mort_son.wav')
+    @sonTeleporteur = Gosu::Sample.new('../media/divers/teleporteur.wav')
+    @sonTeleporteur.play(1)
 
     @listeModeleCellules = Array.new
     self.setModelesMurs
@@ -326,7 +329,10 @@ class Fenetre < Gosu::Window
     elsif @sound_btn.getColor == Gosu::Color::YELLOW
       @sound_btn.color(Gosu::Color::CYAN)
     end
+
     if @player.vie <= 0
+      @player.sonMort.play(1)
+      @sonFin.play(1)
       close
       MenuPrincipal.new.show
     end
