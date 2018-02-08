@@ -309,7 +309,7 @@ class CreateModele
     return Modele.new(pointBatte, triangleBatte)
   end
 
-  def self.player(ennemi=false boss=false)
+  def self.player(ennemi=false, boss=false)
 
     size = 1
 
@@ -343,12 +343,12 @@ class CreateModele
     p13 = Point.new(2*size, -6*size, -1*size)
     p14 = Point.new(1*size, -7*size, -1*size)
 
-    p15 = Point.new(-2, -5, 1)
-    p16 = Point.new(-2, -6, 1)
-    p17 = Point.new(-1, -7, 1)
-    p18 = Point.new(2, -5, 1)
-    p19 = Point.new(2, -6, 1)
-    p20 = Point.new(1, -7, 1)
+    p15 = Point.new(-2*size, -5*size, 1*size)
+    p16 = Point.new(-2*size, -6*size, 1*size)
+    p17 = Point.new(-1*size, -7*size, 1*size)
+    p18 = Point.new(2*size, -5*size, 1*size)
+    p19 = Point.new(2*size, -6*size, 1*size)
+    p20 = Point.new(1*size, -7*size, 1*size)
 
     pointsPlayer = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
 
