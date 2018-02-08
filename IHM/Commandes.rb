@@ -10,12 +10,21 @@ class Commandes < Gosu::Window
     @retour = Bouton.new(10,10,350,80,Gosu::Color::CYAN,"Retour",3)
 
     @commandes = Gosu::Image.from_text('Commandes', 50, {:font => "../media/Basica.ttf", :align => :center})
+
+    @commandeJoueur3D = Gosu::Image.new("../media/CommandesJoueur3D.png")
+    @commandeCamera3D = Gosu::Image.new("../media/CommandesCamera3D.png")
+    @commandeTirer3D = Gosu::Image.new("../media/CommandeTirer3D.png")
+    @commandePause3D = Gosu::Image.new("../media/CommandePause3D.png")
   end
 
   def draw
     @retour.draw
     @cursor.draw self.mouse_x, self.mouse_y, 4
     @commandes.draw(475, 50, 0)
+    @commandeJoueur3D.draw(10,200,0)
+    @commandeCamera3D.draw(600,600,0)
+    @commandeTirer3D.draw(10,800,0)
+    @commandePause3D.draw(10,1000,0)
   end
 
   def update
