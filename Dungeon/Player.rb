@@ -3,7 +3,7 @@ require 'gosu'
 require_relative './Element.rb'
 
 class Player < Element
-      attr_accessor :vie,:items , :puissance,:arme,:angle,:vitesse, :angle , :degats,:range,:vitesseAt, :animeDeplacement,:invulnerable
+      attr_accessor :vie,:items , :puissance,:arme,:angle,:vitesse, :angle , :degats,:range,:vitesseAt, :animeDeplacement,:invulnerable, :nbRuby, :nbZombie
     def initialize(room, modele, arme, itbox=1, x=0, y=0, z=0, vie = 3, puissance =1)
         super room, modele, itbox, x, y, z
         @angle = 0
@@ -21,6 +21,10 @@ class Player < Element
         @velY = 0
 
         @anime = 0
+
+
+        @nbRuby = 0
+        @nbZombie = 0
     end
 
 #Gestion de la vie du joueur
@@ -71,9 +75,9 @@ class Player < Element
     if @invulnerable > 0
       @invulnerable -= 1
     end
-    if @arme.vitesse > 0
-        @arme.update
-    end
+
+    @arme.update
+
     @items.each do |item|
       if item.is_a? DroneAt
         if item.vitesse > 0

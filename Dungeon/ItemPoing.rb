@@ -3,7 +3,7 @@ require 'gosu'  # Librairie graphique Gosu
 require_relative 'Item.rb'
 
 class ItemPoing < Item
-      attr_accessor :vitesse,:range,:degats,:attaqueVit,:startAnime,:nom,:vraiMod
+      attr_accessor :vitesse,:range,:degats,:attaqueVit,:startAnime,:nom,:vraiMod, :son, :rate
   def initialize(app,room,x=0,y=0,z=0,oui = 0)
     modele = CreateModele::pointInterrogation
     if oui == 2
@@ -18,6 +18,7 @@ class ItemPoing < Item
       @attaqueVit = 2
       @degats = 2
       @vraiMod = CreateModele::batte
+      @son = Gosu::Sample.new('../media/armes/claque.wav')
       itbox = 3
     when 1
       @nom = "Hache"
@@ -25,6 +26,7 @@ class ItemPoing < Item
       @attaqueVit = 1
       @degats = 4
       @vraiMod = CreateModele::hache
+      @son = Gosu::Sample.new('../media/armes/hache.wav')
       itbox = 5
     when 2
       @nom = "Main"
@@ -32,6 +34,7 @@ class ItemPoing < Item
       @attaqueVit = 4
       @degats = 1
       modele =  CreateModele::cube
+      @son = Gosu::Sample.new('../media/armes/claque.wav')
       itbox = 3
     end
       @vitesse = 0
@@ -39,7 +42,7 @@ class ItemPoing < Item
       @startAnime = false
 
       @objetDeFrappe = Element.new(room, CreateModele::sim, 2)
-
+      @rate = Gosu::Sample.new('../media/armes/coup_air.wav')
       super room , modele, itbox , x,y,z
   end
 
@@ -47,7 +50,6 @@ class ItemPoing < Item
     if @vitesse <= 0
       @vitesse = 140
       @startAnime = true
-
         @app.ennemis.each do |ennemie|
           @objetDeFrappe.x = Math.sin(@app.player.angle) + @app.player.x
           @objetDeFrappe.z = Math.cos(@app.player.angle) + @app.player.z
@@ -60,9 +62,12 @@ class ItemPoing < Item
           if Math.sqrt((ennemie.x - @objetDeFrappe.x)**2 + (ennemie.z - @objetDeFrappe.z)**2) < (@itBox + ennemie.itBox)
             ennemie.vie -= @degats+@app.player.degats
             ennemie.recul
+            @son.play(1)
             for i in (0...5)
               @app.particules << Particule.new(@app.map.rooms[rand(0..0)], @app.modeleParicule2, ennemie.x, ennemie.y, ennemie.z)
             end
+          else
+            @rate.play(0.1)
           end
         end
 
@@ -74,6 +79,10 @@ class ItemPoing < Item
   end
 
   def update
-    @vitesse -= @attaqueVit + @app.player.vitesseAt
+    if @vitesse > 0
+      @vitesse -= @attaqueVit + @app.player.vitesseAt
+    else
+      @vitesse = 0
+    end
   end
 end

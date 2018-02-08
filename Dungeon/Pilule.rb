@@ -4,8 +4,7 @@ require 'gosu'  # Librairie graphique Gosu
 class Pilule < Item
     attr_accessor :app,:nom
 
-    def initialize(app,room,modele,x=0,y=0,z=0,itbox=1)
-      super room,modele,itbox,x,y,z
+    def initialize(app,room,x=0,y=0,z=0,itbox=1)
       @app = app
       @angle = rand(-3..3)
       case rand(7)
@@ -26,6 +25,7 @@ class Pilule < Item
         when 7
           @nom = "Vitesse Att -"
       end
+      super room,@app.modPilule,itbox,x,y,z
     end # Fin initialize
 
     def activeEffet

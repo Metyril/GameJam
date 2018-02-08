@@ -30,7 +30,8 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
-  attr_accessor :player, :ennemis, :projectiles, :modeleParicule, :particules, :map,:ramassablesArme,:ramassables,:pilules, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert
+  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage
+  attr_accessor :modeleParicule, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert,:modeleDrone,:modPilule,:modeleRuby,:modeleProjectile
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
 
@@ -45,6 +46,10 @@ class Fenetre < Gosu::Window
 
     @etage = 0
 
+    @fontHUD = Gosu::Font.new 30
+    @iconRuby = Gosu::Image.new('../media/iconRuby.png')
+    @iconZombie = Gosu::Image.new('../media/iconZombie.png')
+
     # MODELES
     @playerModele = CreateModele::player
     @batte = CreateModele::batte
@@ -53,7 +58,9 @@ class Fenetre < Gosu::Window
     @modPilule = CreateModele::pilule
     @modeleParicule = CreateModele::sim
     @modeleProjectileVert = CreateModele::projectile(0.5,0xff1abc9c,0xff16a085)
+    @modeleProjectile = CreateModele::projectile
     @modeleParicule2 = CreateModele::sim 1
+    @modeleDrone = CreateModele::pyramide
     @modelePointInterrogation= CreateModele::pointInterrogation
 
     # TELEPORTEUR
@@ -78,10 +85,7 @@ class Fenetre < Gosu::Window
 
 
     @listeModeleCellules = Array.new
-    for i in (0..15)
-      @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), 0))
-      #@listeModeleCellules.push(CreateModele::cellule("0111"))
-    end
+    self.setModelesMurs
 
     @freeCam = false
     @drawTotal = false
@@ -100,6 +104,14 @@ class Fenetre < Gosu::Window
     @sound_btn = Bouton.new(1100,500,100,100,Gosu::Color::CYAN,"",2.8)
     @sound_image = Gosu::Image.new('../media/sound.png')
     @music.play(true)
+  end
+
+  def setModelesMurs
+    @listeModeleCellules = Array.new
+    for i in (0..15)
+      @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), @etage))
+      #@listeModeleCellules.push(CreateModele::cellule("0111"))
+    end
   end
 
   def button_down(id)
@@ -131,7 +143,7 @@ class Fenetre < Gosu::Window
 
 
   def update
-    self.caption = "#{Gosu.fps} FPS / vitesse:#{@player.vitesse} Attaque:#{@player.degats} Range:#{@player.range} | VitesseAt:#{@player.vitesseAt} Vie:#{@player.vie}"
+    self.caption = "#{Gosu.fps} FPS / vitesse:#{@player.vitesse} Attaque:#{@player.degats} Range:#{@player.range} | VitesseAt:#{@player.vitesseAt} Vie:#{@player.vie} ArmeVitesse:#{@player.arme.vitesse}"
     if !@pause
       frontal = 0
       lateral = 0
@@ -207,6 +219,8 @@ class Fenetre < Gosu::Window
 
     if self.dist(@player, @teleporteur) < (@player.itBox + @teleporteur.itBox)
       @playerInitPos = rand(0..@nb_room-1)
+      @etage += 1
+      self.setModelesMurs
       @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @playerInitPos, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
 
       @map = @teleporteur.allSet[:map]
@@ -228,7 +242,10 @@ class Fenetre < Gosu::Window
     end
 
     @ramassables.each do |ramassable|
-      ramassable.detruire if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+      if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+        ramassable.detruire
+        @player.nbRuby += 1
+      end
     end
     @vies.each do |ramassable|
       if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
@@ -262,7 +279,16 @@ class Fenetre < Gosu::Window
     self.iter @drones
     self.iter @pilules
     self.iter @projectiles
-    self.iter @ennemis
+    #self.iter @ennemis
+    @ennemis.delete_if do |elem|
+      elem.update
+      if elem.isDetruit
+        @player.nbZombie += 1
+      end
+
+      elem.isDetruit
+    end
+
     self.iter @ramassables
     self.iter @ramassablesArme
     self.iter @particules
@@ -350,7 +376,6 @@ class Fenetre < Gosu::Window
     @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)
     @batte.draw(@camera, 0, 0, 0, 0, 0, 0)
     #@ruby.draw(@camera, @mursHitBox[3].x, 0, @mursHitBox[1].z, 0, 0, 0)
-    Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
     #@map.draw
 
     #MENU PAUSE
@@ -361,7 +386,25 @@ class Fenetre < Gosu::Window
       @titre.draw 50, 100, 2
       @cursor.draw self.mouse_x, self.mouse_y, 4
       @sound_image.draw 1110, 510, 2
+    else
+      #HUD
+      Gosu::draw_rect(20, 20, @player.vie * 47, 20, 0xffff0000, 10)
+      Gosu::draw_rect(20, 50, 140 - @player.arme.vitesse, 20, 0xffffff00, 10)
+
+      @iconRuby.draw(20, 80, 10)
+      @iconZombie.draw(20, 150, 10)
+
+      @fontHUD.draw("x #{@player.nbRuby}", 80, 90, 10, 1.5, 1.5, 0xffffffff)
+      @fontHUD.draw("x #{@player.nbZombie}", 80, 160, 10, 1.5, 1.5, 0xffffffff)
+
+      @fontHUD.draw("Bonus: ", 20, 230, 101, 1, 1, 0xffffffff)
+      @fontHUD.draw("Vitesse: #{(@player.vitesse-1)}", 30, 265, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("Attaque: #{@player.degats}", 30, 300, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("Range: #{@player.range}", 30, 335, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("VitesseAt: #{@player.vitesseAt}", 30, 370, 10, 1, 1, 0xffffffff)
     end
+
+    Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
   end
 
   def redraw?(x, z)
