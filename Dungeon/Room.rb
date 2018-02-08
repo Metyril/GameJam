@@ -11,8 +11,6 @@ class Room
           @width = rand(3..10)     # Largeur de la Room
           @height = rand(3..10)    # Hauteur de la Room
         end
-        puts "------------------------"
-        puts @width, @height
 
         @x_pos = rand(1..map_width-@width-1)    # Position X de la Room dans la Map, aléatoire
         @y_pos = rand(1..map_height-@height-1)  # Position Y de la Room dans la Map, aléatoire
