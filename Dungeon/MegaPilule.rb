@@ -2,7 +2,7 @@
 require 'gosu'  # Librairie graphique Gosu
 
 class MegaPilule < Item
-    attr_accessor :app,:nom,:sonRubis
+    attr_accessor :app,:nom
 
     def initialize(app,room,x=0,y=0,z=0,itbox=2)
       super room,CreateModele::pilule,itbox,x,y,z
