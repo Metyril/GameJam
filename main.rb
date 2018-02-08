@@ -84,6 +84,7 @@ class Fenetre < Gosu::Window
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
+    @ennemis << Ennemi.new(@map.rooms[@playerInitPos],@ennemisModele,3,0,0,0,true,self)
 
     @sonFin = Gosu::Sample.new('../media/divers/mort_son.wav')
     @sonTeleporteur = Gosu::Sample.new('../media/divers/teleporteur.wav')
@@ -419,10 +420,10 @@ class Fenetre < Gosu::Window
       @fontHUD.draw("x #{@player.nbZombie}", 80, 160, 10, 1.5, 1.5, 0xffffffff)
 
       @fontHUD.draw("Bonus: ", 20, 230, 101, 1, 1, 0xffffffff)
-      @fontHUD.draw("Vitesse: #{(@player.vitesse-1)}", 30, 265, 10, 1, 1, 0xffffffff)
-      @fontHUD.draw("Attaque: #{@player.degats}", 30, 300, 10, 1, 1, 0xffffffff)
-      @fontHUD.draw("Range: #{@player.range}", 30, 335, 10, 1, 1, 0xffffffff)
-      @fontHUD.draw("VitesseAt: #{@player.vitesseAt}", 30, 370, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("Vitesse: #{((@player.vitesse-1).round(1))}", 30, 265, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("Attaque: #{(@player.degats.round(1))}", 30, 300, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("Range: #{(@player.range.round(1))}", 30, 335, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("VitesseAt: #{(@player.vitesseAt.round(1))}", 30, 370, 10, 1, 1, 0xffffffff)
     end
 
     Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
