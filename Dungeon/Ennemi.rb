@@ -6,8 +6,9 @@ require_relative './Element.rb'
 
 class Ennemi < Element
   attr_accessor :vie,:room,:son
-    def initialize(room, modele, itbox=3,x=0,y=0,z=0,cracheur = false,app = 0)
+    def initialize(room, modele,app = 0, itbox=3,x=0,y=0,z=0,cracheur = false)
         super room, modele , itbox, x,y,z
+        @app = app
         @vie = rand(1..(3+@app.etage*4))
         @angle = 0
         @dirAngle = 0
