@@ -10,7 +10,7 @@ class MenuPrincipal < Gosu::Window
 
     def initialize(width=1280, height=720, options={:fullscreen => false})     # options facultatif / update_interval est en ms
       super
-      self.caption = 'Omotecy'
+      self.caption = 'Omotecy - Menu principal'
       @background = Gosu::Image.new("./media/menus/background.png")
       @cursor = Gosu::Image.new('./media/menus/mouse.png')
       @titre = Gosu::Image.new('./media/menus/Omotecy - Titre Final.png')
