@@ -2,7 +2,7 @@
 require 'gosu'  # Librairie graphique Gosu
 
 class MegaPilule < Item
-    attr_accessor :app,:nom
+    attr_accessor :app,:nom,:sonRubis
 
     def initialize(app,room,x=0,y=0,z=0,itbox=2)
       super room,CreateModele::pilule,itbox,x,y,z
@@ -14,9 +14,11 @@ class MegaPilule < Item
           @nom = "Zombie"
         when 1
           @nom = "Explosion"
+          @boom = Gosu::Sample.new('../media/divers/boom.wav')
         when 2
           @nom = "Armement"
         when 3
+          @sonRubis = Gosu::Sample.new('../media/divers/ruby.wav')
           @nom = "Rubis"
         when 4
           @nom = "Pillule"
@@ -33,6 +35,7 @@ class MegaPilule < Item
           @app.ennemis << Ennemi.new(@room, @app.ennemisModele)
         end
       when "Explosion"
+        @boom.play(1)
         @app.ennemis.each do |ennemie|
           if ennemie.room == @room
             ennemie.detruire

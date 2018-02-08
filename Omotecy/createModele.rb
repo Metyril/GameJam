@@ -7,6 +7,9 @@ class CreateModele
     if theme == 1
       couleur1 = 0xff218c74
       couleur2 = 0xff33d9b2
+    elsif theme == 2
+      couleur1 = 0xFF696969
+      couleur2 = 0xFF595959
     end
 
     s1 = Point.new(-1, 0, -1)
@@ -36,46 +39,54 @@ class CreateModele
   end
 
   def self.cube
-    c1 = Point.new(-1, 1, -1)
-    c2 = Point.new(-1, -1, -1)
-    c3 = Point.new(1, 1, -1)
-    c4 = Point.new(1, -1, -1)
-    c5 = Point.new(-1, -1, 1)
-    c6 = Point.new(-1, 1, 1)
-    c7 = Point.new(1, 1, 1)
-    c8 = Point.new(1, -1, 1)
+
+    size = 0.75
+
+    #Couleurs
+    head_color = 0xffe0c47d
+    head_color2 = 0xffffeaa7
+    head_color3 = 0xFFd1b775
+
+    c1 = Point.new(-1*size, 1*size, -1*size)
+    c2 = Point.new(-1*size, -1*size, -1*size)
+    c3 = Point.new(1*size, 1*size, -1*size)
+    c4 = Point.new(1*size, -1*size, -1*size)
+    c5 = Point.new(-1*size, -1*size, 1*size)
+    c6 = Point.new(-1*size, 1*size, 1*size)
+    c7 = Point.new(1*size, 1*size, 1*size)
+    c8 = Point.new(1*size, -1*size, 1*size)
 
     pointsCube = [c1, c2, c3, c4, c5, c6, c7, c8]
 
     trianglesCube = [
       # devant
-      Triangle.new(c1, c2, c3, 0xff2ecc71),
-      Triangle.new(c3, c2, c4, 0xff2ecc71),
+      Triangle.new(c1, c2, c3, head_color2),
+      Triangle.new(c3, c2, c4, head_color2),
       #---
 
       # deriere
-      Triangle.new(c5, c6, c7, 0xfff39c12),
-      Triangle.new(c8, c5, c7, 0xfff39c12),
+      Triangle.new(c5, c6, c7, head_color2),
+      Triangle.new(c8, c5, c7, head_color2),
       #---
 
       # haut
-      Triangle.new(c6, c1, c7, 0xff2980b9),
-      Triangle.new(c1, c3, c7, 0xff2980b9),
+      Triangle.new(c6, c1, c7, head_color),
+      Triangle.new(c1, c3, c7, head_color),
       #---
 
       # bas
-      Triangle.new(c2, c5, c8, 0xffe74c3c),
-      Triangle.new(c4, c2, c8, 0xffe74c3c),
+      Triangle.new(c2, c5, c8, head_color),
+      Triangle.new(c4, c2, c8, head_color),
       #---
 
       # droite
-      Triangle.new(c4, c8, c7, 0xff8e44ad),
-      Triangle.new(c3, c4, c7, 0xff8e44ad),
+      Triangle.new(c4, c8, c7, head_color3),
+      Triangle.new(c3, c4, c7, head_color3),
       #---
 
       # gauche
-      Triangle.new(c5, c2, c6, 0xffecf0f1),
-      Triangle.new(c2, c1, c6, 0xffecf0f1)
+      Triangle.new(c5, c2, c6, head_color3),
+      Triangle.new(c2, c1, c6, head_color3)
       #---
     ]
 
@@ -306,7 +317,10 @@ class CreateModele
     return Modele.new(pointBatte, triangleBatte)
   end
 
-  def self.player(ennemi=false)
+  def self.player(ennemi=false, boss=false)
+
+    size = 1
+
     if ennemi
       body_color = 0xffccae62
       head_color = 0xffbadc58
@@ -317,28 +331,32 @@ class CreateModele
       head_color2 = 0xffe0c47d
     end
 
-    p1 = Point.new(-1, 0, -1)
-    p2 = Point.new(-1, -4, -1)
-    p3 = Point.new(1, 0, -1)
-    p4 = Point.new(1, -4, -1)
-    p5 = Point.new(-1, -4, 1)
-    p6 = Point.new(-1, 0, 1)
-    p7 = Point.new(1, 0, 1)
-    p8 = Point.new(1, -4, 1)
+    if boss
+      size = 3
+    end
 
-    p9 = Point.new(-2, -5, -1)
-    p10 = Point.new(-2, -6, -1)
-    p11 = Point.new(-1, -7, -1)
-    p12 = Point.new(2, -5, -1)
-    p13 = Point.new(2, -6, -1)
-    p14 = Point.new(1, -7, -1)
+    p1 = Point.new(-1*size, 0*size, -1*size)
+    p2 = Point.new(-1*size, -4*size, -1*size)
+    p3 = Point.new(1*size, 0*size, -1*size)
+    p4 = Point.new(1*size, -4*size, -1*size)
+    p5 = Point.new(-1*size, -4*size, 1*size)
+    p6 = Point.new(-1*size, 0*size, 1*size)
+    p7 = Point.new(1*size, 0*size, 1*size)
+    p8 = Point.new(1*size, -4*size, 1*size)
 
-    p15 = Point.new(-2, -5, 1)
-    p16 = Point.new(-2, -6, 1)
-    p17 = Point.new(-1, -7, 1)
-    p18 = Point.new(2, -5, 1)
-    p19 = Point.new(2, -6, 1)
-    p20 = Point.new(1, -7, 1)
+    p9 = Point.new(-2*size, -5*size, -1*size)
+    p10 = Point.new(-2*size, -6*size, -1*size)
+    p11 = Point.new(-1*size, -7*size, -1*size)
+    p12 = Point.new(2*size, -5*size, -1*size)
+    p13 = Point.new(2*size, -6*size, -1*size)
+    p14 = Point.new(1*size, -7*size, -1*size)
+
+    p15 = Point.new(-2*size, -5*size, 1*size)
+    p16 = Point.new(-2*size, -6*size, 1*size)
+    p17 = Point.new(-1*size, -7*size, 1*size)
+    p18 = Point.new(2*size, -5*size, 1*size)
+    p19 = Point.new(2*size, -6*size, 1*size)
+    p20 = Point.new(1*size, -7*size, 1*size)
 
     pointsPlayer = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
 

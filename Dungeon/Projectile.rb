@@ -33,14 +33,14 @@ class Projectile < Element
             end
         end
       else
-        if Math.sqrt((@app.player.x - @x)**2 + (@app.player.z - @z)**2) < (@itBox + @app.player.itBox)
+        if Math.sqrt((@app.player.x - @x)**2 + (@app.player.z - @z)**2) < (@itBox + @app.player.itBox) && @app.player.invulnerable <= 0
           @app.player.vie -= 1
           @app.player.invulnerable = 70
           @rand = rand(1.5).to_i
           if @rand == 0
-            @player.cri02.play(1)
+            @app.player.cri02.play(1)
           elsif @rand == 1
-            @player.cri03.play(1)
+            @app.player.cri03.play(1)
           end
         end
       end

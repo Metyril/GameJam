@@ -41,6 +41,8 @@ class ItemTire < Item
     @vitesse = 0
     @app = app
     @startAnime = false
+    @sonRecup = Gosu::Sample.new('../media/divers/chgmt_arme.wav')
+
     itbox = 1
     super room , @app.modelePointInterrogation, itbox , x,y,z
   end
@@ -55,6 +57,7 @@ class ItemTire < Item
   end
 
   def equiper
+    @sonRecup.play(1)
     @modele = @vraiMod
   end
 

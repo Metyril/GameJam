@@ -40,6 +40,8 @@ class ItemPoing < Item
       @vitesse = 0
       @app = app
       @startAnime = false
+      @sonRecup = Gosu::Sample.new('../media/divers/chgmt_arme.wav')
+
 
       @objetDeFrappe = Element.new(room, CreateModele::sim, 2)
       @rate = Gosu::Sample.new('../media/armes/coup_air.wav')
@@ -75,6 +77,7 @@ class ItemPoing < Item
   end
 
   def equiper
+    @sonRecup.play(1)
     @modele = @vraiMod
   end
 
