@@ -39,46 +39,54 @@ class CreateModele
   end
 
   def self.cube
-    c1 = Point.new(-1, 1, -1)
-    c2 = Point.new(-1, -1, -1)
-    c3 = Point.new(1, 1, -1)
-    c4 = Point.new(1, -1, -1)
-    c5 = Point.new(-1, -1, 1)
-    c6 = Point.new(-1, 1, 1)
-    c7 = Point.new(1, 1, 1)
-    c8 = Point.new(1, -1, 1)
+
+    size = 0.75
+
+    #Couleurs
+    head_color = 0xffe0c47d
+    head_color2 = 0xffffeaa7
+    head_color3 = 0xFFd1b775
+
+    c1 = Point.new(-1*size, 1*size, -1*size)
+    c2 = Point.new(-1*size, -1*size, -1*size)
+    c3 = Point.new(1*size, 1*size, -1*size)
+    c4 = Point.new(1*size, -1*size, -1*size)
+    c5 = Point.new(-1*size, -1*size, 1*size)
+    c6 = Point.new(-1*size, 1*size, 1*size)
+    c7 = Point.new(1*size, 1*size, 1*size)
+    c8 = Point.new(1*size, -1*size, 1*size)
 
     pointsCube = [c1, c2, c3, c4, c5, c6, c7, c8]
 
     trianglesCube = [
       # devant
-      Triangle.new(c1, c2, c3, 0xff2ecc71),
-      Triangle.new(c3, c2, c4, 0xff2ecc71),
+      Triangle.new(c1, c2, c3, head_color2),
+      Triangle.new(c3, c2, c4, head_color2),
       #---
 
       # deriere
-      Triangle.new(c5, c6, c7, 0xfff39c12),
-      Triangle.new(c8, c5, c7, 0xfff39c12),
+      Triangle.new(c5, c6, c7, head_color2),
+      Triangle.new(c8, c5, c7, head_color2),
       #---
 
       # haut
-      Triangle.new(c6, c1, c7, 0xff2980b9),
-      Triangle.new(c1, c3, c7, 0xff2980b9),
+      Triangle.new(c6, c1, c7, head_color),
+      Triangle.new(c1, c3, c7, head_color),
       #---
 
       # bas
-      Triangle.new(c2, c5, c8, 0xffe74c3c),
-      Triangle.new(c4, c2, c8, 0xffe74c3c),
+      Triangle.new(c2, c5, c8, head_color),
+      Triangle.new(c4, c2, c8, head_color),
       #---
 
       # droite
-      Triangle.new(c4, c8, c7, 0xff8e44ad),
-      Triangle.new(c3, c4, c7, 0xff8e44ad),
+      Triangle.new(c4, c8, c7, head_color3),
+      Triangle.new(c3, c4, c7, head_color3),
       #---
 
       # gauche
-      Triangle.new(c5, c2, c6, 0xffecf0f1),
-      Triangle.new(c2, c1, c6, 0xffecf0f1)
+      Triangle.new(c5, c2, c6, head_color3),
+      Triangle.new(c2, c1, c6, head_color3)
       #---
     ]
 
