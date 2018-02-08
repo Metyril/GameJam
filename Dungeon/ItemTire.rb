@@ -57,6 +57,7 @@ class ItemTire < Item
   end
 
   def equiper
+    @sonRecup.play(1)
     @modele = @vraiMod
   end
 
