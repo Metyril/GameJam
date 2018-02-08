@@ -74,6 +74,10 @@ class ItemPoing < Item
   end
 
   def update
-    @vitesse -= @attaqueVit + @app.player.vitesseAt
+    if @vitesse > 0
+      @vitesse -= @attaqueVit + @app.player.vitesseAt
+    else
+      @vitesse = 0
+    end
   end
 end

@@ -45,6 +45,10 @@ class Fenetre < Gosu::Window
 
     @etage = 0
 
+    @fontHUD = Gosu::Font.new 30
+    @iconRuby = Gosu::Image.new('../media/iconRuby.png')
+    @iconZombie = Gosu::Image.new('../media/iconZombie.png')
+
     # MODELES
     @playerModele = CreateModele::player
     @batte = CreateModele::batte
@@ -130,7 +134,7 @@ class Fenetre < Gosu::Window
 
 
   def update
-    self.caption = "#{Gosu.fps} FPS / vitesse:#{@player.vitesse} Attaque:#{@player.degats} Range:#{@player.range} | VitesseAt:#{@player.vitesseAt} Vie:#{@player.vie}"
+    self.caption = "#{Gosu.fps} FPS / vitesse:#{@player.vitesse} Attaque:#{@player.degats} Range:#{@player.range} | VitesseAt:#{@player.vitesseAt} Vie:#{@player.vie} ArmeVitesse:#{@player.arme.vitesse}"
     if !@pause
       frontal = 0
       lateral = 0
@@ -349,7 +353,6 @@ class Fenetre < Gosu::Window
     @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)
     @batte.draw(@camera, 0, 0, 0, 0, 0, 0)
     #@ruby.draw(@camera, @mursHitBox[3].x, 0, @mursHitBox[1].z, 0, 0, 0)
-    Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
     #@map.draw
 
     #MENU PAUSE
@@ -360,7 +363,25 @@ class Fenetre < Gosu::Window
       @titre.draw 50, 100, 2
       @cursor.draw self.mouse_x, self.mouse_y, 4
       @sound_image.draw 1110, 510, 2
+    else
+      #HUD
+      Gosu::draw_rect(20, 20, @player.vie * 47, 20, 0xffff0000, 10)
+      Gosu::draw_rect(20, 50, 140 - @player.arme.vitesse, 20, 0xffffff00, 10)
+
+      @iconRuby.draw(20, 80, 10)
+      @iconZombie.draw(20, 150, 10)
+
+      @fontHUD.draw("x #{@player.nbRuby}", 80, 90, 10, 1.5, 1.5, 0xffffffff)
+      @fontHUD.draw("x #{@player.nbZombie}", 80, 160, 10, 1.5, 1.5, 0xffffffff)
+
+      @fontHUD.draw("Bonus: ", 20, 230, 101, 1, 1, 0xffffffff)
+      @fontHUD.draw("Vitesse: #{@player.vitesse}", 30, 265, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("Attaque: #{@player.degats}", 30, 300, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("Range: #{@player.range}", 30, 335, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("VitesseAt: #{@player.vitesseAt}", 30, 370, 10, 1, 1, 0xffffffff)
     end
+
+    Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)
   end
 
   def redraw?(x, z)

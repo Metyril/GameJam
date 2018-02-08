@@ -1209,7 +1209,7 @@ def self.bazooka size = 0.7
   p6e = Point.new(2*size+tailleEmbout,(1-hauteur)*size+tailleEmbout,longueur/2*size+longueurEmbout)
   p7e = Point.new(2*size+tailleEmbout,(-1-hauteur)*size-tailleEmbout,longueur/2*size+longueurEmbout)
   p8e = Point.new(1*size+tailleEmbout,(-2-hauteur)*size-tailleEmbout,longueur/2*size+longueurEmbout)
-  pmilieue = Point.new(0*size,(0+hauteur)*size,longueur/2*size+longueurEmbout)
+  pmilieue = Point.new(0*size+tailleEmbout,(0-hauteur)*size-tailleEmbout,longueur/2*size+longueurEmbout)
 
   #Points Octogone Avant
   p1a = Point.new(-1*size,(-2-hauteur)*size,longueur/2*size)
