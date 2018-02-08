@@ -28,7 +28,7 @@ class Teleporteur < Element
         map.rooms.each_with_index do |room, r|
           if r != playerInitPos
             if fenetre.etage == 0
-              self.spone(fenetre,room,"Zombie",0.5,15)
+              self.spone(fenetre,room,"Zombie",0.5,10)
               self.spone(fenetre,room,"Ruby",0.5,15)
               self.spone(fenetre,room,"Pilule",0.5,3)
               self.spone(fenetre,room,"MegaPilule",0.5,1)
@@ -37,7 +37,7 @@ class Teleporteur < Element
               self.spone(fenetre,room,"Vie",0.1,1)
               self.spone(fenetre,room,"Piege",0.5,2)
             elsif fenetre.etage == 1
-              self.spone(fenetre,room,"Zombie",0.5,20)
+              self.spone(fenetre,room,"Zombie",0.5,15)
               self.spone(fenetre,room,"ZombieCracheur",0.5,4)
               self.spone(fenetre,room,"Ruby",0.5,15)
               self.spone(fenetre,room,"Pilule",0.5,3)
@@ -48,8 +48,8 @@ class Teleporteur < Element
               self.spone(fenetre,room,"Vie",0.1,1)
               self.spone(fenetre,room,"Piege",0.5,2)
             elsif fenetre.etage == 2
-              self.spone(fenetre,room,"Zombie",0.5,25)
-              self.spone(fenetre,room,"ZombieCracheur",0.5,10)
+              self.spone(fenetre,room,"Zombie",0.5,15)
+              self.spone(fenetre,room,"ZombieCracheur",0.5,7)
               self.spone(fenetre,room,"Ruby",0.5,15)
               self.spone(fenetre,room,"Pilule",0.5,3)
               self.spone(fenetre,room,"MegaPilule",0.5,2)
@@ -59,8 +59,8 @@ class Teleporteur < Element
               self.spone(fenetre,room,"Vie",0.1,1)
               self.spone(fenetre,room,"Piege",0.5,2)
             elsif fenetre.etage == 3
-              self.spone(fenetre,room,"Zombie",0.5,30)
-              self.spone(fenetre,room,"ZombieCracheur",0.5,13)
+              self.spone(fenetre,room,"Zombie",0.5,15)
+              self.spone(fenetre,room,"ZombieCracheur",0.5,10)
               self.spone(fenetre,room,"Ruby",0.5,15)
               self.spone(fenetre,room,"Pilule",0.5,3)
               self.spone(fenetre,room,"MegaPilule",0.5,2)

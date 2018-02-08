@@ -33,34 +33,34 @@ class Pilule < Item
       when "Vitesse +"
         if @app.player.vitesse < 2
           @app.player.vitesse += 0.2
-          @app.player.ajouterItem(self)
+          #@app.player.ajouterItem(self)
         end
       when "Vitesse -"
         if @app.player.vitesse > 0.5
           @app.player.vitesse -= 0.2
-          @app.player.ajouterItem(self)
+          #@app.player.ajouterItem(self)
         end
       when "Attaque +"
         @app.player.degats += 0.5
-        @app.player.ajouterItem(self)
+        #@app.player.ajouterItem(self)
       when "Attaque -"
         @app.player.degats -= 0.5
-        @app.player.ajouterItem(self)
+        #@app.player.ajouterItem(self)
       when "Range +"
         @app.player.range += 1
-        @app.player.ajouterItem(self)
+        #@app.player.ajouterItem(self)
       when "Range -"
         if @app.player.range > -1
           @app.player.range -= 1
-          @app.player.ajouterItem(self)
+          #@app.player.ajouterItem(self)
         end
       when "Vitesse Att +"
         @app.player.vitesseAt += 1
-        @app.player.ajouterItem(self)
+        #@app.player.ajouterItem(self)
       when "Vitesse Att -"
         if @app.player.vitesseAt > -0.5
           @app.player.vitesseAt -= 0.5
-          @app.player.ajouterItem(self)
+          #@app.player.ajouterItem(self)
         end
       end
     end

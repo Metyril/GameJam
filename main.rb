@@ -62,8 +62,8 @@ class Fenetre < Gosu::Window
     @modeleProjectileVert = CreateModele::projectile(0.5,0xff1abc9c,0xff16a085)
     @modeleProjectile = CreateModele::projectile
     @modeleParicule2 = CreateModele::sim 1
-    @modeleDrone = CreateModele::pyramide
-    @modelePointInterrogation= CreateModele::pointInterrogation
+    @modeleDrone = CreateModele::sim 2
+    @modelePointInterrogation = CreateModele::pointInterrogation
 
     # TELEPORTEUR
     @playerInitPos = rand(0..@nb_room-1)
@@ -85,7 +85,10 @@ class Fenetre < Gosu::Window
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
-    @mega << MegaZombie.new(@map.rooms[@playerInitPos],@ennemisModele,3,0,0,0,true,self)
+
+    #@drones << DroneAt.new(self,@map.rooms[@playerInitPos])
+
+
 
     @sonFin = Gosu::Sample.new('../media/divers/mort_son.wav')
     @sonTeleporteur = Gosu::Sample.new('../media/divers/teleporteur.wav')
@@ -308,6 +311,7 @@ class Fenetre < Gosu::Window
         ramassable.detruire
       end
     end
+
     # @ennemis.each do |ennemi|
     #   ennemi.detruire if self.dist(@player,ennemi) < (@player.itBox + ennemi.itBox)
     # end
@@ -316,6 +320,7 @@ class Fenetre < Gosu::Window
     self.iter @vies
     self.iter @drones
     self.iter @pilules
+
     self.iter @projectiles
     #self.iter @ennemis
     @ennemis.delete_if do |elem|
