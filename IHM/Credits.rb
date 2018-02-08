@@ -18,6 +18,8 @@ class Credits < Gosu::Window
     @message5 = Gosu::Image.from_text('Jeremy    Andre           aka    Le    MultiDimensioneur', 30, {:font => "./media/menus/Basica.ttf"})
     @sources = Gosu::Image.from_text('Sources : ', 50, {:font => "./media/menus/Basica.ttf", :align => :center})
     @source_son = Gosu::Image.from_text('Bruitages                                       Universal    Soundbank', 30, {:font => "./media/menus/Basica.ttf"})
+    @source_police = Gosu::Image.from_text('Police    Ecriture                     Basica    by    QbotypeFonts', 30, {:font => "./media/menus/Basica.ttf"})
+    @source_glitch = Gosu::Image.from_text('Glitcher                                           ImageGlitcher', 30, {:font => "./media/menus/Basica.ttf"})
   end
 
   def draw
@@ -32,6 +34,8 @@ class Credits < Gosu::Window
     @message5.draw(200, 350, 0)
     @sources.draw(475,450,0)
     @source_son.draw(200,550,0)
+    @source_police.draw(200,600,0)
+    @source_glitch.draw(200,650,0)
   end
 
   def update
