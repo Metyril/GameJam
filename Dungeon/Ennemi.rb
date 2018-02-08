@@ -17,14 +17,12 @@ class Ennemi < Element
         @cracheur = cracheur
         @app = app
 
-        @rand = rand(3).to_i
+        @rand = rand(2).to_i
         if @rand == 0
           @son = Gosu::Sample.new('../media/zombie/zombie01.ogg')
         elsif @rand == 1
-          @son = Gosu::Sample.new('../media/zombie/zombie02.ogg')
-        elsif @rand == 2
           @son = Gosu::Sample.new('../media/zombie/zombie03.ogg')
-        elsif @rand == 3
+        elsif @rand == 2
           @son = Gosu::Sample.new('../media/zombie/zombie04.ogg')
         end
         @a_crie = false

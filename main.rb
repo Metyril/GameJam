@@ -66,7 +66,7 @@ class Fenetre < Gosu::Window
 
     # TELEPORTEUR
     @playerInitPos = rand(0..@nb_room-1)
-    @modeleTP = CreateModele::sim
+    @modeleTP = CreateModele::teleporteur
     @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @playerInitPos, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
 
     # ATTRIBUTS
@@ -244,7 +244,10 @@ class Fenetre < Gosu::Window
     end
 
     @ramassables.each do |ramassable|
-      ramassable.detruire if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+      if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+        ramassable.detruire
+        @player.nbRuby += 1
+      end
     end
     @vies.each do |ramassable|
       if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
@@ -285,7 +288,16 @@ class Fenetre < Gosu::Window
     self.iter @drones
     self.iter @pilules
     self.iter @projectiles
-    self.iter @ennemis
+    #self.iter @ennemis
+    @ennemis.delete_if do |elem|
+      elem.update
+      if elem.isDetruit
+        @player.nbZombie += 1
+      end
+
+      elem.isDetruit
+    end
+
     self.iter @ramassables
     self.iter @ramassablesArme
     self.iter @particules
@@ -395,7 +407,7 @@ class Fenetre < Gosu::Window
       @fontHUD.draw("x #{@player.nbZombie}", 80, 160, 10, 1.5, 1.5, 0xffffffff)
 
       @fontHUD.draw("Bonus: ", 20, 230, 101, 1, 1, 0xffffffff)
-      @fontHUD.draw("Vitesse: #{@player.vitesse}", 30, 265, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("Vitesse: #{(@player.vitesse-1)}", 30, 265, 10, 1, 1, 0xffffffff)
       @fontHUD.draw("Attaque: #{@player.degats}", 30, 300, 10, 1, 1, 0xffffffff)
       @fontHUD.draw("Range: #{@player.range}", 30, 335, 10, 1, 1, 0xffffffff)
       @fontHUD.draw("VitesseAt: #{@player.vitesseAt}", 30, 370, 10, 1, 1, 0xffffffff)
