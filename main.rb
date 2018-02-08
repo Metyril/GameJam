@@ -398,7 +398,7 @@ class Fenetre < Gosu::Window
       @fontHUD.draw("x #{@player.nbZombie}", 80, 160, 10, 1.5, 1.5, 0xffffffff)
 
       @fontHUD.draw("Bonus: ", 20, 230, 101, 1, 1, 0xffffffff)
-      @fontHUD.draw("Vitesse: #{@player.vitesse}", 30, 265, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("Vitesse: #{(@player.vitesse-1)}", 30, 265, 10, 1, 1, 0xffffffff)
       @fontHUD.draw("Attaque: #{@player.degats}", 30, 300, 10, 1, 1, 0xffffffff)
       @fontHUD.draw("Range: #{@player.range}", 30, 335, 10, 1, 1, 0xffffffff)
       @fontHUD.draw("VitesseAt: #{@player.vitesseAt}", 30, 370, 10, 1, 1, 0xffffffff)
