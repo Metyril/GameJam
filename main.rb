@@ -105,7 +105,7 @@ class Fenetre < Gosu::Window
     @pause = false
     @music = Gosu::Song.new('../media/little_apocalypse.ogg')
     @cursor = Gosu::Image.new('../media/mouse.png')
-    @titre = Gosu::Image.new('../media/Omotecy - Titre Final.png')
+    @titre = Gosu::Image.new('../media/Pause3D.png')
     @bouton = Bouton.new(500,350,270,80,Gosu::Color::CYAN,"Jouer",3)
     @exit = Bouton.new(500,450,270,80,Gosu::Color::CYAN,"Quitter",2.8)
     @sound_btn = Bouton.new(1100,500,100,100,Gosu::Color::CYAN,"",2.8)
@@ -424,7 +424,7 @@ class Fenetre < Gosu::Window
       @bouton.draw
       @exit.draw
       @sound_btn.draw
-      @titre.draw 50, 100, 2
+      @titre.draw 350, 130, 2
       @cursor.draw self.mouse_x, self.mouse_y, 4
       @sound_image.draw 1110, 510, 2
     else
