@@ -81,6 +81,9 @@ class Player < Element
         end
       end
     end
+
+    @arme.x = @x - Math.sin(@angle - DEMIPI)*3
+    @arme.z = @z - Math.cos(@angle - DEMIPI)*3
   end
 
   def draw cam
@@ -101,9 +104,11 @@ class Player < Element
     end
 
     if @arme.is_a? ItemPoing
-      @arme.modele.draw(cam, @x - Math.sin(@angle - DEMIPI)*3, @y - 2, @z - Math.cos(@angle - DEMIPI)*3, @anime > DEMIPI ? 0 : @anime, -@angle, 0)
+      @arme.modele.draw(cam, @arme.x, @y - 2, @arme.z, @anime > DEMIPI ? 0 : @anime, -@angle, 0)
+      #@arme.modele.draw(cam, @x - Math.sin(@angle - DEMIPI)*3, @y - 2, @z - Math.cos(@angle - DEMIPI)*3, @anime > DEMIPI ? 0 : @anime, -@angle, 0)
     else
-      @arme.modele.draw(cam, @x - Math.sin(@angle - DEMIPI)*3, @y - 2.5, @z - Math.cos(@angle - DEMIPI)*3, @anime > DEMIPI ? 0 : -@anime, -@angle, 0)
+      @arme.modele.draw(cam, @arme.x, @y - 2.5, @arme.z, @anime > DEMIPI ? 0 : -@anime, -@angle, 0)
+      #@arme.modele.draw(cam, @x - Math.sin(@angle - DEMIPI)*3, @y - 2.5, @z - Math.cos(@angle - DEMIPI)*3, @anime > DEMIPI ? 0 : -@anime, -@angle, 0)
     end
 
     if (@anime < DEMIPI)

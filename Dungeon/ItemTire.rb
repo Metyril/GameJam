@@ -39,14 +39,15 @@ class ItemTire < Item
     @app = app
     @startAnime = false
     itbox = 1
-    super room ,CreateModele::pointInterrogation, itbox , x,y,z
+    super room , @app.modelePointInterrogation, itbox , x,y,z
   end
 
   def attaque
     if @vitesse <= 0
       @vitesse = 140
       @startAnime = true
-      @app.projectiles << Projectile.new(@app,@app.player.angle,@app.player.x,@app.player.y,@app.player.z,@itBox,@degats+@app.player.degats,@modeleTire,@room,@vitesseP)
+
+      @app.projectiles << Projectile.new(@app,@app.player.angle,@x,@y,@z,@itBox,@degats+@app.player.degats,@modeleTire,@room,@vitesseP)
     end
   end
 

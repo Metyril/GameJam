@@ -27,7 +27,7 @@ class Projectile < Element
 
             room = @app.map.rooms[rand(0..0)]
             for i in (0...5)
-              @app.particules << Particule.new(room, @app.modeleParicule, @x, @y, @z)
+              @app.particules << Particule.new(room, @app.modeleParicule2, @x, @y, @z)
             end
           end
       end
