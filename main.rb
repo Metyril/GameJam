@@ -34,7 +34,7 @@ DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
   attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage, :score, :pieges,:gagner,:zombieFin,:bossModele
-  attr_accessor :modeleParicule, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert,:modeleDrone,:modPilule,:modeleRuby,:modeleProjectile
+  attr_accessor :modeleParicule, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert,:modeleDrone,:modPilule,:modeleRuby,:modeleProjectile,:modelePiege
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
 
@@ -69,6 +69,7 @@ class Fenetre < Gosu::Window
     @modeleProjectile = CreateModele::projectile
     @modeleParicule2 = CreateModele::sim 1
     @modeleDrone = CreateModele::sim 2
+    @modelePiege = CreateModele::sol
     @modelePointInterrogation = CreateModele::pointInterrogation
 
     # TELEPORTEUR
