@@ -30,7 +30,8 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
-  attr_accessor :player, :ennemis, :projectiles, :modeleParicule, :particules, :map,:ramassablesArme,:ramassables,:pilules, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert
+  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele
+  attr_accessor :modeleParicule, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert,:modeleDrone,:modelePilule,:modeleRuby,:modeleProjectile
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
 
@@ -53,7 +54,9 @@ class Fenetre < Gosu::Window
     @modPilule = CreateModele::pilule
     @modeleParicule = CreateModele::sim
     @modeleProjectileVert = CreateModele::projectile(0.5,0xff1abc9c,0xff16a085)
+    @modeleProjectile = CreateModele::projectile
     @modeleParicule2 = CreateModele::sim 1
+    @modeleDrone = CreateModele::pyramide
     @modelePointInterrogation= CreateModele::pointInterrogation
 
     # TELEPORTEUR
@@ -75,6 +78,7 @@ class Fenetre < Gosu::Window
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
+    @pilules << MegaPilule.new(self,@map.rooms[@playerInitPos])
 
 
     @listeModeleCellules = Array.new
