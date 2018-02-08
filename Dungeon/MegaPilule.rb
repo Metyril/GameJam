@@ -55,7 +55,7 @@ class MegaPilule < Item
       when "Pillule"
         j = rand(3..5)
         for i in 1..j
-          @app.pilules << Pilule.new(@app,@room,@app.modelePilule)
+          @app.pilules << Pilule.new(@app,@room,@app.modPilule)
         end
       when "Drone"
         j = rand(3..5)

@@ -30,8 +30,8 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
-  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele
-  attr_accessor :modeleParicule, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert,:modeleDrone,:modelePilule,:modeleRuby,:modeleProjectile
+  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage
+  attr_accessor :modeleParicule, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert,:modeleDrone,:modPilule,:modeleRuby,:modeleProjectile
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
 
@@ -78,14 +78,10 @@ class Fenetre < Gosu::Window
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
-    @pilules << MegaPilule.new(self,@map.rooms[@playerInitPos])
 
 
     @listeModeleCellules = Array.new
-    for i in (0..15)
-      @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), 0))
-      #@listeModeleCellules.push(CreateModele::cellule("0111"))
-    end
+    self.setModelesMurs
 
     @freeCam = false
     @drawTotal = false
@@ -104,6 +100,14 @@ class Fenetre < Gosu::Window
     @sound_btn = Bouton.new(1100,500,100,100,Gosu::Color::CYAN,"",2.8)
     @sound_image = Gosu::Image.new('../media/sound.png')
     @music.play(true)
+  end
+
+  def setModelesMurs
+    @listeModeleCellules = Array.new
+    for i in (0..15)
+      @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), @etage))
+      #@listeModeleCellules.push(CreateModele::cellule("0111"))
+    end
   end
 
   def button_down(id)
@@ -211,6 +215,8 @@ class Fenetre < Gosu::Window
 
     if self.dist(@player, @teleporteur) < (@player.itBox + @teleporteur.itBox)
       @playerInitPos = rand(0..@nb_room-1)
+      @etage += 1
+      self.setModelesMurs
       @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @playerInitPos, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
 
       @map = @teleporteur.allSet[:map]
