@@ -85,7 +85,7 @@ class Fenetre < Gosu::Window
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
-    @mega << Ennemi.new(@map.rooms[@playerInitPos],@ennemisModele,3,0,0,0,true,self)
+    @mega << MegaZombie.new(@map.rooms[@playerInitPos],@ennemisModele,3,0,0,0,true,self)
 
     @sonFin = Gosu::Sample.new('../media/divers/mort_son.wav')
     @sonTeleporteur = Gosu::Sample.new('../media/divers/teleporteur.wav')
@@ -237,7 +237,7 @@ class Fenetre < Gosu::Window
       @mega.each do |ennemi|
         ennemi.detruire if 1 > ennemi.vie
         ennemi.deplacements(@player.x, @player.z)
-        if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable == 0
+        if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable <= 0
           @player.vie -= 1
           @player.invulnerable = 70
         end
