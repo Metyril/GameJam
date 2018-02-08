@@ -8,6 +8,8 @@ class ItemTire < Item
     @room = room
 
     rang = rand(3)
+    #rang = 2
+
     case rang
       when 0
         @nom = "Pistolet"
@@ -45,6 +47,10 @@ class ItemTire < Item
 
     itbox = 1
     super room , @app.modelePointInterrogation, itbox , x,y,z
+
+
+
+    #self.equiper
   end
 
   def attaque
