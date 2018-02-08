@@ -16,7 +16,7 @@ class MenuFin < Gosu::Window
         self.caption = "Omotecy - Vous avez survécu à la transformation !"
       else
         @statut = Gosu::Image.new('./media/menus/loseMenuFin.png')
-        self.caption = "Omotecy - La matrice vous a emprisonnée !"
+        self.caption = "Omotecy - Vous devenez l'un d'eux ..."
       end
       @rejouer = Bouton.new(450,500,400,80,Gosu::Color::CYAN,"Rejouer",3)
       @exit = Bouton.new(450,600,400,80,Gosu::Color::CYAN,"Quitter",2.8)
