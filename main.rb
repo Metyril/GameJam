@@ -25,8 +25,7 @@ require_relative 'Dungeon/Particule.rb'
 require_relative 'Dungeon/Teleporteur.rb'
 
 require_relative 'IHM/Bouton.rb'
-require_relative 'IHM/MenuGameOver.rb'
-require_relative 'IHM/MenuWin.rb'
+require_relative 'IHM/MenuFin.rb'
 
 WIDTH = 1280
 HEIGHT = 720
@@ -34,7 +33,7 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
-  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage,:pieges,:gagner,:zombieFin,:bossModele
+  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage, :score, :pieges,:gagner,:zombieFin,:bossModele
   attr_accessor :modeleParicule, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert,:modeleDrone,:modPilule,:modeleRuby,:modeleProjectile
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
@@ -49,7 +48,8 @@ class Fenetre < Gosu::Window
     @type_gen = 'random'    # Type de génération / 4 valeurs possibles : 'random', 'newest', 'middle', 'oldest'
     @gagner = false
 
-    @etage = 0
+    @score = 0
+    @etage = 3
     @zombieFin = 0
     @fontHUD = Gosu::Font.new 30
     @iconRuby = Gosu::Image.new('../media/iconRuby.png')
@@ -386,13 +386,16 @@ class Fenetre < Gosu::Window
       if @player.vie <= 0
         @player.sonMort.play(1)
         @sonFin.play(1)
+        @score = @player.nbRuby + 10*(@player.nbZombie-@zombieFin) + 100*@zombieFin
         self.close!
-        MenuGameOver.new.show
+        MenuFin.new(@score).show
       end
     else
       #CEST LA FIN
+      @sonFin.play(1)
+      @score = @player.nbRuby + 10*(@player.nbZombie-@zombieFin) + 100*@zombieFin
       self.close!
-      MenuWin.new.show
+      MenuFin.new(@score).show
     end
 
   end
@@ -471,8 +474,8 @@ class Fenetre < Gosu::Window
         @iconRuby.draw(20, 80, 10)
         @iconZombie.draw(20, 150, 10)
 
-        @fontHUD.draw("x #{@player.nbRuby}", 80, 90, 10, 1.5, 1.5, 0xffffffff)
-        @fontHUD.draw("x #{@player.nbZombie}", 80, 160, 10, 1.5, 1.5, 0xffffffff)
+        @fontHUD.draw("x #{@player.nbRuby}", 90, 95, 10, 1.5, 1.5, 0xffffffff)
+        @fontHUD.draw("x #{@player.nbZombie}", 90, 165, 10, 1.5, 1.5, 0xffffffff)
 
         @fontHUD.draw("Bonus: ", 20, 230, 101, 1, 1, 0xffffffff)
         @fontHUD.draw("Vitesse: #{((@player.vitesse-1).round(1))}", 30, 265, 10, 1, 1, 0xffffffff)

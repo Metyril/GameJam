@@ -2,23 +2,27 @@
 require 'gosu'  # Librairie graphique Gosu
 
 require_relative 'Bouton.rb'
-# require_relative '../main.rb'
-# require_relative 'MenuPrincipal.rb'
 
-class MenuGameOver < Gosu::Window
+class MenuFin < Gosu::Window
 
-    def initialize(width=1280, height=720, options={:fullscreen => false})     # options facultatif / update_interval est en ms
-      super
+    def initialize(score, width=1280, height=720, options={:fullscreen => false})     # options facultatif / update_interval est en ms
+      super width, height, options
+      @score = score
+      puts @score
       @cursor = Gosu::Image.new('../media/mouse.png')
       @titre = Gosu::Image.new('../media/Omotecy - Titre Final.png')
-      @rejouer = Bouton.new(500,350,350,80,Gosu::Color::CYAN,"Rejouer",3)
-      @exit = Bouton.new(500,450,350,80,Gosu::Color::CYAN,"Quitter",2.8)
+      @rejouer = Bouton.new(450,450,400,80,Gosu::Color::CYAN,"Rejouer",3)
+      @exit = Bouton.new(450,550,400,80,Gosu::Color::CYAN,"Quitter",2.8)
+      @txtScore = Gosu::Image.from_text('Score obtenu', 50, {:font => "../media/Basica.ttf", :align => :center})
+      @printScore = Gosu::Image.from_text("#{@score}", 100)
     end
 
     def draw
       @rejouer.draw
       @exit.draw
-      @titre.draw 50, 100, 2
+      @titre.draw 50, 100, 0
+      @txtScore.draw 425, 300, 0
+      @printScore.draw 600, 350, 0
       @cursor.draw self.mouse_x, self.mouse_y, 4
     end
 

@@ -5,7 +5,7 @@ require_relative './Element.rb'
 
 
 class MegaZombie < Ennemi
-    def initialize(room, modele,app = 0, itbox=5,x=0,y=0,z=0,cracheur = true ,app = 0)
+    def initialize(room, modele,app = 0, itbox=5,x=0,y=0,z=0,cracheur = true)
         super room, modele,app , itbox, x,y,z,cracheur
         @vie = 90
     end

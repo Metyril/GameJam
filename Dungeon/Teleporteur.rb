@@ -104,7 +104,7 @@ class Teleporteur < Element
           when "Piege"
             @pieges << Piege.new(fenetre,room)
           when "MegaZombie"
-            @ennemis << MegaZombie.new(room, fenetre.bossModele,5,0,0,0,true,fenetre)
+            @ennemis << MegaZombie.new(room, fenetre.bossModele, fenetre, 5,0,0,0,true)
           end
         end
       end

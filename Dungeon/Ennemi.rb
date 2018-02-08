@@ -16,7 +16,6 @@ class Ennemi < Element
         @velRecul = 1
         @vitesseAt = 0
         @cracheur = cracheur
-        @app = app
 
         @tire = false
 
