@@ -3,7 +3,7 @@ require 'gosu'  # Librairie graphique Gosu
 require_relative 'Item.rb'
 
 class ItemTire < Item
-      attr_accessor :vitesse,:degats,:attaqueVit,:startAnime,:modeleTire,:room,:vitesseP,:nom,:vraiMod
+      attr_accessor :vitesse,:degats,:attaqueVit,:startAnime,:modeleTire,:room,:vitesseP,:nom,:vraiMod,:son
   def initialize(app,room,x=0,y=0,z=0)
     @room = room
 
@@ -16,6 +16,7 @@ class ItemTire < Item
         @degats = 1
         @modeleTire = CreateModele::projectile
         @vraiMod  = CreateModele::pistolet
+        @son = Gosu::Sample.new('../media/armes/revolver.wav')
         itbox = 1
       when 1
         @nom = "Mitraillette"
@@ -24,14 +25,16 @@ class ItemTire < Item
         @degats = 2
         @modeleTire = CreateModele::projectile(0.5)
         @vraiMod  = CreateModele::pistolet
+        @son = Gosu::Sample.new('../media/armes/revolver.wav')
         itbox = 3
       when 2
         @nom = "Bazooka"
         @attaqueVit = 1
-        @vitesseP = 1
+        @vitesseP = 8
         @degats = 4
         @modeleTire = CreateModele::projectile(0.8)
         @vraiMod  = CreateModele::bazooka
+        @son = Gosu::Sample.new('../media/armes/bazooka.wav')
         itbox = 3
 
     end
@@ -46,7 +49,7 @@ class ItemTire < Item
     if @vitesse <= 0
       @vitesse = 140
       @startAnime = true
-
+      @son.play(1)
       @app.projectiles << Projectile.new(@app,@app.player.angle,@x,@y,@z,@itBox,@degats+@app.player.degats,@modeleTire,@room,@vitesseP)
     end
   end

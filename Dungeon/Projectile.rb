@@ -34,7 +34,7 @@ class Projectile < Element
         end
       else
         if Math.sqrt((@app.player.x - @x)**2 + (@app.player.z - @z)**2) < (@itBox + @app.player.itBox)
-          @app.player.vie -= 0.1
+          @app.player.vie -= 1
           @app.player.invulnerable = 70
         end
       end
