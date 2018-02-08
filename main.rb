@@ -33,7 +33,7 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
-  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage,:pieges,:gagner,:zombieFin
+  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage,:pieges,:gagner,:zombieFin,:bossModele
   attr_accessor :modeleParicule, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert,:modeleDrone,:modPilule,:modeleRuby,:modeleProjectile
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
@@ -48,7 +48,7 @@ class Fenetre < Gosu::Window
     @type_gen = 'random'    # Type de génération / 4 valeurs possibles : 'random', 'newest', 'middle', 'oldest'
     @gagner = false
 
-    @etage = 0
+    @etage = 4
     @zombieFin = 0
     @fontHUD = Gosu::Font.new 30
     @iconRuby = Gosu::Image.new('../media/iconRuby.png')
