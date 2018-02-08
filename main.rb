@@ -87,6 +87,9 @@ class Fenetre < Gosu::Window
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
     @mega << Ennemi.new(@map.rooms[@playerInitPos],@ennemisModele,3,0,0,0,true,self)
 
+    @sonFin = Gosu::Sample.new('../media/divers/mort_son.wav')
+    @sonTeleporteur = Gosu::Sample.new('../media/divers/teleporteur.wav')
+    @sonTeleporteur.play(1)
 
     @listeModeleCellules = Array.new
     self.setModelesMurs
@@ -219,6 +222,12 @@ class Fenetre < Gosu::Window
         ennemi.deplacements(@player.x, @player.z)
         if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable == 0
           @player.vie -= 1
+          @rand = rand(2).to_i
+          if @rand == 0
+            @player.cri02.play(1)
+          elsif @rand == 1
+            @player.cri03.play(1)
+          end
           @player.invulnerable = 70
         end
         self.murCollision ennemi
@@ -340,7 +349,10 @@ class Fenetre < Gosu::Window
     elsif @sound_btn.getColor == Gosu::Color::YELLOW
       @sound_btn.color(Gosu::Color::CYAN)
     end
+
     if @player.vie <= 0
+      @player.sonMort.play(1)
+      @sonFin.play(1)
       close
       MenuPrincipal.new.show
     end
@@ -427,10 +439,10 @@ class Fenetre < Gosu::Window
       @fontHUD.draw("x #{@player.nbZombie}", 80, 160, 10, 1.5, 1.5, 0xffffffff)
 
       @fontHUD.draw("Bonus: ", 20, 230, 101, 1, 1, 0xffffffff)
-      @fontHUD.draw("Vitesse: #{(@player.vitesse-1)}", 30, 265, 10, 1, 1, 0xffffffff)
-      @fontHUD.draw("Attaque: #{@player.degats}", 30, 300, 10, 1, 1, 0xffffffff)
-      @fontHUD.draw("Range: #{@player.range}", 30, 335, 10, 1, 1, 0xffffffff)
-      @fontHUD.draw("VitesseAt: #{@player.vitesseAt}", 30, 370, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("Vitesse: #{((@player.vitesse-1).round(1))}", 30, 265, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("Attaque: #{(@player.degats.round(1))}", 30, 300, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("Range: #{(@player.range.round(1))}", 30, 335, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("VitesseAt: #{(@player.vitesseAt.round(1))}", 30, 370, 10, 1, 1, 0xffffffff)
     end
 
     Gosu::draw_rect(0, 0, WIDTH, HEIGHT, 0xff2c3e50, -10000)

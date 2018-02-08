@@ -7,6 +7,9 @@ class CreateModele
     if theme == 1
       couleur1 = 0xff218c74
       couleur2 = 0xff33d9b2
+    elsif theme == 2
+      couleur1 = 0xFF696969
+      couleur2 = 0xFF595959
     end
 
     s1 = Point.new(-1, 0, -1)
