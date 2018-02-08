@@ -81,6 +81,7 @@ class Fenetre < Gosu::Window
     @particules = @teleporteur.allSet[:particules]
     @vies = @teleporteur.allSet[:vies]
     @pieges = @teleporteur.allSet[:pieges]
+    @mega = Array.new
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
@@ -88,6 +89,8 @@ class Fenetre < Gosu::Window
     @sonFin = Gosu::Sample.new('../media/divers/mort_son.wav')
     @sonTeleporteur = Gosu::Sample.new('../media/divers/teleporteur.wav')
     @sonTeleporteur.play(1)
+    @sonRubis = Gosu::Sample.new('../media/divers/ruby.wav')
+
 
     @listeModeleCellules = Array.new
     self.setModelesMurs
@@ -199,6 +202,9 @@ class Fenetre < Gosu::Window
       @ennemis.each do |ennemi|
         ennemi.attaque
       end
+      @mega.each do |ennemi|
+        ennemi.attaque
+      end
     end
 
     self.murCollision @player
@@ -229,6 +235,16 @@ class Fenetre < Gosu::Window
         self.murCollision ennemi
       end
 
+      # POUR LE MEGA
+      @mega.each do |ennemi|
+        ennemi.detruire if 1 > ennemi.vie
+        ennemi.deplacements(@player.x, @player.z)
+        if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable == 0
+          @player.vie -= 1
+          @player.invulnerable = 70
+        end
+        self.murCollision ennemi
+      end
     end
 
 
@@ -261,6 +277,7 @@ class Fenetre < Gosu::Window
       if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
         ramassable.detruire
         @player.nbRuby += 1
+        @sonRubis.play(1)
       end
     end
     @vies.each do |ramassable|
@@ -297,6 +314,7 @@ class Fenetre < Gosu::Window
     # @ennemis.each do |ennemi|
     #   ennemi.detruire if self.dist(@player,ennemi) < (@player.itBox + ennemi.itBox)
     # end
+    self.iter @mega
     self.iter @pieges
     self.iter @vies
     self.iter @drones
@@ -504,7 +522,11 @@ class Fenetre < Gosu::Window
         ennemi.draw(@camera)
       end
     end
-
+    @mega.each do |ennemi|
+      if redraw?(ennemi.x, ennemi.z)
+        ennemi.draw(@camera)
+      end
+    end
   end
 
   def drawMapTotal
