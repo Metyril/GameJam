@@ -32,7 +32,7 @@ class MegaPilule < Item
       when "Zombie"
         j = rand(2..10)
         for i in 1..j
-          @app.ennemis << Ennemi.new(@room, @app.ennemisModele)
+          @app.ennemis << Ennemi.new(@room, @app.ennemisModele,@app)
         end
       when "Explosion"
         @boom.play(1)

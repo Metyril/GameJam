@@ -9,7 +9,7 @@ class Projectile < Element
       @app = app
       @ennemie = Array.new
       @vitesse = vitesse
-      @range = range + 10*@app.player.range
+      @range = range + 5*@app.player.range
       @angle = angle
       @degats = degats
       @y = -5

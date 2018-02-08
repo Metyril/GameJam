@@ -11,7 +11,7 @@ class Piege < Item
 
     def activeEffet
       for i in 1..2
-        @app.ennemis << Ennemi.new(@room, @app.ennemisModele)
+        @app.ennemis << Ennemi.new(@room, @app.ennemisModele,@app)
       end
     end
 end # Fin Element
