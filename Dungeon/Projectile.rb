@@ -4,12 +4,12 @@ require 'gosu'  # Librairie graphique Gosu
 class Projectile < Element
     attr_accessor :app,:angle, :degats, :vitesse,:ennemie,:cracha
 
-    def initialize(app,angle,x,y,z,itbox,degats,modele,room,vitesse,cracha = false)
+    def initialize(app,angle,x,y,z,itbox,degats,modele,room,vitesse,cracha = false,range = 20)
       super room,modele,itbox,x,y,z,false
       @app = app
       @ennemie = Array.new
       @vitesse = vitesse
-      @range = 20 + 10*@app.player.range
+      @range = range + 10*@app.player.range
       @angle = angle
       @degats = degats
       @y = -5

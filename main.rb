@@ -34,7 +34,7 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
-  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage,:pieges,:gagner,:zombieFin
+  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage,:pieges,:gagner,:zombieFin,:bossModele
   attr_accessor :modeleParicule, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert,:modeleDrone,:modPilule,:modeleRuby,:modeleProjectile
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
@@ -91,6 +91,7 @@ class Fenetre < Gosu::Window
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
+
 
     @sonFin = Gosu::Sample.new('../media/divers/mort_son.wav')
     @sonTeleporteur = Gosu::Sample.new('../media/divers/teleporteur.wav')
@@ -566,7 +567,7 @@ class Fenetre < Gosu::Window
     #   end
     # end
 
-    @teleporteur.draw(@camera)
+
   end
 
   def drawMapTotal
