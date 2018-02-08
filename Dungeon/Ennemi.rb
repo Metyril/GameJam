@@ -17,6 +17,8 @@ class Ennemi < Element
         @cracheur = cracheur
         @app = app
 
+        @tire = false
+
         @rand = rand(2).to_i
         if @rand == 0
           @son = Gosu::Sample.new('../media/zombie/zombie01.ogg')
@@ -39,7 +41,11 @@ class Ennemi < Element
               @son.play(0.5)
               @a_crie = true
             end
+
+            @tire = true
         else
+
+          @tire = false
 
             @angle += @dirAngle
 
@@ -63,7 +69,7 @@ class Ennemi < Element
     end
 
     def attaque
-      if @cracheur
+      if @cracheur && @tire
         if @vitesseAt <= 0
           @vitesseAt = 140
           @app.projectiles << Projectile.new(@app,@angle,@x,@y,@z,3,1,@app.modeleProjectileVert,@room,1,true)

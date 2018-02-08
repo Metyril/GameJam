@@ -3,9 +3,15 @@ class Room
     # Getters
     attr_accessor :width, :height, :x_pos, :y_pos, :cell_size, :room
 
-    def initialize(map_width, map_height, cell_size)
-        @width = rand(3..10)     # Largeur de la Room
-        @height = rand(3..10)    # Hauteur de la Room
+    def initialize(map_width, map_height, cell_size, lastRoom = false)
+        if lastRoom
+          @width = 8     # Largeur de la Room
+          @height = 10    # Hauteur de la Room
+        else
+          @width = rand(3..10)     # Largeur de la Room
+          @height = rand(3..10)    # Hauteur de la Room
+        end
+
         @x_pos = rand(1..map_width-@width-1)    # Position X de la Room dans la Map, aléatoire
         @y_pos = rand(1..map_height-@height-1)  # Position Y de la Room dans la Map, aléatoire
 

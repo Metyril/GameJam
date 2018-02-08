@@ -17,13 +17,15 @@ class Map
     # Getters
     attr_accessor :map, :width, :height, :rooms, :cell_size
 
-    def initialize(width, height, cell_size, wall_size, nb_room, type_gen)
+    def initialize(width, height, cell_size, wall_size, nb_room, type_gen, lastRoom = false)
         @width = width              # Largeur de la Map
         @height = height            # Hauteur de la Map
         @cell_size = cell_size      # Taille d'une cellule
         @wall_size = wall_size      # Largeur d'un mur
         @nb_room = nb_room          # Nombre de salles
         @type_gen = type_gen        # Type de génération du Maze
+
+        @lastRoom = lastRoom
 
         @map = Array.new(@height) { Array.new(@width, 0) }  # Initialisation de la Map à 0 / Nécessaire pour la méthode createMaze
 
@@ -49,7 +51,7 @@ class Map
 
 
     def addRoom   # Crée une instance de Room, si elle n'est pas créée sur une autre Room on l'ajoute à @rooms
-        tmp_room = Room.new(@width, @height, @cell_size)
+        tmp_room = Room.new(@width, @height, @cell_size, @lastRoom)
         collision = false
         @rooms.each do |room|
             if room.isCollide(tmp_room)

@@ -46,7 +46,7 @@ class Fenetre < Gosu::Window
     @nb_room = 10           # Nombre de salles
     @type_gen = 'random'    # Type de génération / 4 valeurs possibles : 'random', 'newest', 'middle', 'oldest'
 
-    @etage = 0
+    @etage = 3
 
     @fontHUD = Gosu::Font.new 30
     @iconRuby = Gosu::Image.new('../media/iconRuby.png')
@@ -81,7 +81,7 @@ class Fenetre < Gosu::Window
     @particules = @teleporteur.allSet[:particules]
     @vies = @teleporteur.allSet[:vies]
     @pieges = @teleporteur.allSet[:pieges]
-    @mega = Array.new
+    #@mega = Array.new
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
@@ -127,7 +127,8 @@ class Fenetre < Gosu::Window
       @pause = true
     elsif id == Gosu::KB_TAB
       @freeCam = !@freeCam
-      @drawTotal = !@drawTotal
+      #@drawTotal = !@drawTotal
+    elsif id == Gosu
     end
 
     #MENU PAUSE
@@ -202,9 +203,9 @@ class Fenetre < Gosu::Window
       @ennemis.each do |ennemi|
         ennemi.attaque
       end
-      @mega.each do |ennemi|
-        ennemi.attaque
-      end
+      # @mega.each do |ennemi|
+      #   ennemi.attaque
+      # end
     end
 
     self.murCollision @player
@@ -236,15 +237,15 @@ class Fenetre < Gosu::Window
       end
 
       # POUR LE MEGA
-      @mega.each do |ennemi|
-        ennemi.detruire if 1 > ennemi.vie
-        ennemi.deplacements(@player.x, @player.z)
-        if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable == 0
-          @player.vie -= 1
-          @player.invulnerable = 70
-        end
-        self.murCollision ennemi
-      end
+      # @mega.each do |ennemi|
+      #   ennemi.detruire if 1 > ennemi.vie
+      #   ennemi.deplacements(@player.x, @player.z)
+      #   if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable == 0
+      #     @player.vie -= 1
+      #     @player.invulnerable = 70
+      #   end
+      #   self.murCollision ennemi
+      # end
     end
 
 
@@ -253,6 +254,13 @@ class Fenetre < Gosu::Window
       @playerInitPos = rand(0..@nb_room-1)
       @etage += 1
       self.setModelesMurs
+
+      ##if @etage == 4
+        #@map_width = 40         # Largeur de la Map
+        #@map_height = 40        # Hauteur de la Map
+      ##  @nb_room = 3
+      ##end
+
       @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @playerInitPos, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
 
       @map = @teleporteur.allSet[:map]
@@ -264,11 +272,17 @@ class Fenetre < Gosu::Window
       @drones = @teleporteur.allSet[:drones]
       @particules = @teleporteur.allSet[:particules]
       @vies = @teleporteur.allSet[:vies]
+      @pieges = @teleporteur.allSet[:pieges]
 
       room = @map.rooms[@playerInitPos]
       @player.x, @player.z = rand(room.width), rand(room.height)
       @player.x = (@player.x + room.x_pos) * @cell_size
       @player.z = (@player.z + room.y_pos) * @cell_size
+
+
+      if @etage == 4
+        @teleporteur.detruire
+      end
 
       @camera = Camera.new(@player.x, @player.y,@player.z-30)
     end
@@ -315,7 +329,7 @@ class Fenetre < Gosu::Window
     # @ennemis.each do |ennemi|
     #   ennemi.detruire if self.dist(@player,ennemi) < (@player.itBox + ennemi.itBox)
     # end
-    self.iter @mega
+    #self.iter @mega
     self.iter @pieges
     self.iter @vies
     self.iter @drones
@@ -522,12 +536,11 @@ class Fenetre < Gosu::Window
         ennemi.draw(@camera)
       end
     end
-    @mega.each do |ennemi|
-      if redraw?(ennemi.x, ennemi.z)
-        ennemi.draw(@camera)
-      end
-    end
-    @teleporteur.draw(@camera)
+    # @mega.each do |ennemi|
+    #   if redraw?(ennemi.x, ennemi.z)
+    #     ennemi.draw(@camera)
+    #   end
+    # end
   end
 
   def drawMapTotal
