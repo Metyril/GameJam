@@ -5,7 +5,7 @@ require_relative './Element.rb'
 
 
 class Ennemi < Element
-  attr_accessor :vie,:room
+  attr_accessor :vie,:room,:son
     def initialize(room, modele, itbox=3,x=0,y=0,z=0,cracheur = false,app = 0)
         super room, modele , itbox, x,y,z
         @vie = 3
@@ -16,31 +16,40 @@ class Ennemi < Element
         @vitesseAt = 0
         @cracheur = cracheur
         @app = app
+
+        @rand = rand(3).to_i
+        if @rand == 0
+          @son = Gosu::Sample.new('../media/zombie/zombie01.ogg')
+        elsif @rand == 1
+          @son = Gosu::Sample.new('../media/zombie/zombie02.ogg')
+        elsif @rand == 2
+          @son = Gosu::Sample.new('../media/zombie/zombie03.ogg')
+        elsif @rand == 3
+          @son = Gosu::Sample.new('../media/zombie/zombie04.ogg')
+        end
+        @a_crie = false
     end
 
 
     def deplacements(xP, zP)
         # if (@x <= xP + 20 || @x >= xP - 20) && (@z <= zP + 20 || @z >= zP - 20)
         if Math.sqrt((@x-xP)**2 + (@z-zP)**2) < 40
-            # if @x > xP
-            #     @x -= 0.4
-            # else
-            #     @x += 0.4
-            # end
-            # if @z > zP
-            #     @z -= 0.4
-            # else
-            #     @z += 0.4
-            # end
 
             @angle = Math.atan2((xP - @x), (zP - @z))
 
-
+            if !@a_crie
+              @son.play(0.5)
+              @a_crie = true
+            end
         else
 
             @angle += @dirAngle
 
             @dirAngle = rand(-0.4..0.4) if rand(5) > 3
+
+            if @a_crie
+              @a_crie = false
+            end
         end
 
         @x += Math.sin(@angle) * (0.3 * @vitesse) * @velRecul
