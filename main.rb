@@ -85,6 +85,9 @@ class Fenetre < Gosu::Window
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
 
+    @sonFin = Gosu::Sample.new('../media/divers/mort_son.wav')
+    @sonTeleporteur = Gosu::Sample.new('../media/divers/teleporteur.wav')
+    @sonTeleporteur.play(1)
 
     @listeModeleCellules = Array.new
     self.setModelesMurs
@@ -213,6 +216,12 @@ class Fenetre < Gosu::Window
         ennemi.deplacements(@player.x, @player.z)
         if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable == 0
           @player.vie -= 1
+          @rand = rand(2).to_i
+          if @rand == 0
+            @player.cri02.play(1)
+          elsif @rand == 1
+            @player.cri03.play(1)
+          end
           @player.invulnerable = 70
         end
         self.murCollision ennemi
@@ -320,7 +329,10 @@ class Fenetre < Gosu::Window
     elsif @sound_btn.getColor == Gosu::Color::YELLOW
       @sound_btn.color(Gosu::Color::CYAN)
     end
+
     if @player.vie <= 0
+      @player.sonMort.play(1)
+      @sonFin.play(1)
       close
       MenuPrincipal.new.show
     end

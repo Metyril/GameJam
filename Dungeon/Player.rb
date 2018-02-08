@@ -3,7 +3,7 @@ require 'gosu'
 require_relative './Element.rb'
 
 class Player < Element
-      attr_accessor :vie,:items , :puissance,:arme,:angle,:vitesse, :angle , :degats,:range,:vitesseAt, :animeDeplacement,:invulnerable, :nbRuby, :nbZombie
+      attr_accessor :vie,:items , :puissance,:arme,:angle,:vitesse, :angle , :degats,:range,:vitesseAt, :animeDeplacement,:invulnerable, :nbRuby, :nbZombie, :cri02, :cri03, :sonMort
     def initialize(room, modele, arme, itbox=1, x=0, y=0, z=0, vie = 3, puissance =1)
         super room, modele, itbox, x, y, z
         @angle = 0
@@ -25,6 +25,11 @@ class Player < Element
 
         @nbRuby = 0
         @nbZombie = 0
+
+        @cri02 = Gosu::Sample.new('../media/divers/cri02.wav')
+        @cri03 = Gosu::Sample.new('../media/divers/cri03.wav')
+        @sonMort = Gosu::Sample.new('../media/divers/mort_cri.wav')
+
     end
 
 #Gestion de la vie du joueur
