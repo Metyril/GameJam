@@ -25,6 +25,7 @@ require_relative 'Dungeon/Particule.rb'
 require_relative 'Dungeon/Teleporteur.rb'
 
 require_relative 'IHM/Bouton.rb'
+require_relative 'IHM/MenuGameOver.rb'
 
 WIDTH = 1280
 HEIGHT = 720
@@ -376,7 +377,7 @@ class Fenetre < Gosu::Window
       @player.sonMort.play(1)
       @sonFin.play(1)
       close
-      MenuPrincipal.new.show
+      MenuGameOver.new.show
     end
 
 
