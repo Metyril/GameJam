@@ -185,8 +185,8 @@ class CreateModele
     pointsSol = [s1, s2, s3, s4]
 
     trianglesSol = [
-      Triangle.new(s1, s2, s3, 0xffb2bec3),
-      Triangle.new(s4, s3, s2, 0xffb2bec3)
+      Triangle.new(s1, s2, s3, 0xff74818C),
+      Triangle.new(s4, s3, s2, 0xff74818C)
     ]
 
     return Modele.new(pointsSol, trianglesSol)
