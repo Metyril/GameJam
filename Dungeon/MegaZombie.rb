@@ -5,10 +5,9 @@ require_relative './Element.rb'
 
 
 class MegaZombie < Ennemi
-    def initialize(room, modele, itbox=3,x=0,y=0,z=0,cracheur = true ,app = 0)
+    def initialize(room, modele, itbox=5,x=0,y=0,z=0,cracheur = true ,app = 0)
         super room, modele , itbox, x,y,z,cracheur,app
         @vie = 250
-        @itBox = 1
         @vitesseSpone = 1500
     end
 
@@ -17,9 +16,10 @@ class MegaZombie < Ennemi
         if @vitesseAt <= 0
           @vitesseAt = 140
           @app.projectiles << Projectile.new(@app,@angle,@x,@y,@z,3,1,@app.modeleProjectileVert,@room,1,true)
-          @app.projectiles << Projectile.new(@app,-@angle,@x,@y,@z,3,1,@app.modeleProjectileVert,@room,1,true)
-          @app.projectiles << Projectile.new(@app,@angle+90,@x,@y,@z,3,1,@app.modeleProjectileVert,@room,1,true)
-          @app.projectiles << Projectile.new(@app,@angle-90,@x,@y,@z,3,1,@app.modeleProjectileVert,@room,1,true)
+          @app.projectiles << Projectile.new(@app,@angle-Math::PI/4,@x,@y,@z,3,1,@app.modeleProjectileVert,@room,1,true)
+          @app.projectiles << Projectile.new(@app,@angle+Math::PI/4,@x,@y,@z,3,1,@app.modeleProjectileVert,@room,1,true)
+          @app.projectiles << Projectile.new(@app,@angle-Math::PI/6,@x,@y,@z,3,1,@app.modeleProjectileVert,@room,1,true)
+          @app.projectiles << Projectile.new(@app,@angle+Math::PI/6,@x,@y,@z,3,1,@app.modeleProjectileVert,@room,1,true)
         end
         @vitesseAt -= 1
       end
