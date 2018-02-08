@@ -85,9 +85,9 @@ class Player < Element
 
     @items.each do |item|
       if item.is_a? DroneAt
-        if item.vitesse > 0
-            item.update
-        end
+        #if item.vitesse > 0
+            item.updateActif
+        #end
       end
     end
 
@@ -119,6 +119,14 @@ class Player < Element
       @arme.modele.draw(cam, @arme.x, @y - 2.5, @arme.z, @anime > DEMIPI ? 0 : -@anime, -@angle, 0)
       #@arme.modele.draw(cam, @x - Math.sin(@angle - DEMIPI)*3, @y - 2.5, @z - Math.cos(@angle - DEMIPI)*3, @anime > DEMIPI ? 0 : -@anime, -@angle, 0)
     end
+
+    @items.each do |drone|
+      #if drone.is_a? DroneAt
+        drone.modele.draw(cam, drone.x, drone.y, drone.z, 0, 0, 0)
+      #end
+    end
+
+    #puts @items.length
 
     if (@anime < DEMIPI)
       @anime += 0.15
