@@ -242,7 +242,10 @@ class Fenetre < Gosu::Window
     end
 
     @ramassables.each do |ramassable|
-      ramassable.detruire if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+      if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+        ramassable.detruire
+        @player.nbRuby += 1
+      end
     end
     @vies.each do |ramassable|
       if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
@@ -276,7 +279,16 @@ class Fenetre < Gosu::Window
     self.iter @drones
     self.iter @pilules
     self.iter @projectiles
-    self.iter @ennemis
+    #self.iter @ennemis
+    @ennemis.delete_if do |elem|
+      elem.update
+      if elem.isDetruit
+        @player.nbZombie += 1
+      end
+
+      elem.isDetruit
+    end
+
     self.iter @ramassables
     self.iter @ramassablesArme
     self.iter @particules
