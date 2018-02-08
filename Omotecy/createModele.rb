@@ -1187,4 +1187,133 @@ def self.pointInterrogation
   return Modele.new(pointsCube, trianglesCube)
 end
 
+def self.bazooka size = 0.7
+
+  #Hauteur et Longueur
+  hauteur = 2
+  longueur = 13
+  tailleEmbout = 0.33
+  longueurEmbout = 2
+
+  #Couleurs
+  noirClair = 0xFF253542
+  noirFonce = 0xFF1E272E
+  noirInt = 0xFF000000
+
+  #Points Embout
+  p1e = Point.new(-1*size-tailleEmbout,(-2-hauteur)*size-tailleEmbout,longueur/2*size+longueurEmbout)
+  p2e = Point.new(-2*size-tailleEmbout,(-1-hauteur)*size-tailleEmbout,longueur/2*size+longueurEmbout)
+  p3e = Point.new(-2*size-tailleEmbout,(1-hauteur)*size+tailleEmbout,longueur/2*size+longueurEmbout)
+  p4e = Point.new(-1*size-tailleEmbout,(2-hauteur)*size+tailleEmbout,longueur/2*size+longueurEmbout)
+  p5e = Point.new(1*size+tailleEmbout,(2-hauteur)*size+tailleEmbout,longueur/2*size+longueurEmbout)
+  p6e = Point.new(2*size+tailleEmbout,(1-hauteur)*size+tailleEmbout,longueur/2*size+longueurEmbout)
+  p7e = Point.new(2*size+tailleEmbout,(-1-hauteur)*size-tailleEmbout,longueur/2*size+longueurEmbout)
+  p8e = Point.new(1*size+tailleEmbout,(-2-hauteur)*size-tailleEmbout,longueur/2*size+longueurEmbout)
+  pmilieue = Point.new(0*size,(0+hauteur)*size,longueur/2*size+longueurEmbout)
+
+  #Points Octogone Avant
+  p1a = Point.new(-1*size,(-2-hauteur)*size,longueur/2*size)
+  p2a = Point.new(-2*size,(-1-hauteur)*size,longueur/2*size)
+  p3a = Point.new(-2*size,(1-hauteur)*size,longueur/2*size)
+  p4a = Point.new(-1*size,(2-hauteur)*size,longueur/2*size)
+  p5a = Point.new(1*size,(2-hauteur)*size,longueur/2*size)
+  p6a = Point.new(2*size,(1-hauteur)*size,longueur/2*size)
+  p7a = Point.new(2*size,(-1-hauteur)*size,longueur/2*size)
+  p8a = Point.new(1*size,(-2-hauteur)*size,longueur/2*size)
+
+  #Points Octogone Arrière
+  p1r = Point.new(-1*size,(-2-hauteur)*size,-longueur/2*size)
+  p2r = Point.new(-2*size,(-1-hauteur)*size,-longueur/2*size)
+  p3r = Point.new(-2*size,(1-hauteur)*size,-longueur/2*size)
+  p4r = Point.new(-1*size,(2-hauteur)*size,-longueur/2*size)
+  p5r = Point.new(1*size,(2-hauteur)*size,-longueur/2*size)
+  p6r = Point.new(2*size,(1-hauteur)*size,-longueur/2*size)
+  p7r = Point.new(2*size,(-1-hauteur)*size,-longueur/2*size)
+  p8r = Point.new(1*size,(-2-hauteur)*size,-longueur/2*size)
+  pmilieur = Point.new(0*size,(0-hauteur)*size,-longueur/2*size)
+
+
+  pointsBazooka = [p1r, p2r, p3r, p4r, p5r, p6r, p7r, p8r, pmilieur,
+                   p1a, p2a, p3a, p4a, p5a, p6a, p7a, p8a,
+                   p1e, p2e, p3e, p4e, p5e, p6e, p7e, p8e, pmilieue,]
+
+  trianglesBazooka = [
+
+  #Triangles Octogone Arrière
+  Triangle.new(pmilieur,p2r,p1r,noirClair),
+  Triangle.new(pmilieur,p3r,p2r,noirFonce),
+  Triangle.new(pmilieur,p4r,p3r,noirClair),
+  Triangle.new(pmilieur,p5r,p4r,noirFonce),
+  Triangle.new(pmilieur,p6r,p5r,noirClair),
+  Triangle.new(pmilieur,p7r,p6r,noirFonce),
+  Triangle.new(pmilieur,p8r,p7r,noirClair),
+  Triangle.new(pmilieur,p1r,p8r,noirFonce),
+
+  #Triangles Embout
+  Triangle.new(pmilieue,p1e,p2e,noirInt),
+  Triangle.new(pmilieue,p2e,p3e,noirInt),
+  Triangle.new(pmilieue,p3e,p4e,noirInt),
+  Triangle.new(pmilieue,p4e,p5e,noirInt),
+  Triangle.new(pmilieue,p5e,p6e,noirInt),
+  Triangle.new(pmilieue,p6e,p7e,noirInt),
+  Triangle.new(pmilieue,p7e,p8e,noirInt),
+  Triangle.new(pmilieue,p8e,p1e,noirInt),
+
+  #Triangles reliant Octogones Avant et Arrière
+  #Face 1
+  Triangle.new(p1r,p2a,p1a,noirFonce),
+  Triangle.new(p1r,p2r,p2a,noirFonce),
+  #Face 2
+  Triangle.new(p2r,p3a,p2a,noirClair),
+  Triangle.new(p2r,p3r,p3a,noirClair),
+  #Face 3
+  Triangle.new(p3r,p4a,p3a,noirFonce),
+  Triangle.new(p3r,p4r,p4a,noirFonce),
+  #Face 4
+  Triangle.new(p4r,p5a,p4a,noirClair),
+  Triangle.new(p4r,p5r,p5a,noirClair),
+  #Face 5
+  Triangle.new(p5r,p6a,p5a,noirFonce),
+  Triangle.new(p5r,p6r,p6a,noirFonce),
+  #Face 6
+  Triangle.new(p6r,p7a,p6a,noirClair),
+  Triangle.new(p6r,p7r,p7a,noirClair),
+  #Face 7
+  Triangle.new(p7r,p8a,p7a,noirFonce),
+  Triangle.new(p7r,p8r,p8a,noirFonce),
+  #Face 8
+  Triangle.new(p8r,p1a,p8a,noirClair),
+  Triangle.new(p8r,p1r,p1a,noirClair),
+
+  #Triangles reliant Octogones Avant et Embout
+  #Face 1
+  Triangle.new(p1a,p2e,p1e,noirClair),
+  Triangle.new(p1a,p2a,p2e,noirClair),
+  #Face 2
+  Triangle.new(p2a,p3e,p2e,noirFonce),
+  Triangle.new(p2a,p3a,p3e,noirFonce),
+  #Face 3
+  Triangle.new(p3a,p4e,p3e,noirClair),
+  Triangle.new(p3a,p4a,p4e,noirClair),
+  #Face 4
+  Triangle.new(p4a,p5e,p4e,noirFonce),
+  Triangle.new(p4a,p5a,p5e,noirFonce),
+  #Face 5
+  Triangle.new(p5a,p6e,p5e,noirClair),
+  Triangle.new(p5a,p6a,p6e,noirClair),
+  #Face 6
+  Triangle.new(p6a,p7e,p6e,noirFonce),
+  Triangle.new(p6a,p7a,p7e,noirFonce),
+  #Face 7
+  Triangle.new(p7a,p8e,p7e,noirClair),
+  Triangle.new(p7a,p8a,p8e,noirClair),
+  #Face 8
+  Triangle.new(p8a,p1e,p8e,noirFonce),
+  Triangle.new(p8a,p1a,p1e,noirFonce)
+
+  ]
+
+  return Modele.new(pointsBazooka, trianglesBazooka)
+end
+
 end
