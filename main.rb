@@ -85,7 +85,7 @@ class Fenetre < Gosu::Window
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
-    @mega << MegaZombie.new(@map.rooms[@playerInitPos],@ennemisModele,3,0,0,0,true,self)
+    @mega << Ennemi.new(@map.rooms[@playerInitPos],@ennemisModele,3,0,0,0,true,self)
 
     @sonFin = Gosu::Sample.new('../media/divers/mort_son.wav')
     @sonTeleporteur = Gosu::Sample.new('../media/divers/teleporteur.wav')
@@ -105,7 +105,7 @@ class Fenetre < Gosu::Window
     @pause = false
     @music = Gosu::Song.new('../media/little_apocalypse.ogg')
     @cursor = Gosu::Image.new('../media/mouse.png')
-    @titre = Gosu::Image.new('../media/Pause3D.png')
+    @titre = Gosu::Image.new('../media/Omotecy - Titre Final.png')
     @bouton = Bouton.new(500,350,270,80,Gosu::Color::CYAN,"Jouer",3)
     @exit = Bouton.new(500,450,270,80,Gosu::Color::CYAN,"Quitter",2.8)
     @sound_btn = Bouton.new(1100,500,100,100,Gosu::Color::CYAN,"",2.8)
@@ -194,15 +194,16 @@ class Fenetre < Gosu::Window
 
     #################################
     #update des objets
+    if !@pause
+      @player.attaque if Gosu.button_down? Gosu::KB_SPACE
 
-    @player.attaque if Gosu.button_down? Gosu::KB_SPACE
-
-    @player.update
-    @ennemis.each do |ennemi|
-      ennemi.attaque
-    end
-    @mega.each do |ennemi|
-      ennemi.attaque
+      @player.update
+      @ennemis.each do |ennemi|
+        ennemi.attaque
+      end
+      @mega.each do |ennemi|
+        ennemi.attaque
+      end
     end
 
     self.murCollision @player
@@ -237,7 +238,7 @@ class Fenetre < Gosu::Window
       @mega.each do |ennemi|
         ennemi.detruire if 1 > ennemi.vie
         ennemi.deplacements(@player.x, @player.z)
-        if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable <= 0
+        if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable == 0
           @player.vie -= 1
           @player.invulnerable = 70
         end
@@ -424,7 +425,7 @@ class Fenetre < Gosu::Window
       @bouton.draw
       @exit.draw
       @sound_btn.draw
-      @titre.draw 350, 130, 2
+      @titre.draw 50, 100, 2
       @cursor.draw self.mouse_x, self.mouse_y, 4
       @sound_image.draw 1110, 510, 2
     else
