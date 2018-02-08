@@ -389,14 +389,14 @@ class Fenetre < Gosu::Window
         @sonFin.play(1)
         @score = @player.nbRuby + 10*(@player.nbZombie-@zombieFin) + 100*@zombieFin
         self.close!
-        MenuFin.new(@score).show
+        MenuFin.new(@score, @gagner).show
       end
     else
       #CEST LA FIN
       @sonFin.play(1)
       @score = @player.nbRuby + 10*(@player.nbZombie-@zombieFin) + 100*@zombieFin
       self.close!
-      MenuFin.new(@score).show
+      MenuFin.new(@score, @gagner).show
     end
 
   end
