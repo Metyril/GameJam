@@ -309,7 +309,10 @@ class CreateModele
     return Modele.new(pointBatte, triangleBatte)
   end
 
-  def self.player(ennemi=false)
+  def self.player(ennemi=false boss=false)
+
+    size = 1
+
     if ennemi
       body_color = 0xffccae62
       head_color = 0xffbadc58
@@ -320,21 +323,25 @@ class CreateModele
       head_color2 = 0xffe0c47d
     end
 
-    p1 = Point.new(-1, 0, -1)
-    p2 = Point.new(-1, -4, -1)
-    p3 = Point.new(1, 0, -1)
-    p4 = Point.new(1, -4, -1)
-    p5 = Point.new(-1, -4, 1)
-    p6 = Point.new(-1, 0, 1)
-    p7 = Point.new(1, 0, 1)
-    p8 = Point.new(1, -4, 1)
+    if boss
+      size = 3
+    end
 
-    p9 = Point.new(-2, -5, -1)
-    p10 = Point.new(-2, -6, -1)
-    p11 = Point.new(-1, -7, -1)
-    p12 = Point.new(2, -5, -1)
-    p13 = Point.new(2, -6, -1)
-    p14 = Point.new(1, -7, -1)
+    p1 = Point.new(-1*size, 0*size, -1*size)
+    p2 = Point.new(-1*size, -4*size, -1*size)
+    p3 = Point.new(1*size, 0*size, -1*size)
+    p4 = Point.new(1*size, -4*size, -1*size)
+    p5 = Point.new(-1*size, -4*size, 1*size)
+    p6 = Point.new(-1*size, 0*size, 1*size)
+    p7 = Point.new(1*size, 0*size, 1*size)
+    p8 = Point.new(1*size, -4*size, 1*size)
+
+    p9 = Point.new(-2*size, -5*size, -1*size)
+    p10 = Point.new(-2*size, -6*size, -1*size)
+    p11 = Point.new(-1*size, -7*size, -1*size)
+    p12 = Point.new(2*size, -5*size, -1*size)
+    p13 = Point.new(2*size, -6*size, -1*size)
+    p14 = Point.new(1*size, -7*size, -1*size)
 
     p15 = Point.new(-2, -5, 1)
     p16 = Point.new(-2, -6, 1)

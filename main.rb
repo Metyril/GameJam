@@ -19,6 +19,7 @@ require_relative 'Dungeon/Item.rb'
 require_relative 'Dungeon/Vie.rb'
 require_relative 'Dungeon/MegaPilule.rb'
 require_relative 'Dungeon/Piege.rb'
+require_relative 'Dungeon/MegaZombie.rb'
 require_relative 'Dungeon/Particule.rb'
 
 require_relative 'Dungeon/Teleporteur.rb'
@@ -80,11 +81,11 @@ class Fenetre < Gosu::Window
     @particules = @teleporteur.allSet[:particules]
     @vies = @teleporteur.allSet[:vies]
     @pieges = @teleporteur.allSet[:pieges]
-
+    @mega = Array.new
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
-    @ennemis << Ennemi.new(@map.rooms[@playerInitPos],@ennemisModele,3,0,0,0,true,self)
+    @mega << Ennemi.new(@map.rooms[@playerInitPos],@ennemisModele,3,0,0,0,true,self)
 
     @sonFin = Gosu::Sample.new('../media/divers/mort_son.wav')
     @sonTeleporteur = Gosu::Sample.new('../media/divers/teleporteur.wav')
@@ -200,6 +201,10 @@ class Fenetre < Gosu::Window
     @ennemis.each do |ennemi|
       ennemi.attaque
     end
+    @mega.each do |ennemi|
+      ennemi.attaque
+    end
+
     self.murCollision @player
     @projectiles.each do |projectile|
       projectile.avancer
@@ -227,7 +232,20 @@ class Fenetre < Gosu::Window
         end
         self.murCollision ennemi
       end
+
+      # POUR LE MEGA
+      @mega.each do |ennemi|
+        ennemi.detruire if 1 > ennemi.vie
+        ennemi.deplacements(@player.x, @player.z)
+        if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable == 0
+          @player.vie -= 1
+          @player.invulnerable = 70
+        end
+        self.murCollision ennemi
+      end
     end
+
+
 
     if self.dist(@player, @teleporteur) < (@player.itBox + @teleporteur.itBox)
       @playerInitPos = rand(0..@nb_room-1)
@@ -293,6 +311,7 @@ class Fenetre < Gosu::Window
     # @ennemis.each do |ennemi|
     #   ennemi.detruire if self.dist(@player,ennemi) < (@player.itBox + ennemi.itBox)
     # end
+    self.iter @mega
     self.iter @pieges
     self.iter @vies
     self.iter @drones
@@ -496,6 +515,11 @@ class Fenetre < Gosu::Window
     end
 
     @ennemis.each do |ennemi|
+      if redraw?(ennemi.x, ennemi.z)
+        ennemi.draw(@camera)
+      end
+    end
+    @mega.each do |ennemi|
       if redraw?(ennemi.x, ennemi.z)
         ennemi.draw(@camera)
       end
