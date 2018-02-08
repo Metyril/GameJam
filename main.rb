@@ -536,6 +536,7 @@ class Fenetre < Gosu::Window
         ennemi.draw(@camera)
       end
     end
+    @teleporteur.draw(@camera)
     # @mega.each do |ennemi|
     #   if redraw?(ennemi.x, ennemi.z)
     #     ennemi.draw(@camera)

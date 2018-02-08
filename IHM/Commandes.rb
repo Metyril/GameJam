@@ -21,10 +21,10 @@ class Commandes < Gosu::Window
     @retour.draw
     @cursor.draw self.mouse_x, self.mouse_y, 4
     @commandes.draw(475, 50, 0)
-    @commandeJoueur3D.draw(10,200,0)
-    @commandeCamera3D.draw(600,600,0)
-    @commandeTirer3D.draw(10,800,0)
-    @commandePause3D.draw(10,1000,0)
+    @commandeJoueur3D.draw(200,200,0)
+    @commandeCamera3D.draw(700,200,0)
+    @commandeTirer3D.draw(200,450,0)
+    @commandePause3D.draw(700,450,0)
   end
 
   def update
