@@ -70,7 +70,8 @@ class Teleporteur < Element
               self.spone(fenetre,room,"Vie",0.1,3)
               self.spone(fenetre,room,"Piege",0.5,2)
             elsif fenetre.etage == 4
-              self.spone(fenetre, room, "MegaZombie", 1, 1)
+              self.spone(fenetre, room, "MegaZombie", 2, 1)
+              self.spone(fenetre,room,"Piege",1,10)
             end
           end
         end
@@ -102,10 +103,9 @@ class Teleporteur < Element
             @vies << Vie.new(room)
           when "Piege"
             @pieges << Piege.new(fenetre,room)
+          when "MegaZombie"
+            @ennemis << MegaZombie.new(room, fenetre.ennemisModele,5,0,0,0,true,fenetre)
           end
-          #when "MegaZombie"
-          #  @ennemis << Ennemi.new(room, fenetre.ennemisModele,3,0,0,0,true,fenetre)
-          #end
         end
       end
     end
