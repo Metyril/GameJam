@@ -211,6 +211,12 @@ class Fenetre < Gosu::Window
         ennemi.deplacements(@player.x, @player.z)
         if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable == 0
           @player.vie -= 1
+          @rand = rand(2).to_i
+          if @rand == 0
+            @player.cri02.play(1)
+          elsif @rand == 1
+            @player.cri03.play(1)
+          end
           @player.invulnerable = 70
         end
         self.murCollision ennemi
