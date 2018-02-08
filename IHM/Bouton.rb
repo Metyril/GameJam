@@ -12,7 +12,7 @@ class Bouton
       @height = height
       @color = color
       @text = text
-      @font = Gosu::Font.new(20)
+      @font = Gosu::Font.new(20, {:name => './Basica.ttf'})
       @font_length = font_length
   end
 
@@ -24,7 +24,7 @@ class Bouton
     return @color
   end
   def draw
-      @font.draw(@text,@x+@x/10+10,@y+10,3,@font_length,@font_length,Gosu::Color::BLACK)
+      @font.draw(@text,@x+25,@y+10,3,@font_length,@font_length,Gosu::Color::BLACK)
       Gosu.draw_rect(@x, @y, @width, @height, @color, 2)
   end # Fin draw
 

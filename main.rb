@@ -121,7 +121,7 @@ class Fenetre < Gosu::Window
       @pause = true
     elsif id == Gosu::KB_TAB
       @freeCam = !@freeCam
-      #@drawTotal = !@drawTotal
+      @drawTotal = !@drawTotal
     end
 
     #MENU PAUSE
