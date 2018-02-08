@@ -13,7 +13,7 @@ class Player < Element
         @vitesseAt = 0
         #@arme = ItemPoing.new(room,modele,3,x,y,z)
         @arme = arme
-        @vitesse = 2
+        @vitesse = 1
         @puissance = puissance
         @items = Array.new()
         @invulnerable = 0

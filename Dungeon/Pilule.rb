@@ -31,13 +31,13 @@ class Pilule < Item
     def activeEffet
       case @nom
       when "Vitesse +"
-        if @app.player.vitesse < 3
-          @app.player.vitesse += 0.5
+        if @app.player.vitesse < 2
+          @app.player.vitesse += 0.2
           @app.player.ajouterItem(self)
         end
       when "Vitesse -"
         if @app.player.vitesse > 0.5
-          @app.player.vitesse -= 0.5
+          @app.player.vitesse -= 0.2
           @app.player.ajouterItem(self)
         end
       when "Attaque +"

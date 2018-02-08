@@ -167,9 +167,9 @@ class CreateModele
 
   def self.sol
     s1 = Point.new(0, 0, 0)
-    s2 = Point.new(0, 0, 10)
-    s3 = Point.new(10, 0, 0)
-    s4 = Point.new(10, 0, 10)
+    s2 = Point.new(0, 0, 2)
+    s3 = Point.new(2, 0, 0)
+    s4 = Point.new(2, 0, 2)
 
     pointsSol = [s1, s2, s3, s4]
 
@@ -1315,5 +1315,264 @@ def self.bazooka size = 0.7
 
   return Modele.new(pointsBazooka, trianglesBazooka)
 end
+
+def self.teleporteur
+  c1 = Point.new(-6, 0, -1)
+  c2 = Point.new(-6, -8, -1)
+  c3 = Point.new(-4, 0, -1)
+  c4 = Point.new(-4, -8, -1)
+  c5 = Point.new(-6, -8, 1)
+  c6 = Point.new(-6, 0, 1)
+  c7 = Point.new(-4, 0, 1)
+  c8 = Point.new(-4, -8, 1)
+
+  c9 = Point.new(4, 0, -1)
+  c10 = Point.new(4, -8, -1)
+  c11 = Point.new(6, 0, -1)
+  c12 = Point.new(6, -8, -1)
+  c13 = Point.new(4, -8, 1)
+  c14 = Point.new(4, 0, 1)
+  c15 = Point.new(6, 0, 1)
+  c16 = Point.new(6, -8, 1)
+  ######################################
+
+  c17 = Point.new(-3, -6, 0)
+  c18 = Point.new(-3, -8, 0)
+  c19 = Point.new(-1, -6, 0)
+  c20 = Point.new(-1, -8, 0)
+
+  c21 = Point.new(-3, 0, 0)
+  c22 = Point.new(-3, -2, 0)
+  c23 = Point.new(-1, 0, 0)
+  c24 = Point.new(-1, -2, 0)
+
+  c25 = Point.new(3, -6, 0)
+  c26 = Point.new(3, -8, 0)
+  c27 = Point.new(1, -6, 0)
+  c28 = Point.new(1, -8, 0)
+
+  c29 = Point.new(3, 0, 0)
+  c30 = Point.new(3, -2, 0)
+  c31 = Point.new(1, 0, 0)
+  c32 = Point.new(1, -2, 0)
+###########################################
+
+  c33 = Point.new(-3, -4, 0)
+  c34 = Point.new(0, -6, 0)
+  c35 = Point.new(0, -2, 0)
+  c36 = Point.new(3, -4, 0)
+
+
+  pointsCube = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13 , c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31, c32, c33, c34, c35, c36]
+
+  trianglesCube = [
+    # devant
+    Triangle.new(c1, c2, c3, 0xff18dcff),
+    Triangle.new(c3, c2, c4, 0xff18dcff),
+    #---
+
+    # deriere tp gauche
+    Triangle.new(c5, c6, c7, 0xffff0101),
+    Triangle.new(c8, c5, c7, 0xffff0101),
+    #---
+
+    # haut tp gauche
+    Triangle.new(c6, c1, c7, 0xff2d3436),
+    Triangle.new(c1, c3, c7, 0xff2d3436),
+    #---
+
+    # bas tp gauche
+    Triangle.new(c2, c5, c8, 0xff2d3436),
+    Triangle.new(c4, c2, c8, 0xff2d3436),
+    #---
+
+    # droite tp gauche
+    Triangle.new(c4, c8, c7, 0xff2d3436),
+    Triangle.new(c3, c4, c7, 0xff2d3436),
+    #---
+
+    # gauche tp gauche
+    Triangle.new(c5, c2, c6, 0xff2d3436),
+    Triangle.new(c2, c1, c6, 0xff2d3436),
+    #---
+
+    # devant tp droit
+    Triangle.new(c9, c10, c11, 0xffff0101),
+    Triangle.new(c11, c10, c12, 0xffff0101),
+    #---
+
+    # deriere tp droit
+    Triangle.new(c13, c14, c15, 0xff18dcff),
+    Triangle.new(c16, c13, c15, 0xff18dcff),
+    #---
+
+    # haut tp droit
+    Triangle.new(c14, c9, c15, 0xff2d3436),
+    Triangle.new(c9, c11, c15, 0xff2d3436),
+    #---
+
+    # bas tp droit
+    Triangle.new(c10, c13, c16, 0xff2d3436),
+    Triangle.new(c12, c10, c16, 0xff2d3436),
+    #---
+
+    # droite tp droit
+    Triangle.new(c12, c16, c15, 0xff2d3436),
+    Triangle.new(c11, c12, c15, 0xff2d3436),
+    #---
+
+    # gauche tp droit
+    Triangle.new(c13, c10, c14, 0xff2d3436),
+    Triangle.new(c10, c9, c14, 0xff2d3436),
+    #---
+
+    # particules 1
+    Triangle.new(c17, c18, c20, 0xff2d3436),
+    Triangle.new(c17, c19, c20, 0xff2d3436),
+
+    Triangle.new(c21, c22, c23, 0xff2d3436),
+    Triangle.new(c22, c23, c24, 0xff2d3436),
+
+    Triangle.new(c25, c28, c26, 0xff2d3436),
+    Triangle.new(c25, c28, c27, 0xff2d3436),
+
+    Triangle.new(c29, c31, c30, 0xff2d3436),
+    Triangle.new(c30, c32, c31, 0xff2d3436),
+
+    Triangle.new(c33, c34, c36, 0xff2d3436),
+    Triangle.new(c33, c36, c35, 0xff2d3436),
+
+    Triangle.new(c34, c36, c25, 0xff2d3436),
+    Triangle.new(c33, c34, c17, 0xff2d3436),
+    Triangle.new(c33, c22, c35, 0xff2d3436),
+    Triangle.new(c36, c35, c30, 0xff2d3436)
+    #---
+  ]
+
+  return Modele.new(pointsCube, trianglesCube)
+end
+def self.mitraillette
+
+    #Tailles
+    size = 3
+    tailleBout = 0.8
+
+    #Couleurs
+    colorBois1 = 0xFF88421D
+    colorBois2 = 0xFF8E4918
+    colorChargeur1 = 0xFF808080
+    colorChargeur2 = 0xFF8F8F8F
+    colorChargeur3 = 0xFF8C8989
+    colorCanon1 = 0xFF696969
+    colorCanon2 = 0xFF595959
+    colorCanon3 = 0xFF515151
+    colorEmbout = 0xff2F3640
+
+
+    #Points Canon Coté Gauche (Vue Personnage)
+    p1 = Point.new(-0.1 * size, 0, 0)
+    p2 = Point.new(-0.1 * size, 0, 1 * size)
+    p3 = Point.new(-0.1 * size, -0.2 * size, 1 * size)
+    p4 = Point.new(-0.1 * size, -0.2 * size, -0.1 * size)
+
+    #Points Manche Coté Gauche
+    p5 = Point.new(-0.2 * size, 0.3 * size, -0.45 * size)
+    p6 = Point.new(-0.1 * size, 0.4 * size, -0.4 * size)
+
+    #Points Canon Coté Droit (Vue Personnage)
+    p7 = Point.new(0.1 * size, 0, 0)
+    p8 = Point.new(0.1 * size, 0, 1 * size)
+    p9 = Point.new(0.1 * size, -0.2 * size, 1 * size)
+    p10 = Point.new(0.1 * size, -0.2 * size, -0.1 * size)
+
+    #Points Manche Coté Droit
+    p11 = Point.new(0.1 * size, 0.3 * size, -0.45 * size)
+    p12 = Point.new(0.1 * size, 0.4 * size, -0.4 * size)
+
+    #Points Bout
+    p13 = Point.new(0.1 * size, 0, (1+tailleBout) * size) #p8 allongé
+    p14 = Point.new(0.1 * size, -0.2 * size, (1+tailleBout) * size) #p9 allongé
+    p15 = Point.new(-0.1 * size, -0.2 * size, (1+tailleBout) * size) #p3 allongé
+    p16 = Point.new(-0.1 * size, 0, (1+tailleBout) * size) #p2 allongé
+
+    #Points Sur Canon Pour Attache Chargeur
+    p17 = Point.new(0.1 * size, 0, (1+(tailleBout/4)) * size)
+    p18 = Point.new(0.1 * size, -0.2 * size, (1+(tailleBout/4)) * size)
+
+    #Points Chargeur
+    p19 = Point.new(0.6 * size, 0, 1 * size) #p8 allongé à droite
+    p20 = Point.new(0.6 * size, -0.2 * size, 1 * size) #p9 allongé à droite
+    p21 = Point.new(0.6 * size, 0, (1+(tailleBout/4)) * size) #p17 allongé à droite
+    p22 = Point.new(0.6 * size, -0.2 * size, (1+(tailleBout/4)) * size) #p18 allongé à droite
+
+    pointsMitraillette = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22]
+
+    trianglesMitraillette = [
+      Triangle.new(p7, p9, p8, colorBois2),
+      Triangle.new(p9, p7, p10, colorBois2),
+
+      Triangle.new(p10, p7, p11, colorBois2),
+      Triangle.new(p11, p7, p12, colorBois2),
+
+      Triangle.new(p1, p2, p3, colorBois2),
+      Triangle.new(p3, p4, p1, colorBois2),
+
+      Triangle.new(p4, p5, p1, colorBois2),
+      Triangle.new(p5, p6, p1, colorBois2),
+
+
+      Triangle.new(p1, p8, p2, colorBois1),
+      Triangle.new(p1, p7, p8, colorBois1),
+
+      Triangle.new(p3, p9, p4, colorCanon3),
+      Triangle.new(p4, p9, p10, colorCanon3),
+
+      Triangle.new(p4, p10, p5, colorBois1),
+      Triangle.new(p10, p11, p5, colorBois1),
+
+      Triangle.new(p5, p11, p6, colorBois1),
+      Triangle.new(p11, p12, p6, colorBois1),
+
+      Triangle.new(p6, p7, p1, colorBois1),
+      Triangle.new(p6, p12, p7, colorBois1),
+
+      #Triangles Bout
+      #Coté Droit
+      Triangle.new(p8, p14, p13, colorCanon2),
+      Triangle.new(p14, p8, p9, colorCanon2),
+      #Coté Gauche
+      Triangle.new(p2, p16, p15, colorCanon2),
+      Triangle.new(p15, p3, p2, colorCanon2),
+      #Dessus
+      Triangle.new(p15, p14, p3, colorCanon1),
+      Triangle.new(p3, p14, p9, colorCanon1),
+      #Dessous
+      Triangle.new(p2, p13, p16, colorCanon1),
+      Triangle.new(p2, p8, p13, colorCanon1),
+      #Bout Canon
+      Triangle.new(p16, p13, p15, colorEmbout),
+      Triangle.new(p15, p13, p14, colorEmbout),
+
+      #Triangles Chargeur
+      #Coté Droit
+      Triangle.new(p19, p22, p21, colorChargeur3),
+      Triangle.new(p22, p19, p20, colorChargeur3),
+      #Dessus
+      Triangle.new(p18, p22, p9, colorChargeur2),
+      Triangle.new(p9, p22, p20, colorChargeur2),
+      #Dessous
+      Triangle.new(p8, p21, p17, colorChargeur2),
+      Triangle.new(p8, p19, p21, colorChargeur2),
+      #Devant
+      Triangle.new(p17, p21, p18, colorChargeur1),
+      Triangle.new(p18, p21, p22, colorChargeur1),
+      #Derrière
+      Triangle.new(p9, p20, p8, colorChargeur1),
+      Triangle.new(p20, p19, p8, colorChargeur1),
+
+    ]
+
+    return Modele.new(pointsMitraillette, trianglesMitraillette)
+  end
 
 end

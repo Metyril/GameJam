@@ -21,6 +21,7 @@ class Teleporteur < Element
         @drones = Array.new
         @particules = Array.new
         @vies =  Array.new
+        @pieges = Array.new
 
         map.rooms.each_with_index do |room, r|
           if r != playerInitPos
@@ -32,6 +33,7 @@ class Teleporteur < Element
               self.spone(fenetre,room,"Drone",0.2,1)
               self.spone(fenetre,room,"ItemPoing",0.5,1)
               self.spone(fenetre,room,"Vie",0.1,1)
+              self.spone(fenetre,room,"Piege",0.5,2)
             elsif fenetre.etage == 1
               self.spone(fenetre,room,"Zombie",0.5,20)
               self.spone(fenetre,room,"ZombieCracheur",0.5,4)
@@ -42,6 +44,7 @@ class Teleporteur < Element
               self.spone(fenetre,room,"ItemPoing",0.5,1)
               self.spone(fenetre,room,"ItemTire",0.5,1)
               self.spone(fenetre,room,"Vie",0.1,1)
+              self.spone(fenetre,room,"Piege",0.5,2)
             elsif fenetre.etage == 2
               self.spone(fenetre,room,"Zombie",0.5,25)
               self.spone(fenetre,room,"ZombieCracheur",0.5,10)
@@ -52,6 +55,7 @@ class Teleporteur < Element
               self.spone(fenetre,room,"ItemPoing",0.5,1)
               self.spone(fenetre,room,"ItemTire",0.5,1)
               self.spone(fenetre,room,"Vie",0.1,1)
+              self.spone(fenetre,room,"Piege",0.5,2)
             elsif fenetre.etage == 3
               self.spone(fenetre,room,"Zombie",0.5,30)
               self.spone(fenetre,room,"ZombieCracheur",0.5,13)
@@ -62,11 +66,12 @@ class Teleporteur < Element
               self.spone(fenetre,room,"ItemPoing",0.5,2)
               self.spone(fenetre,room,"ItemTire",0.5,2)
               self.spone(fenetre,room,"Vie",0.1,3)
+              self.spone(fenetre,room,"Piege",0.5,2)
             end
           end
         end
 
-        return {:map => map, :projectiles => @projectiles, :ramassablesArme => @ramassablesArme, :ennemis => @ennemis, :ramassables => @ramassables, :pilules => @pilules, :drones => @drones, :particules => @particules, :vies => @vies}
+        return {:map => map, :projectiles => @projectiles, :ramassablesArme => @ramassablesArme, :ennemis => @ennemis, :ramassables => @ramassables, :pilules => @pilules, :drones => @drones, :particules => @particules, :vies => @vies,:pieges => @pieges}
     end
 
     def spone(fenetre,room,type,proba,nbTour)
@@ -91,6 +96,8 @@ class Teleporteur < Element
             @ramassablesArme << ItemTire.new(fenetre,room)
           when "Vie"
             @vies << Vie.new(room)
+          when "Piege"
+            @pieges << Piege.new(fenetre,room)
           end
 
         end

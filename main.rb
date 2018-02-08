@@ -18,6 +18,7 @@ require_relative 'Dungeon/Drone.rb'
 require_relative 'Dungeon/Item.rb'
 require_relative 'Dungeon/Vie.rb'
 require_relative 'Dungeon/MegaPilule.rb'
+require_relative 'Dungeon/Piege.rb'
 require_relative 'Dungeon/Particule.rb'
 
 require_relative 'Dungeon/Teleporteur.rb'
@@ -30,7 +31,7 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
-  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage
+  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage,:pieges
   attr_accessor :modeleParicule, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert,:modeleDrone,:modPilule,:modeleRuby,:modeleProjectile
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
@@ -65,7 +66,7 @@ class Fenetre < Gosu::Window
 
     # TELEPORTEUR
     @playerInitPos = rand(0..@nb_room-1)
-    @modeleTP = CreateModele::sim
+    @modeleTP = CreateModele::teleporteur
     @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @playerInitPos, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
 
     # ATTRIBUTS
@@ -78,6 +79,7 @@ class Fenetre < Gosu::Window
     @drones = @teleporteur.allSet[:drones]
     @particules = @teleporteur.allSet[:particules]
     @vies = @teleporteur.allSet[:vies]
+    @pieges = @teleporteur.allSet[:pieges]
 
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
@@ -248,7 +250,10 @@ class Fenetre < Gosu::Window
     end
 
     @ramassables.each do |ramassable|
-      ramassable.detruire if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+      if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+        ramassable.detruire
+        @player.nbRuby += 1
+      end
     end
     @vies.each do |ramassable|
       if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
@@ -257,6 +262,12 @@ class Fenetre < Gosu::Window
       end
     end
     @pilules.each do |pilule|
+      if self.dist(@player, pilule) < (@player.itBox + pilule.itBox)
+        pilule.activeEffet
+        pilule.detruire
+      end
+    end
+    @pieges.each do |pilule|
       if self.dist(@player, pilule) < (@player.itBox + pilule.itBox)
         pilule.activeEffet
         pilule.detruire
@@ -278,11 +289,21 @@ class Fenetre < Gosu::Window
     # @ennemis.each do |ennemi|
     #   ennemi.detruire if self.dist(@player,ennemi) < (@player.itBox + ennemi.itBox)
     # end
+    self.iter @pieges
     self.iter @vies
     self.iter @drones
     self.iter @pilules
     self.iter @projectiles
-    self.iter @ennemis
+    #self.iter @ennemis
+    @ennemis.delete_if do |elem|
+      elem.update
+      if elem.isDetruit
+        @player.nbZombie += 1
+      end
+
+      elem.isDetruit
+    end
+
     self.iter @ramassables
     self.iter @ramassablesArme
     self.iter @particules
@@ -392,7 +413,7 @@ class Fenetre < Gosu::Window
       @fontHUD.draw("x #{@player.nbZombie}", 80, 160, 10, 1.5, 1.5, 0xffffffff)
 
       @fontHUD.draw("Bonus: ", 20, 230, 101, 1, 1, 0xffffffff)
-      @fontHUD.draw("Vitesse: #{@player.vitesse}", 30, 265, 10, 1, 1, 0xffffffff)
+      @fontHUD.draw("Vitesse: #{(@player.vitesse-1)}", 30, 265, 10, 1, 1, 0xffffffff)
       @fontHUD.draw("Attaque: #{@player.degats}", 30, 300, 10, 1, 1, 0xffffffff)
       @fontHUD.draw("Range: #{@player.range}", 30, 335, 10, 1, 1, 0xffffffff)
       @fontHUD.draw("VitesseAt: #{@player.vitesseAt}", 30, 370, 10, 1, 1, 0xffffffff)
@@ -426,6 +447,11 @@ class Fenetre < Gosu::Window
     end
 
     @ramassables.each do |ramassable|
+      if redraw?(ramassable.x, ramassable.z)
+        ramassable.draw(@camera)
+      end
+    end
+    @pieges.each do |ramassable|
       if redraw?(ramassable.x, ramassable.z)
         ramassable.draw(@camera)
       end

@@ -24,7 +24,7 @@ class ItemTire < Item
         @vitesseP = 2
         @degats = 2
         @modeleTire = CreateModele::projectile(0.5)
-        @vraiMod  = CreateModele::pistolet
+        @vraiMod  = CreateModele::mitraillette
         @son = Gosu::Sample.new('../media/armes/revolver.wav')
         itbox = 3
       when 2
