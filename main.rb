@@ -48,7 +48,7 @@ class Fenetre < Gosu::Window
     @type_gen = 'random'    # Type de génération / 4 valeurs possibles : 'random', 'newest', 'middle', 'oldest'
     @gagner = false
 
-    @etage = 4
+    @etage = 0
     @zombieFin = 0
     @fontHUD = Gosu::Font.new 30
     @iconRuby = Gosu::Image.new('../media/iconRuby.png')
@@ -566,7 +566,7 @@ class Fenetre < Gosu::Window
     #   end
     # end
 
-    @teleporteur.draw(@camera)
+
   end
 
   def drawMapTotal
