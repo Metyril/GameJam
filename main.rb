@@ -199,9 +199,6 @@ class Fenetre < Gosu::Window
       @ennemis.each do |ennemi|
         ennemi.attaque
       end
-      @mega.each do |ennemi|
-        ennemi.attaque
-      end
     end
 
     self.murCollision @player
@@ -232,16 +229,6 @@ class Fenetre < Gosu::Window
         self.murCollision ennemi
       end
 
-      # POUR LE MEGA
-      @mega.each do |ennemi|
-        ennemi.detruire if 1 > ennemi.vie
-        ennemi.deplacements(@player.x, @player.z)
-        if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable == 0
-          @player.vie -= 1
-          @player.invulnerable = 70
-        end
-        self.murCollision ennemi
-      end
     end
 
 
@@ -310,7 +297,6 @@ class Fenetre < Gosu::Window
     # @ennemis.each do |ennemi|
     #   ennemi.detruire if self.dist(@player,ennemi) < (@player.itBox + ennemi.itBox)
     # end
-    self.iter @mega
     self.iter @pieges
     self.iter @vies
     self.iter @drones
@@ -518,11 +504,7 @@ class Fenetre < Gosu::Window
         ennemi.draw(@camera)
       end
     end
-    @mega.each do |ennemi|
-      if redraw?(ennemi.x, ennemi.z)
-        ennemi.draw(@camera)
-      end
-    end
+
   end
 
   def drawMapTotal
