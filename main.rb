@@ -356,7 +356,7 @@ class Fenetre < Gosu::Window
 
         elem.isDetruit
       end
-      if @zombieFin == 9
+      if @zombieFin == 1
         @gagner = true
       end
 
@@ -386,7 +386,7 @@ class Fenetre < Gosu::Window
       if @player.vie <= 0
         @player.sonMort.play(1)
         @sonFin.play(1)
-        close
+        self.close!
         MenuGameOver.new.show
       end
     else
