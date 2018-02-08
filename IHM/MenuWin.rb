@@ -2,10 +2,8 @@
 require 'gosu'  # Librairie graphique Gosu
 
 require_relative 'Bouton.rb'
-# require_relative '../main.rb'
-# require_relative 'MenuPrincipal.rb'
 
-class MenuGameOver < Gosu::Window
+class MenuWin < Gosu::Window
 
     def initialize(width=1280, height=720, options={:fullscreen => false})     # options facultatif / update_interval est en ms
       super
