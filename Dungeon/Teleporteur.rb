@@ -48,9 +48,9 @@ class Teleporteur < Element
           end
           j = rand(2..4)
           for i in 1..j
-            if rand < 0.5
+            if rand < 0.2
               ramassablesArme << ItemPoing.new(fenetre,map.rooms[rand(0..nb_room-1)])
-            else rand> 0.5
+            else rand> 0.8
               ramassablesArme << ItemTire.new(fenetre,map.rooms[rand(0..nb_room-1)])
             end
           end
