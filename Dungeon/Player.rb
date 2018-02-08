@@ -11,7 +11,6 @@ class Player < Element
         @degats = 0
         @range = 0
         @vitesseAt = 0
-        #@arme = ItemPoing.new(room,modele,3,x,y,z)
         @arme = arme
         @vitesse = 1
         @puissance = puissance
@@ -26,9 +25,9 @@ class Player < Element
         @nbRuby = 0
         @nbZombie = 0
 
-        @cri02 = Gosu::Sample.new('../media/divers/cri02.wav')
-        @cri03 = Gosu::Sample.new('../media/divers/cri03.wav')
-        @sonMort = Gosu::Sample.new('../media/divers/mort_cri.wav')
+        @cri02 = Gosu::Sample.new('./media/divers/cri02.wav')
+        @cri03 = Gosu::Sample.new('./media/divers/cri03.wav')
+        @sonMort = Gosu::Sample.new('./media/divers/mort_cri.wav')
 
     end
 
@@ -85,9 +84,7 @@ class Player < Element
 
     @items.each do |item|
       if item.is_a? DroneAt
-        #if item.vitesse > 0
-            item.updateActif
-        #end
+          item.updateActif
       end
     end
 
@@ -114,25 +111,17 @@ class Player < Element
 
     if @arme.is_a? ItemPoing
       @arme.modele.draw(cam, @arme.x, @y - 2, @arme.z, @anime > DEMIPI ? 0 : @anime, -@angle, 0)
-      #@arme.modele.draw(cam, @x - Math.sin(@angle - DEMIPI)*3, @y - 2, @z - Math.cos(@angle - DEMIPI)*3, @anime > DEMIPI ? 0 : @anime, -@angle, 0)
     else
       @arme.modele.draw(cam, @arme.x, @y - 2.5, @arme.z, @anime > DEMIPI ? 0 : -@anime, -@angle, 0)
-      #@arme.modele.draw(cam, @x - Math.sin(@angle - DEMIPI)*3, @y - 2.5, @z - Math.cos(@angle - DEMIPI)*3, @anime > DEMIPI ? 0 : -@anime, -@angle, 0)
     end
 
     @items.each do |drone|
-      #if drone.is_a? DroneAt
-        drone.modele.draw(cam, drone.x, drone.y, drone.z, 0, 0, 0)
-      #end
+      drone.modele.draw(cam, drone.x, drone.y, drone.z, 0, 0, 0)
     end
 
-    #puts @items.length
 
     if (@anime < DEMIPI)
       @anime += 0.15
     end
-
-    #@arme.modele.draw(cam, @x - 5, @y - 2, @z - 5, 0, -@angle, 0.5)
-      #Gosu.draw_rect(@x, @y, @cell_size, @cell_size, Gosu::Color.argb(0xff_ff0000), 2)
   end # Fin draw
 end # Fin Player

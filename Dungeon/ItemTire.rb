@@ -1,6 +1,6 @@
 ## Dépendances Gems
 require 'gosu'  # Librairie graphique Gosu
-require_relative 'Item.rb'
+require_relative './Item.rb'
 
 class ItemTire < Item
       attr_accessor :vitesse,:degats,:attaqueVit,:startAnime,:modeleTire,:room,:vitesseP,:nom,:vraiMod,:son
@@ -8,7 +8,6 @@ class ItemTire < Item
     @room = room
 
     rang = rand(3)
-    #rang = 2
 
     case rang
       when 0
@@ -18,7 +17,7 @@ class ItemTire < Item
         @degats = 1
         @modeleTire = CreateModele::projectile
         @vraiMod  = CreateModele::pistolet
-        @son = Gosu::Sample.new('../media/armes/revolver.wav')
+        @son = Gosu::Sample.new('./media/armes/revolver.wav')
         itbox = 1
       when 1
         @nom = "Mitraillette"
@@ -27,7 +26,7 @@ class ItemTire < Item
         @degats = 2
         @modeleTire = CreateModele::projectile(0.5)
         @vraiMod  = CreateModele::mitraillette
-        @son = Gosu::Sample.new('../media/armes/revolver.wav')
+        @son = Gosu::Sample.new('./media/armes/revolver.wav')
         itbox = 3
       when 2
         @nom = "Bazooka"
@@ -36,21 +35,17 @@ class ItemTire < Item
         @degats = 4
         @modeleTire = CreateModele::projectile(0.8)
         @vraiMod  = CreateModele::bazooka
-        @son = Gosu::Sample.new('../media/armes/bazooka.wav')
+        @son = Gosu::Sample.new('./media/armes/bazooka.wav')
         itbox = 3
 
     end
     @vitesse = 0
     @app = app
     @startAnime = false
-    @sonRecup = Gosu::Sample.new('../media/divers/chgmt_arme.wav')
+    @sonRecup = Gosu::Sample.new('./media/divers/chgmt_arme.wav')
 
     itbox = 1
     super room , @app.modelePointInterrogation, itbox , x,y,z
-
-
-
-    #self.equiper
   end
 
   def attaque

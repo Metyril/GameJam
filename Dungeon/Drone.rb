@@ -1,6 +1,6 @@
 # Dépendances Gems
 require 'gosu'  # Librairie graphique Gosu
-require_relative 'Item.rb'
+require_relative './Item.rb'
 
 class DroneAt < Item
     attr_accessor :app,:nom,:room,:attaqueVit,:vitesse
@@ -15,8 +15,6 @@ class DroneAt < Item
       modele = @app.modeleDrone
       super room, modele,itbox,x,y,z
 
-      #@xOffset = rand(-10..10)
-      #@zOffset = rand(-10..10)
       @dist = rand(2..6)
       @y = -rand(2..4)
     end
@@ -24,7 +22,6 @@ class DroneAt < Item
     def tirer
       if @vitesse <= 0
         @vitesse = 140
-        #@app.projectiles << Projectile.new(@app,@app.player.angle,@app.player.x+rand(2..4),@app.player.y,@app.player.z+rand(2..4),@itBox,@degats,@app.modeleProjectile,@room,@vitesseP)
         @app.projectiles << Projectile.new(@app,@app.player.angle,@x,@y,@z,@itBox,@degats,@app.modeleProjectile,@room,@vitesseP)
       end
     end
@@ -39,8 +36,4 @@ class DroneAt < Item
       @x += Math.sin(angle) * v
       @z += Math.cos(angle) * v
     end
-
-    #def draw camera
-    #    @modele.draw(camera, @x, @y - 2, @z, 0, 0, 0)
-    #end
 end

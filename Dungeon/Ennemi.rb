@@ -21,18 +21,17 @@ class Ennemi < Element
 
         @rand = rand(2).to_i
         if @rand == 0
-          @son = Gosu::Sample.new('../media/zombie/zombie01.ogg')
+          @son = Gosu::Sample.new('./media/zombie/zombie01.ogg')
         elsif @rand == 1
-          @son = Gosu::Sample.new('../media/zombie/zombie03.ogg')
+          @son = Gosu::Sample.new('./media/zombie/zombie03.ogg')
         elsif @rand == 2
-          @son = Gosu::Sample.new('../media/zombie/zombie04.ogg')
+          @son = Gosu::Sample.new('./media/zombie/zombie04.ogg')
         end
         @a_crie = false
     end
 
 
     def deplacements(xP, zP)
-        # if (@x <= xP + 20 || @x >= xP - 20) && (@z <= zP + 20 || @z >= zP - 20)
         if Math.sqrt((@x-xP)**2 + (@z-zP)**2) < 50
 
             @angle = Math.atan2((xP - @x), (zP - @z))
@@ -79,10 +78,6 @@ class Ennemi < Element
     end
 
     def draw camera
-        #Gosu.draw_rect(@x, @z, @cell_size, @cell_size, Gosu::Color.argb(0xff_00ff00), 1)
         @modele.draw(camera, @x, @y, @z, 0, -@angle, 0)
       end # Fin draw
-    #def draw
-    #    Gosu.draw_rect(@x, @y, @cell_size, @cell_size, Gosu::Color.argb(0xff_0000ff), 1)
-  #  end # Fin draw
 end # Fin Ennemi

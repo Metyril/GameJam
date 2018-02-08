@@ -1,26 +1,26 @@
 # Dépendances Gems
 require 'gosu'  # Librairie graphique Gosu
 
-require_relative 'Bouton.rb'
-require_relative 'Credits.rb'
-require_relative 'Commandes.rb'
-require_relative '../main.rb'
+require_relative './Bouton.rb'
+require_relative './Credits.rb'
+require_relative './Commandes.rb'
+require_relative '../Omotecy/main.rb'
 
 class MenuPrincipal < Gosu::Window
 
     def initialize(width=1280, height=720, options={:fullscreen => false})     # options facultatif / update_interval est en ms
       super
       self.caption = 'Omotecy'
-      @background = Gosu::Image.new("../media/background.png")
-      @cursor = Gosu::Image.new('../media/mouse.png')
-      @titre = Gosu::Image.new('../media/Omotecy - Titre Final.png')
+      @background = Gosu::Image.new("./media/menus/background.png")
+      @cursor = Gosu::Image.new('./media/menus/mouse.png')
+      @titre = Gosu::Image.new('./media/menus/Omotecy - Titre Final.png')
       @play = Bouton.new(400,300,450,80,Gosu::Color::CYAN,"Jouer",3)
       @credits = Bouton.new(400,400,450,80,Gosu::Color::CYAN,"Credits",2.8)
       @commandes = Bouton.new(400,500,450,80,Gosu::Color::CYAN,"Commandes",2.8)
       @exit = Bouton.new(400,600,450,80,Gosu::Color::CYAN,"Quitter",2.8)
-      @music = Gosu::Song.new('../media/warm_welcome_to_hell_o.ogg')
+      @music = Gosu::Song.new('./media/musiques/warm_welcome_to_hell_o.ogg')
       @sound_btn = Bouton.new(1100,500,100,100,Gosu::Color::CYAN,"",2.8)
-      @sound_image = Gosu::Image.new('../media/sound.png')
+      @sound_image = Gosu::Image.new('./media/menus/sound.png')
       @music.play(true)
     end
 
@@ -95,10 +95,3 @@ class MenuPrincipal < Gosu::Window
       end
     end
 end
-
-#TEST
-# Création d'une fenêtre
-window = MenuPrincipal.new
-
-# Affichage
-window.show

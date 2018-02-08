@@ -1,31 +1,29 @@
 require 'gosu'
 
-require_relative 'Dungeon/Map.rb'
-require_relative 'Dungeon/Player.rb'
-require_relative 'Dungeon/Element.rb'
-require_relative 'Dungeon/Ennemi.rb'
-require_relative 'Dungeon/ObjetRamassable.rb'
+require_relative '../Dungeon/Map.rb'
+require_relative '../Dungeon/Player.rb'
+require_relative '../Dungeon/Element.rb'
+require_relative '../Dungeon/Ennemi.rb'
+require_relative '../Dungeon/ObjetRamassable.rb'
+require_relative '../Dungeon/MurHitBox.rb'
+require_relative '../Dungeon/ItemPoing.rb'
+require_relative '../Dungeon/ItemTire.rb'
+require_relative '../Dungeon/Projectile.rb'
+require_relative '../Dungeon/Pilule.rb'
+require_relative '../Dungeon/Drone.rb'
+require_relative '../Dungeon/Item.rb'
+require_relative '../Dungeon/Vie.rb'
+require_relative '../Dungeon/MegaPilule.rb'
+require_relative '../Dungeon/Piege.rb'
+require_relative '../Dungeon/MegaZombie.rb'
+require_relative '../Dungeon/Particule.rb'
+require_relative '../Dungeon/Teleporteur.rb'
 
-require_relative 'Omotecy/createModele.rb'
-require_relative 'Omotecy/projectModele.rb'
+require_relative '../IHM/Bouton.rb'
+require_relative '../IHM/MenuFin.rb'
 
-require_relative 'Dungeon/MurHitBox.rb'
-require_relative 'Dungeon/ItemPoing.rb'
-require_relative 'Dungeon/ItemTire.rb'
-require_relative 'Dungeon/Projectile.rb'
-require_relative 'Dungeon/Pilule.rb'
-require_relative 'Dungeon/Drone.rb'
-require_relative 'Dungeon/Item.rb'
-require_relative 'Dungeon/Vie.rb'
-require_relative 'Dungeon/MegaPilule.rb'
-require_relative 'Dungeon/Piege.rb'
-require_relative 'Dungeon/MegaZombie.rb'
-require_relative 'Dungeon/Particule.rb'
-
-require_relative 'Dungeon/Teleporteur.rb'
-
-require_relative 'IHM/Bouton.rb'
-require_relative 'IHM/MenuFin.rb'
+require_relative './createModele.rb'
+require_relative './projectModele.rb'
 
 WIDTH = 1280
 HEIGHT = 720
@@ -52,8 +50,8 @@ class Fenetre < Gosu::Window
     @etage = 0
     @zombieFin = 0
     @fontHUD = Gosu::Font.new 30
-    @iconRuby = Gosu::Image.new('../media/iconRuby.png')
-    @iconZombie = Gosu::Image.new('../media/iconZombie.png')
+    @iconRuby = Gosu::Image.new('./media/hud/iconRuby.png')
+    @iconZombie = Gosu::Image.new('./media/hud/iconZombie.png')
 
     @afficheUHD = true
 
@@ -88,16 +86,15 @@ class Fenetre < Gosu::Window
     @particules = @teleporteur.allSet[:particules]
     @vies = @teleporteur.allSet[:vies]
     @pieges = @teleporteur.allSet[:pieges]
-    #@mega = Array.new
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
 
 
-    @sonFin = Gosu::Sample.new('../media/divers/mort_son.wav')
-    @sonTeleporteur = Gosu::Sample.new('../media/divers/teleporteur.wav')
+    @sonFin = Gosu::Sample.new('./media/divers/mort_son.wav')
+    @sonTeleporteur = Gosu::Sample.new('./media/divers/teleporteur.wav')
     @sonTeleporteur.play(1)
-    @sonRubis = Gosu::Sample.new('../media/divers/ruby.wav')
+    @sonRubis = Gosu::Sample.new('./media/divers/ruby.wav')
 
 
     @listeModeleCellules = Array.new
@@ -112,13 +109,13 @@ class Fenetre < Gosu::Window
 
     #MENU pause
     @pause = false
-    @music = Gosu::Song.new('../media/little_apocalypse.ogg')
-    @cursor = Gosu::Image.new('../media/mouse.png')
-    @titre = Gosu::Image.new('../media/Pause3D.png')
+    @music = Gosu::Song.new('./media/musiques/little_apocalypse.ogg')
+    @cursor = Gosu::Image.new('./media/menus/mouse.png')
+    @titre = Gosu::Image.new('./media/menus/Pause3D.png')
     @bouton = Bouton.new(500,350,350,80,Gosu::Color::CYAN,"Jouer",3)
     @exit = Bouton.new(500,450,350,80,Gosu::Color::CYAN,"Quitter",2.8)
     @sound_btn = Bouton.new(1100,500,100,100,Gosu::Color::CYAN,"",2.8)
-    @sound_image = Gosu::Image.new('../media/sound.png')
+    @sound_image = Gosu::Image.new('./media/menus/sound.png')
     @music.play(true)
   end
 
@@ -126,7 +123,6 @@ class Fenetre < Gosu::Window
     @listeModeleCellules = Array.new
     for i in (0..15)
       @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), @etage))
-      #@listeModeleCellules.push(CreateModele::cellule("0111"))
     end
   end
 
@@ -148,7 +144,8 @@ class Fenetre < Gosu::Window
         @pause = false
       end
       if @exit.isHover(@mouse_x,@mouse_y)
-        close
+        self.close!
+        MenuPrincipal.new.show
       end
       if @sound_btn.isHover(@mouse_x,@mouse_y) && @music.playing?
         @music.pause
@@ -162,7 +159,7 @@ class Fenetre < Gosu::Window
 
   def update
     if !@gagner
-      self.caption = "#{Gosu.fps} FPS / vitesse:#{@player.vitesse} Attaque:#{@player.degats} Range:#{@player.range} | VitesseAt:#{@player.vitesseAt} Vie:#{@player.vie} ArmeVitesse:#{@player.arme.vitesse}"
+      self.caption = "Omotecy (#{Gosu.fps} FPS)"
       if !@pause
         frontal = 0
         lateral = 0
@@ -213,9 +210,6 @@ class Fenetre < Gosu::Window
         @ennemis.each do |ennemi|
           ennemi.attaque
         end
-        # @mega.each do |ennemi|
-        #   ennemi.attaque
-        # end
       end
 
       self.murCollision @player
@@ -245,17 +239,6 @@ class Fenetre < Gosu::Window
           end
           self.murCollision ennemi
         end
-
-        # POUR LE MEGA
-        # @mega.each do |ennemi|
-        #   ennemi.detruire if 1 > ennemi.vie
-        #   ennemi.deplacements(@player.x, @player.z)
-        #   if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable == 0
-        #     @player.vie -= 1
-        #     @player.invulnerable = 70
-        #   end
-        #   self.murCollision ennemi
-        # end
       end
 
 
@@ -264,12 +247,6 @@ class Fenetre < Gosu::Window
         @playerInitPos = rand(0..@nb_room-1)
         @etage += 1
         self.setModelesMurs
-
-        ##if @etage == 4
-          #@map_width = 40         # Largeur de la Map
-          #@map_height = 40        # Hauteur de la Map
-        ##  @nb_room = 3
-        ##end
 
         @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @playerInitPos, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
 
@@ -335,10 +312,6 @@ class Fenetre < Gosu::Window
         end
       end
 
-      # @ennemis.each do |ennemi|
-      #   ennemi.detruire if self.dist(@player,ennemi) < (@player.itBox + ennemi.itBox)
-      # end
-      #self.iter @mega
       self.iter @pieges
       self.iter @vies
       self.iter @drones
@@ -449,14 +422,7 @@ class Fenetre < Gosu::Window
       self.drawMapClip
     end
 
-    #@playerModele.draw(@camera, @player.x, @player.y, @player.z, 0, -@player.angle, 0)
-
     @player.draw(@camera)
-
-    # @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)
-    # @batte.draw(@camera, 0, 0, 0, 0, 0, 0)
-    #@ruby.draw(@camera, @mursHitBox[3].x, 0, @mursHitBox[1].z, 0, 0, 0)
-    #@map.draw
 
     #MENU PAUSE
     if @pause
@@ -564,14 +530,6 @@ class Fenetre < Gosu::Window
     if @etage != 4
       @teleporteur.draw(@camera)
     end
-
-    # @mega.each do |ennemi|
-    #   if redraw?(ennemi.x, ennemi.z)
-    #     ennemi.draw(@camera)
-    #   end
-    # end
-
-
   end
 
   def drawMapTotal
@@ -607,5 +565,3 @@ class Fenetre < Gosu::Window
     @teleporteur.draw(@camera)
   end
 end
-
-#Fenetre.new.show

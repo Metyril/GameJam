@@ -30,7 +30,6 @@ class Map
         @map = Array.new(@height) { Array.new(@width, 0) }  # Initialisation de la Map à 0 / Nécessaire pour la méthode createMaze
 
         # Création des salles / Min : 1, Max : Selon Map et Gosu
-        # /!\ /!\ Peut provoquer des SystemStackError (récursivité)
         @rooms = [Room.new(@width, @height, @cell_size)]
         for i in 1..@nb_room-1
             @rooms << self.addRoom

@@ -1,20 +1,20 @@
 require 'gosu'
-require_relative 'Bouton.rb'
+require_relative './Bouton.rb'
 
 
 class Commandes < Gosu::Window
   def initialize(width=1280, height=720, options={:fullscreen => false})
     super
     self.caption = 'Omotecy - Commandes'
-    @cursor = Gosu::Image.new('../media/mouse.png')
+    @cursor = Gosu::Image.new('./media/menus/mouse.png')
     @retour = Bouton.new(10,10,350,80,Gosu::Color::CYAN,"Retour",3)
 
-    @commandes = Gosu::Image.from_text('Commandes', 50, {:font => "../media/Basica.ttf", :align => :center})
+    @commandes = Gosu::Image.from_text('Commandes', 50, {:font => "./media/menus/Basica.ttf", :align => :center})
 
-    @commandeJoueur3D = Gosu::Image.new("../media/CommandesJoueur3D.png")
-    @commandeCamera3D = Gosu::Image.new("../media/CommandesCamera3D.png")
-    @commandeTirer3D = Gosu::Image.new("../media/CommandeTirer3D.png")
-    @commandePause3D = Gosu::Image.new("../media/CommandePause3D.png")
+    @commandeJoueur3D = Gosu::Image.new("./media/menus/CommandesJoueur3D.png")
+    @commandeCamera3D = Gosu::Image.new("./media/menus/CommandesCamera3D.png")
+    @commandeTirer3D = Gosu::Image.new("./media/menus/CommandeTirer3D.png")
+    @commandePause3D = Gosu::Image.new("./media/menus/CommandePause3D.png")
   end
 
   def draw

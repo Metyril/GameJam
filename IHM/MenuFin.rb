@@ -1,7 +1,7 @@
 # Dépendances Gems
 require 'gosu'  # Librairie graphique Gosu
 
-require_relative 'Bouton.rb'
+require_relative './Bouton.rb'
 
 class MenuFin < Gosu::Window
 
@@ -9,16 +9,18 @@ class MenuFin < Gosu::Window
       super width, height, options
       @score = score
       @statut = statut
-      @cursor = Gosu::Image.new('../media/mouse.png')
-      @titre = Gosu::Image.new('../media/messageMenuFin.png')
+      @cursor = Gosu::Image.new('./media/menus/mouse.png')
+      @titre = Gosu::Image.new('./media/menus/messageMenuFin.png')
       if(@statut)
-        @statut = Gosu::Image.new('../media/winMenuFin.png')
+        @statut = Gosu::Image.new('./media/menus/winMenuFin.png')
+        self.caption = "Omotecy - Vous avez survécu à la transformation !"
       else
-        @statut = Gosu::Image.new('../media/loseMenuFin.png')
+        @statut = Gosu::Image.new('./media/menus/loseMenuFin.png')
+        self.caption = "Omotecy - La matrice vous a emprisonnée !"
       end
       @rejouer = Bouton.new(450,500,400,80,Gosu::Color::CYAN,"Rejouer",3)
       @exit = Bouton.new(450,600,400,80,Gosu::Color::CYAN,"Quitter",2.8)
-      @txtScore = Gosu::Image.from_text('Score obtenu', 50, {:font => "../media/Basica.ttf", :align => :center})
+      @txtScore = Gosu::Image.from_text('Score obtenu', 50, {:font => "./media/menus/Basica.ttf", :align => :center})
       @printScore = Gosu::Image.from_text("#{@score}", 100)
     end
 

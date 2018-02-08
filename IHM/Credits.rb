@@ -1,23 +1,23 @@
 require 'gosu'
-require_relative 'Bouton.rb'
+require_relative './Bouton.rb'
 
 
 class Credits < Gosu::Window
   def initialize(width=1280, height=720, options={:fullscreen => false})
     super
     self.caption = 'Omotecy - Crédits'
-    @background = Gosu::Image.new('../media/background2.png')
-    @cursor = Gosu::Image.new('../media/mouse.png')
+    @background = Gosu::Image.new('./media/menus/background2.png')
+    @cursor = Gosu::Image.new('./media/menus/mouse.png')
     @retour = Bouton.new(10,10,350,80,Gosu::Color::CYAN,"Retour",3)
 
-    @credits = Gosu::Image.from_text('Credits', 50, {:font => "../media/Basica.ttf", :align => :center})
-    @message = Gosu::Image.from_text('Thomas    Laurent    aka    Le    Modeleur', 30, {:font => "../media/Basica.ttf"})
-    @message2 = Gosu::Image.from_text('Jeremy    Martin          aka    Le    Musicien', 30, {:font => "../media/Basica.ttf"})
-    @message3 = Gosu::Image.from_text('Romain    Lascaux      aka    Le    MegaConcepteur', 30, {:font => "../media/Basica.ttf"})
-    @message4 = Gosu::Image.from_text('Clement    Martin      aka    Le    Minotaure', 30, {:font => "../media/Basica.ttf"})
-    @message5 = Gosu::Image.from_text('Jeremy    Andre           aka    Le    MultiDimensioneur', 30, {:font => "../media/Basica.ttf"})
-    @sources = Gosu::Image.from_text('Sources : ', 50, {:font => "../media/Basica.ttf", :align => :center})
-    @source_son = Gosu::Image.from_text('Bruitages                                       Universal    Soundbank', 30, {:font => "../media/Basica.ttf"})
+    @credits = Gosu::Image.from_text('Credits', 50, {:font => "./media/menus/Basica.ttf", :align => :center})
+    @message = Gosu::Image.from_text('Thomas    Laurent    aka    Le    Modeleur', 30, {:font => "./media/menus/Basica.ttf"})
+    @message2 = Gosu::Image.from_text('Jeremy    Martin          aka    Le    Musicien', 30, {:font => "./media/menus/Basica.ttf"})
+    @message3 = Gosu::Image.from_text('Romain    Lascaux      aka    Le    MegaConcepteur', 30, {:font => "./media/menus/Basica.ttf"})
+    @message4 = Gosu::Image.from_text('Clement    Martin      aka    Le    Minotaure', 30, {:font => "./media/menus/Basica.ttf"})
+    @message5 = Gosu::Image.from_text('Jeremy    Andre           aka    Le    MultiDimensioneur', 30, {:font => "./media/menus/Basica.ttf"})
+    @sources = Gosu::Image.from_text('Sources : ', 50, {:font => "./media/menus/Basica.ttf", :align => :center})
+    @source_son = Gosu::Image.from_text('Bruitages                                       Universal    Soundbank', 30, {:font => "./media/menus/Basica.ttf"})
   end
 
   def draw

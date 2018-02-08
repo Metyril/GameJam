@@ -7,14 +7,13 @@ class Teleporteur < Element
         @allSet = self.setAll(fenetre, map_width, map_height, cell_size, wall_size, nb_room, type_gen, playerInitPos, batte, modeleRuby, ennemisModele, modeleTP, modPilule)
         room = @allSet[:map].rooms[rand(0..nb_room-1)]
         super room, modeleTP, itbox, x, y, z
-        @sonTeleporteur = Gosu::Sample.new('../media/divers/teleporteur.wav')
+        @sonTeleporteur = Gosu::Sample.new('./media/divers/teleporteur.wav')
         @sonTeleporteur.play(1)
     end
 
     def setAll fenetre, map_width, map_height, cell_size, wall_size, nb_room, type_gen, playerInitPos, batte, modeleRuby, ennemisModele, modeleTP, modPilule
         map = Map.new(map_width, map_height, cell_size, wall_size, nb_room, type_gen)   # Map à générer
 
-        # playerInitPos = rand(0..nb_room-1)
         @projectiles = Array.new
         @ramassablesArme = Array.new
         @ennemis = Array.new

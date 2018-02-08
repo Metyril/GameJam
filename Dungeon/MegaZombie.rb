@@ -11,7 +11,6 @@ class MegaZombie < Ennemi
     end
 
     def deplacements(xP, zP)
-      # if (@x <= xP + 20 || @x >= xP - 20) && (@z <= zP + 20 || @z >= zP - 20)
       if Math.sqrt((@x-xP)**2 + (@z-zP)**2) < 70
 
           @angle = Math.atan2((xP - @x), (zP - @z))
