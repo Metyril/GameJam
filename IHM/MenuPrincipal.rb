@@ -9,12 +9,8 @@ class MenuPrincipal < Gosu::Window
 
     def initialize(width=1280, height=720, options={:fullscreen => false})     # options facultatif / update_interval est en ms
       super
-
-      # @retour = Bouton.new(10,10,350,80,Gosu::Color::CYAN,"Retour",3)
-
-
-
       self.caption = 'Omotecy'
+      @background = Gosu::Image.new("../media/background.png")
       @cursor = Gosu::Image.new('../media/mouse.png')
       @titre = Gosu::Image.new('../media/Omotecy - Titre Final.png')
       @play = Bouton.new(500,350,350,80,Gosu::Color::CYAN,"Jouer",3)
@@ -31,6 +27,7 @@ class MenuPrincipal < Gosu::Window
       @credits.draw
       @exit.draw
       @sound_btn.draw
+      @background.draw 0,0,0
       @titre.draw 50, 100, 2
       @cursor.draw self.mouse_x, self.mouse_y, 4
       @sound_image.draw 1110, 510, 2

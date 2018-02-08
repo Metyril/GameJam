@@ -107,8 +107,8 @@ class Fenetre < Gosu::Window
     @music = Gosu::Song.new('../media/little_apocalypse.ogg')
     @cursor = Gosu::Image.new('../media/mouse.png')
     @titre = Gosu::Image.new('../media/Omotecy - Titre Final.png')
-    @bouton = Bouton.new(500,350,270,80,Gosu::Color::CYAN,"Jouer",3)
-    @exit = Bouton.new(500,450,270,80,Gosu::Color::CYAN,"Quitter",2.8)
+    @bouton = Bouton.new(500,350,350,80,Gosu::Color::CYAN,"Jouer",3)
+    @exit = Bouton.new(500,450,350,80,Gosu::Color::CYAN,"Quitter",2.8)
     @sound_btn = Bouton.new(1100,500,100,100,Gosu::Color::CYAN,"",2.8)
     @sound_image = Gosu::Image.new('../media/sound.png')
     @music.play(true)
@@ -415,10 +415,8 @@ class Fenetre < Gosu::Window
 
     @player.draw(@camera)
 
-    @teleporteur.draw(@camera)
-
-    @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)
-    @batte.draw(@camera, 0, 0, 0, 0, 0, 0)
+    # @playerModele.draw(@camera, 0, 0, 0, 0, 0, 0)
+    # @batte.draw(@camera, 0, 0, 0, 0, 0, 0)
     #@ruby.draw(@camera, @mursHitBox[3].x, 0, @mursHitBox[1].z, 0, 0, 0)
     #@map.draw
 
@@ -527,6 +525,7 @@ class Fenetre < Gosu::Window
         ennemi.draw(@camera)
       end
     end
+    @teleporteur.draw(@camera)
   end
 
   def drawMapTotal
@@ -559,6 +558,7 @@ class Fenetre < Gosu::Window
     @ramassablesArme.each do |ennemi|
       ennemi.draw(@camera)
     end
+    @teleporteur.draw(@camera)
   end
 end
 

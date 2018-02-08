@@ -12,7 +12,7 @@ class Bouton
       @height = height
       @color = color
       @text = text
-      @font = Gosu::Font.new(20, {:name => './Basica.ttf'})
+      @font = Gosu::Font.new(20, {:name => '../media/Basica.ttf'})
       @font_length = font_length
   end
 
