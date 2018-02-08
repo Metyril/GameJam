@@ -3,6 +3,7 @@ require 'gosu'  # Librairie graphique Gosu
 
 require_relative 'Bouton.rb'
 require_relative 'Credits.rb'
+require_relative 'Commandes.rb'
 require_relative '../main.rb'
 
 class MenuPrincipal < Gosu::Window
@@ -13,9 +14,10 @@ class MenuPrincipal < Gosu::Window
       @background = Gosu::Image.new("../media/background.png")
       @cursor = Gosu::Image.new('../media/mouse.png')
       @titre = Gosu::Image.new('../media/Omotecy - Titre Final.png')
-      @play = Bouton.new(500,350,350,80,Gosu::Color::CYAN,"Jouer",3)
-      @credits = Bouton.new(500,450,350,80,Gosu::Color::CYAN,"Credits",2.8)
-      @exit = Bouton.new(500,550,350,80,Gosu::Color::CYAN,"Quitter",2.8)
+      @play = Bouton.new(400,300,450,80,Gosu::Color::CYAN,"Jouer",3)
+      @credits = Bouton.new(400,400,450,80,Gosu::Color::CYAN,"Credits",2.8)
+      @commandes = Bouton.new(400,500,450,80,Gosu::Color::CYAN,"Commandes",2.8)
+      @exit = Bouton.new(400,600,450,80,Gosu::Color::CYAN,"Quitter",2.8)
       @music = Gosu::Song.new('../media/warm_welcome_to_hell_o.ogg')
       @sound_btn = Bouton.new(1100,500,100,100,Gosu::Color::CYAN,"",2.8)
       @sound_image = Gosu::Image.new('../media/sound.png')
@@ -25,6 +27,7 @@ class MenuPrincipal < Gosu::Window
     def draw
       @play.draw
       @credits.draw
+      @commandes.draw
       @exit.draw
       @sound_btn.draw
       @background.draw 0,0,0
@@ -45,6 +48,11 @@ class MenuPrincipal < Gosu::Window
         @credits.color(Gosu::Color::YELLOW)
       elsif @credits.getColor == Gosu::Color::YELLOW
         @credits.color(Gosu::Color::CYAN)
+      end
+      if @commandes.isHover(@mouse_x,@mouse_y)
+        @commandes.color(Gosu::Color::YELLOW)
+      elsif @commandes.getColor == Gosu::Color::YELLOW
+        @commandes.color(Gosu::Color::CYAN)
       end
       if @exit.isHover(@mouse_x,@mouse_y)
         @exit.color(Gosu::Color::YELLOW)
@@ -71,6 +79,10 @@ class MenuPrincipal < Gosu::Window
         if @credits.isHover(@mouse_x,@mouse_y)
           self.close!
           Credits.new.show
+        end
+        if @commandes.isHover(@mouse_x,@mouse_y)
+          self.close!
+          Commandes.new.show
         end
         if @exit.isHover(@mouse_x,@mouse_y)
           self.close!
