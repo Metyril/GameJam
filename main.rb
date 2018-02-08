@@ -18,6 +18,7 @@ require_relative 'Dungeon/Drone.rb'
 require_relative 'Dungeon/Item.rb'
 require_relative 'Dungeon/Vie.rb'
 require_relative 'Dungeon/MegaPilule.rb'
+require_relative 'Dungeon/Piege.rb'
 require_relative 'Dungeon/Particule.rb'
 
 require_relative 'Dungeon/Teleporteur.rb'
@@ -30,7 +31,7 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
-  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage
+  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage,:pieges
   attr_accessor :modeleParicule, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert,:modeleDrone,:modPilule,:modeleRuby,:modeleProjectile
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: false}
@@ -78,6 +79,7 @@ class Fenetre < Gosu::Window
     @drones = @teleporteur.allSet[:drones]
     @particules = @teleporteur.allSet[:particules]
     @vies = @teleporteur.allSet[:vies]
+    @pieges = @teleporteur.allSet[:pieges]
 
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
@@ -256,6 +258,12 @@ class Fenetre < Gosu::Window
         pilule.detruire
       end
     end
+    @pieges.each do |pilule|
+      if self.dist(@player, pilule) < (@player.itBox + pilule.itBox)
+        pilule.activeEffet
+        pilule.detruire
+      end
+    end
     @ramassablesArme.each do |ramassable|
       if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
         @player.arme = ramassable
@@ -272,6 +280,7 @@ class Fenetre < Gosu::Window
     # @ennemis.each do |ennemi|
     #   ennemi.detruire if self.dist(@player,ennemi) < (@player.itBox + ennemi.itBox)
     # end
+    self.iter @pieges
     self.iter @vies
     self.iter @drones
     self.iter @pilules
@@ -420,6 +429,11 @@ class Fenetre < Gosu::Window
     end
 
     @ramassables.each do |ramassable|
+      if redraw?(ramassable.x, ramassable.z)
+        ramassable.draw(@camera)
+      end
+    end
+    @pieges.each do |ramassable|
       if redraw?(ramassable.x, ramassable.z)
         ramassable.draw(@camera)
       end

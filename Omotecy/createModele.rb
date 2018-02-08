@@ -167,9 +167,9 @@ class CreateModele
 
   def self.sol
     s1 = Point.new(0, 0, 0)
-    s2 = Point.new(0, 0, 10)
-    s3 = Point.new(10, 0, 0)
-    s4 = Point.new(10, 0, 10)
+    s2 = Point.new(0, 0, 2)
+    s3 = Point.new(2, 0, 0)
+    s4 = Point.new(2, 0, 2)
 
     pointsSol = [s1, s2, s3, s4]
 
