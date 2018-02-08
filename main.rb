@@ -86,13 +86,11 @@ class Fenetre < Gosu::Window
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
 
-    #@drones << DroneAt.new(self,@map.rooms[@playerInitPos])
-
-
-
     @sonFin = Gosu::Sample.new('../media/divers/mort_son.wav')
     @sonTeleporteur = Gosu::Sample.new('../media/divers/teleporteur.wav')
     @sonTeleporteur.play(1)
+    @sonRubis = Gosu::Sample.new('../media/divers/ruby.wav')
+
 
     @listeModeleCellules = Array.new
     self.setModelesMurs
@@ -129,7 +127,7 @@ class Fenetre < Gosu::Window
       @pause = true
     elsif id == Gosu::KB_TAB
       @freeCam = !@freeCam
-      #@drawTotal = !@drawTotal
+      @drawTotal = !@drawTotal
     end
 
     #MENU PAUSE
@@ -197,15 +195,16 @@ class Fenetre < Gosu::Window
 
     #################################
     #update des objets
+    if !@pause
+      @player.attaque if Gosu.button_down? Gosu::KB_SPACE
 
-    @player.attaque if Gosu.button_down? Gosu::KB_SPACE
-
-    @player.update
-    @ennemis.each do |ennemi|
-      ennemi.attaque
-    end
-    @mega.each do |ennemi|
-      ennemi.attaque
+      @player.update
+      @ennemis.each do |ennemi|
+        ennemi.attaque
+      end
+      @mega.each do |ennemi|
+        ennemi.attaque
+      end
     end
 
     self.murCollision @player
@@ -240,7 +239,7 @@ class Fenetre < Gosu::Window
       @mega.each do |ennemi|
         ennemi.detruire if 1 > ennemi.vie
         ennemi.deplacements(@player.x, @player.z)
-        if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable <= 0
+        if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable == 0
           @player.vie -= 1
           @player.invulnerable = 70
         end
@@ -278,6 +277,7 @@ class Fenetre < Gosu::Window
       if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
         ramassable.detruire
         @player.nbRuby += 1
+        @sonRubis.play(1)
       end
     end
     @vies.each do |ramassable|

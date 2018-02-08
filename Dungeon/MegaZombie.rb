@@ -8,7 +8,7 @@ class MegaZombie < Ennemi
     def initialize(room, modele, itbox=5,x=0,y=0,z=0,cracheur = true ,app = 0)
         super room, modele , itbox, x,y,z,cracheur,app
         @vie = 250
-        @vitesseSpone = 1500
+        @vitesseSpone = 750
     end
 
     def attaque
