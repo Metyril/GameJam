@@ -22,20 +22,7 @@ class Ennemi < Element
     def deplacements(xP, zP)
         # if (@x <= xP + 20 || @x >= xP - 20) && (@z <= zP + 20 || @z >= zP - 20)
         if Math.sqrt((@x-xP)**2 + (@z-zP)**2) < 40
-            # if @x > xP
-            #     @x -= 0.4
-            # else
-            #     @x += 0.4
-            # end
-            # if @z > zP
-            #     @z -= 0.4
-            # else
-            #     @z += 0.4
-            # end
-
             @angle = Math.atan2((xP - @x), (zP - @z))
-
-
         else
 
             @angle += @dirAngle

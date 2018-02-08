@@ -58,7 +58,7 @@ class Fenetre < Gosu::Window
 
     # TELEPORTEUR
     @playerInitPos = rand(0..@nb_room-1)
-    @modeleTP = CreateModele::sim
+    @modeleTP = CreateModele::teleporteur
     @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @playerInitPos, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
 
     # ATTRIBUTS
