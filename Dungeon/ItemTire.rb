@@ -28,7 +28,7 @@ class ItemTire < Item
       when 2
         @nom = "Bazooka"
         @attaqueVit = 1
-        @vitesseP = 1
+        @vitesseP = 8
         @degats = 4
         @modeleTire = CreateModele::projectile(0.8)
         @vraiMod  = CreateModele::bazooka
