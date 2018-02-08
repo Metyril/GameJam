@@ -27,7 +27,11 @@ class Teleporteur < Element
           if r != playerInitPos
             j = rand(2..10)
             for i in 1..j
-              ennemis << Ennemi.new(room, ennemisModele)
+              if rand  < 0.3
+                ennemis << Ennemi.new(room, ennemisModele,3,0,0,0,true,fenetre)
+              else
+                ennemis << Ennemi.new(room, ennemisModele)
+              end
             end
           end
           j = rand(2..10)
@@ -37,7 +41,11 @@ class Teleporteur < Element
           j = rand(2..4)
           for i in 1..j
             if rand < 0.2
-              pilules << Pilule.new(fenetre,room,modPilule)
+              if rand < 0.5
+                pilules << Pilule.new(fenetre,room,modPilule)
+              else
+                pilules << MegaPilule.new(fenetre,room)
+              end
             end
           end
           j = rand(2..4)

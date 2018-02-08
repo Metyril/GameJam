@@ -31,7 +31,7 @@ class ItemTire < Item
         @vitesseP = 1
         @degats = 4
         @modeleTire = CreateModele::projectile(0.8)
-        @vraiMod  = CreateModele::pistolet
+        @vraiMod  = CreateModele::bazooka
         itbox = 3
 
     end

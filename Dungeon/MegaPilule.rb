@@ -4,11 +4,11 @@ require 'gosu'  # Librairie graphique Gosu
 class MegaPilule < Item
     attr_accessor :app,:nom
 
-    def initialize(app,room,h,x=0,y=0,z=0,itbox=2)
+    def initialize(app,room,x=0,y=0,z=0,itbox=2)
       super room,CreateModele::pilule,itbox,x,y,z
       @app = app
       @angle = rand(-3..3)
-      #h = 4
+      h = rand(4)
       case h
         when 0
           @nom = "Zombie"
