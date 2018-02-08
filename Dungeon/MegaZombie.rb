@@ -10,6 +10,35 @@ class MegaZombie < Ennemi
         @vie = 90
     end
 
+    def deplacements(xP, zP)
+      # if (@x <= xP + 20 || @x >= xP - 20) && (@z <= zP + 20 || @z >= zP - 20)
+      if Math.sqrt((@x-xP)**2 + (@z-zP)**2) < 70
+
+          @angle = Math.atan2((xP - @x), (zP - @z))
+
+          if !@a_crie
+            @son.play(0.5)
+            @a_crie = true
+          end
+
+          @tire = true
+      else
+
+        @tire = false
+
+          @angle += @dirAngle
+
+          @dirAngle = rand(-0.4..0.4) if rand(5) > 3
+
+          if @a_crie
+            @a_crie = false
+          end
+      end
+
+      @x += Math.sin(@angle) * (0.3 * @vitesse) * @velRecul
+      @z += Math.cos(@angle) * (0.3 * @vitesse) * @velRecul
+  end
+
     def attaque
       if @cracheur
         if @vitesseAt <= 0
