@@ -81,11 +81,10 @@ class Fenetre < Gosu::Window
     @particules = @teleporteur.allSet[:particules]
     @vies = @teleporteur.allSet[:vies]
     @pieges = @teleporteur.allSet[:pieges]
-    @mega = Array.new
     # AUTRES
     @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
     @camera = Camera.new(@player.x, @player.y,@player.z-30)
-    @mega << MegaZombie.new(@map.rooms[@playerInitPos],@ennemisModele,3,0,0,0,true,self)
+    @ennemis << MegaZombie.new(@map.rooms[@playerInitPos],@ennemisModele,3,0,0,0,true,self)
 
     @sonFin = Gosu::Sample.new('../media/divers/mort_son.wav')
     @sonTeleporteur = Gosu::Sample.new('../media/divers/teleporteur.wav')
