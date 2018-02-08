@@ -8,7 +8,7 @@ class MegaPilule < Item
       super room,CreateModele::pilule,itbox,x,y,z
       @app = app
       @angle = rand(-3..3)
-      h = rand(4)
+      h = rand(5)
       case h
         when 0
           @nom = "Zombie"
@@ -20,6 +20,8 @@ class MegaPilule < Item
           @nom = "Rubis"
         when 4
           @nom = "Pillule"
+        when 5
+          @nom = "Drone"
       end
     end # Fin initialize
 
@@ -28,7 +30,7 @@ class MegaPilule < Item
       when "Zombie"
         j = rand(2..10)
         for i in 1..j
-          @app.ennemis << Ennemi.new(@room, CreateModele::player(true))
+          @app.ennemis << Ennemi.new(@room, @app.ennemisModele)
         end
       when "Explosion"
         @app.ennemis.each do |ennemie|
@@ -48,12 +50,17 @@ class MegaPilule < Item
       when "Rubis"
           j = rand(8..15)
           for i in 1..j
-            @app.ramassables << ObjetRamassable.new(@room , CreateModele::ruby)
+            @app.ramassables << ObjetRamassable.new(@room , @app.modeleRuby)
           end
       when "Pillule"
-        j = rand( 3..5)
+        j = rand(3..5)
         for i in 1..j
-          @app.pilules << Pilule.new(@app,@room,CreateModele::pilule)
+          @app.pilules << Pilule.new(@app,@room,@app.modelePilule)
+        end
+      when "Drone"
+        j = rand(3..5)
+        for i in 1..j
+          @app.drones << DroneAt.new(@app,@room)
         end
       end
     end
