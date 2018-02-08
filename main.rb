@@ -49,7 +49,7 @@ class Fenetre < Gosu::Window
     @gagner = false
 
     @score = 0
-    @etage = 3
+    @etage = 0
     @zombieFin = 0
     @fontHUD = Gosu::Font.new 30
     @iconRuby = Gosu::Image.new('../media/iconRuby.png')
@@ -357,7 +357,7 @@ class Fenetre < Gosu::Window
 
         elem.isDetruit
       end
-      if @zombieFin == 1
+      if @zombieFin == 9
         @gagner = true
       end
 
