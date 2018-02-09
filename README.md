@@ -12,3 +12,10 @@ Etages, ennemis, pièges et autres surprises varient d'une partie à l'autre !
 Il ne faut pas croire qu'avec un peu de chance, Omotecy est un jeu facile... bien au contraire !
 Esquiver des hordes de zombies, garder la bonne arme, se risquer aux modifications des pilules...
 La stratégie reste un élément important du jeu !
+
+# Comment jouer ?
+Si vous avez déjà installé Ruby et Gosu, c'est parfait, il suffit juste de cloner le code !
+Sinon, il vous suffit de procéder à l'installation du langage et la Gem suivant votre OS ;)
+Faîtes attention aux différentes versions qui peuvent modifier le fonctionnement des librairies.
+
+Pour lancer le jeu, tapez, placez vous dans le dossier GameJam et tapez "ruby Omotecy.rb" dans une console.
