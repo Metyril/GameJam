@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require 'gosu'
 
 require_relative './IHM/MenuPrincipal.rb'

@@ -1,1 +1,5 @@
-# GameJam
+# Omotecy
+Omotecy est un Rogue-like / TPS codé entièrement avec Ruby et Gosu !
+Débarquez dans le laboratoire du docteur Michel Trivial, qui a été infecté par le virus Omotecy...
+Votre but sera de vous échapper en traversant divers étages, mais attention ! Des zombies se regroupent dans les diverses salles...
+Pour avancer, vous pourrez ramasser des armes et des pilules. Cependant, sont-elles réellement là pour vous aider ?
