@@ -24,7 +24,7 @@ class ItemTire < Item
         @attaqueVit = 6
         @vitesseP = 2
         @degats = 2
-        @modeleTire = CreateModele::projectile(0.5)
+        @modeleTire = CreateModele::projectile(0.3)
         @vraiMod  = CreateModele::mitraillette
         @son = Gosu::Sample.new('./media/armes/revolver.wav')
         itbox = 3
@@ -42,8 +42,8 @@ class ItemTire < Item
         @attaqueVit = 2
         @vitesseP = 2
         @degats = 2
-        @modeleTire = CreateModele::projectile(0.5)
-        @vraiMod  = CreateModele::bazooka
+        @modeleTire = CreateModele::projectile(0.4)
+        @vraiMod  = CreateModele::pompe
         @son = Gosu::Sample.new('./media/armes/bazooka.wav')
         itbox = 3
     end
