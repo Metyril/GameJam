@@ -1,12 +1,14 @@
 class Particule < Element
-  def initialize room, modele, x, y, z
-    super room, modele, 0, x, y, z, false
+  attr_accessor :aoe
+  def initialize (room, modele, x, y, z, aoe = false)
+    super room, modele, 1, x, y, z, false
 
     @temps = 15 + rand(0..10)
     @angle = rand(-Math::PI..Math::PI)
     @vitesse = rand(1..1.5)
-
     @angleAnime = rand(-3..3)
+    @aoe = aoe
+    @ennemis = Array.new
   end
 
   def update
@@ -15,6 +17,12 @@ class Particule < Element
     @z += Math.cos(@angle) * @vitesse
     @vitesse *= 0.95
     self.detruire if @temps <= 0
+  end
+
+  def mettreDegat(ennemi)
+    if !@ennemis.include?(ennemi)
+      ennemi.vie -= 1
+    end
   end
 
   def draw camera

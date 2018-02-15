@@ -2,7 +2,7 @@
 require 'gosu'  # Librairie graphique Gosu
 
 class Projectile < Element
-    attr_accessor :app,:angle, :degats, :vitesse,:ennemie,:cracha
+    attr_accessor :app,:angle, :degats, :vitesse,:ennemie,:cracha,:aoe
 
     def initialize(app,angle,x,y,z,itbox,degats,modele,room,vitesse,cracha = false,range = 20)
       super room,modele,itbox,x,y,z,false
@@ -14,6 +14,7 @@ class Projectile < Element
       @degats = degats
       @y = -5
       @cracha = cracha
+      @aoe = false
     end # Fin initialize
 
     def avancer()
@@ -28,7 +29,12 @@ class Projectile < Element
                 self.detruire
               room = @app.map.rooms[rand(0..0)]
               for i in (0...5)
-                @app.particules << Particule.new(room, @app.modeleParicule2, @x, @y, @z)
+                if aoe
+                    @app.particules << Particule.new(room, @app.modeleParicule2, @x, @y, @z,true)
+                else
+                    @app.particules << Particule.new(room, @app.modeleParicule2, @x, @y, @z)
+                end
+
               end
             end
         end

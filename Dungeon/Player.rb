@@ -12,7 +12,7 @@ class Player < Element
         @range = 0
         @vitesseAt = 0
         @arme = arme
-        @vitesse = 1
+        @vitesse = 1 
         @puissance = puissance
         @items = Array.new()
         @invulnerable = 0

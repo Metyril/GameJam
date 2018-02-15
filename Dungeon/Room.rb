@@ -1,9 +1,16 @@
 class Room
 
     # Getters
-    attr_accessor :width, :height, :x_pos, :y_pos, :cell_size, :room
+    attr_accessor :width, :height, :x_pos, :y_pos, :cell_size, :room, :itemVisible
+    attr_accessor :active,:ennemis,:ramassables,:ramassablesArme,:drones,:pilules,:vies,:projectiles,:particules,:pieges
+
+          @active = false
 
     def initialize(map_width, map_height, cell_size, lastRoom = false)
+      @ennemis = 0
+
+      @active = false
+
         if lastRoom
           @width = 8     # Largeur de la Room
           @height = 10    # Hauteur de la Room
@@ -37,7 +44,6 @@ class Room
         @room[@height-1][@width-1] = 9
     end
 
-
     def isCollide(room)     # Détecte la collision entre 2 instances de Room
         # Coordonnées de cette instance de Room
         x1 = @x_pos * @cell_size
@@ -53,5 +59,18 @@ class Room
 
         return x1 < x2 + width2 + @cell_size && x1 + width1 + @cell_size > x2 && y1 < y2 + height2 + @cell_size && y1 + height1 + @cell_size > y2
     end
+
+
+
+#######################################################################################################################################
+    def activerRoom
+      if @ennemis <= 0
+        @active = true
+      end
+    end
+
+
+
+
 
 end # Fin Room

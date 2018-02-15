@@ -33,11 +33,11 @@ DEMIPI = Math::PI/2
 class Fenetre < Gosu::Window
   attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage, :score, :pieges,:gagner,:zombieFin,:bossModele
   attr_accessor :modeleParicule, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert,:modeleDrone,:modPilule,:modeleRuby,:modeleProjectile,:modelePiege
+  attr_accessor :sonRubis, :sonTeleporteur,:sonFin
   def initialize
     super WIDTH, HEIGHT, options = {fullscreen: true}
 
     Triangle.setRefSize(WIDTH, HEIGHT)
-
     @map_width = 40         # Largeur de la Map
     @map_height = 40        # Hauteur de la Map
     @cell_size = 20         # Taille d'une cellule
@@ -69,36 +69,17 @@ class Fenetre < Gosu::Window
     @modeleDrone = CreateModele::sim 2
     @modelePiege = CreateModele::sol
     @modelePointInterrogation = CreateModele::pointInterrogation
-
-    # TELEPORTEUR
-    @playerInitPos = rand(0..@nb_room-1)
     @modeleTP = CreateModele::teleporteur
-    @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @playerInitPos, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
 
-    # ATTRIBUTS
-    @map = @teleporteur.allSet[:map]
-    @projectiles = @teleporteur.allSet[:projectiles]
-    @ramassablesArme = @teleporteur.allSet[:ramassablesArme]
-    @ennemis = @teleporteur.allSet[:ennemis]
-    @ramassables = @teleporteur.allSet[:ramassables]
-    @pilules = @teleporteur.allSet[:pilules]
-    @drones = @teleporteur.allSet[:drones]
-    @particules = @teleporteur.allSet[:particules]
-    @vies = @teleporteur.allSet[:vies]
-    @pieges = @teleporteur.allSet[:pieges]
+    self.initialisation
+
     # AUTRES
-    @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
-    @camera = Camera.new(@player.x, @player.y,@player.z-30)
 
 
     @sonFin = Gosu::Sample.new('./media/divers/mort_son.wav')
     @sonTeleporteur = Gosu::Sample.new('./media/divers/teleporteur.wav')
     @sonTeleporteur.play(1)
     @sonRubis = Gosu::Sample.new('./media/divers/ruby.wav')
-
-
-    @listeModeleCellules = Array.new
-    self.setModelesMurs
 
     @freeCam = false
     @drawTotal = false
@@ -119,13 +100,144 @@ class Fenetre < Gosu::Window
     @music.play(true)
   end
 
+###########################################################################################################################
+##################################### Initialisation de la partie #########################################################
+###########################################################################################################################
+
+  def initialisationDesAttributs
+    # ATTRIBUTS
+      @projectiles = Array.new
+      @ramassablesArme = Array.new
+      @ennemis = Array.new
+      @ramassables = Array.new
+      @pilules = Array.new
+      @drones = Array.new
+      @particules = Array.new
+      @vies = Array.new
+      @pieges = Array.new
+      @map.rooms.each do |room|
+        room.ennemis = 0
+      end
+
+  end
+  def spone(room,type,proba,nbTour)                                              # Ajoute les Zombies Item et + dans la salle
+    for i in 1 .. nbTour
+      if rand < proba
+        case type
+        when "Zombie"
+          enne = Ennemi.new(room, @ennemisModele,self)
+          @ennemis << enne
+          room.ennemis += 1
+        when "ZombieCracheur"
+          enne = Ennemi.new(room, @ennemisModele,self,3,0,0,0,true)
+          @ennemis << enne
+          room.ennemis += 1
+        when "Ruby"
+          @ramassables << ObjetRamassable.new(room,@modeleRuby)
+        when "Pilule"
+          @pilules << Pilule.new(self,room)
+        when "MegaPilule"
+          @pilules << MegaPilule.new(self,room)
+        when "Drone"
+          @drones << DroneAt.new(self,room)
+        when "ItemPoing"
+          @ramassablesArme << ItemPoing.new(self,room)
+        when "ItemTire"
+          @ramassablesArme << ItemTire.new(self,room)
+        when "Vie"
+          @vies << Vie.new(room)
+        when "Piege"
+          @pieges << Piege.new(self,room)
+        when "MegaZombie"
+          @ennemis << MegaZombie.new(room, @bossModele, self, 5,0,0,0,true)
+        end
+      end
+    end
+  end
+  def initialisation
+    if etage == 4
+      @nb_room = 2
+    end
+    @map = Map.new(@map_width,@map_height,@cell_size,@wall_size,@nb_room,@type_gen)
+    @playerInitPos = rand(0..@nb_room-1)
+    @teleporteur = 0
+    self.initialisationDesAttributs
+    roomT = rand(0..@nb_room-1)
+    @map.rooms.each_with_index do |room, r|                                       # Pour toutes les salles, rajouter Item
+      if r != @playerInitPos                                                      # On ne rajoute rien dans la salle du joueur
+        if @etage == 0                                                            # Différentes probabilitées selon l'étage
+          self.spone(room,"Zombie",0.5,10)
+          self.spone(room,"Ruby",0.5,15)
+          self.spone(room,"Pilule",0.5,3)
+          self.spone(room,"MegaPilule",0.5,1)
+          self.spone(room,"Drone",0.2,1)
+          self.spone(room,"ItemPoing",0.5,1)
+          self.spone(room,"Vie",0.1,1)
+          self.spone(room,"Piege",0.5,2)
+        elsif @etage == 1
+          self.spone(room,"Zombie",0.5,10)
+          self.spone(room,"ZombieCracheur",0.5,7)
+          self.spone(room,"Ruby",0.5,15)
+          self.spone(room,"Pilule",0.5,3)
+          self.spone(room,"MegaPilule",0.5,1)
+          self.spone(room,"Drone",0.2,1)
+          self.spone(room,"ItemPoing",0.5,1)
+          self.spone(room,"ItemTire",0.5,1)
+          self.spone(room,"Vie",0.1,1)
+          self.spone(room,"Piege",0.5,2)
+        elsif @etage == 2
+          self.spone(room,"Zombie",0.5,13)
+          self.spone(room,"ZombieCracheur",0.5,8)
+          self.spone(room,"Ruby",0.5,15)
+          self.spone(room,"Pilule",0.5,3)
+          self.spone(room,"MegaPilule",0.5,2)
+          self.spone(room,"Drone",0.2,1)
+          self.spone(room,"ItemPoing",0.5,1)
+          self.spone(room,"ItemTire",0.5,1)
+          self.spone(room,"Vie",0.1,1)
+          self.spone(room,"Piege",0.5,2)
+        elsif @etage == 3
+          self.spone(room,"Zombie",0.5,15)
+          self.spone(room,"ZombieCracheur",0.5,10)
+          self.spone(room,"Ruby",0.5,15)
+          self.spone(room,"Pilule",0.5,3)
+          self.spone(room,"MegaPilule",0.5,2)
+          self.spone(room,"Drone",0.2,3)
+          self.spone(room,"ItemPoing",0.5,2)
+          self.spone(room,"ItemTire",0.5,2)
+          self.spone(room,"Vie",0.1,3)
+          self.spone(room,"Piege",0.5,2)
+        elsif @etage == 4
+          self.spone( room, "MegaZombie", 2, 1)
+          self.spone(room,"Piege",1,10)
+        end
+          if @etage != 4 && r == roomT
+            @teleporteur = Teleporteur.new(self,room,@modeleTP)
+          end
+      end
+    end
+    self.setModelesMurs
+    if etage == 0
+      @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
+      @camera = Camera.new(@player.x, @player.y,@player.z-30)
+    else
+      minX = @map.rooms[@playerInitPos].x_pos*@map.rooms[@playerInitPos].cell_size
+      minZ = @map.rooms[@playerInitPos].y_pos*@map.rooms[@playerInitPos].cell_size
+      maxX = (@map.rooms[@playerInitPos].x_pos+@map.rooms[@playerInitPos].width-1)*@map.rooms[@playerInitPos].cell_size
+      maxZ = (@map.rooms[@playerInitPos].y_pos+@map.rooms[@playerInitPos].height-1)*@map.rooms[@playerInitPos].cell_size
+      @player.x = rand(minX..maxX)
+      @player.z = rand(minZ..maxZ)
+    end
+
+  end
+
+
   def setModelesMurs
     @listeModeleCellules = Array.new
     for i in (0..15)
       @listeModeleCellules.push(CreateModele::cellule(i.to_s(2).rjust(4, '0'), @etage))
     end
   end
-
   def button_down(id)
     if id == Gosu::KbEscape
       @pause = true
@@ -172,171 +284,162 @@ class Fenetre < Gosu::Window
         @player.x += Math.sin(@player.angle) * frontal + Math.cos(-@player.angle) * lateral
         @player.z += Math.cos(@player.angle) * frontal + Math.sin(-@player.angle) * lateral
         @player.animeDeplacement = (frontal != 0 || lateral != 0)
+        if !@freeCam
+          @camera.position.x = -Math.sin(@player.angle) * 30 + @player.x
+          @camera.position.z = -Math.cos(@player.angle) * 25 + @player.z
+
+          @camera.rotation.y = @player.angle
+
+          @camera.position.y = -35
+          @camera.rotation.x = -0.9
+        else
+          frontalCam = 0
+          lateralCam = 0
+          frontalCam = -1 if Gosu.button_down? Gosu::KB_K
+          frontalCam = 1 if Gosu.button_down? Gosu::KB_I
+          lateralCam = -0.6 if Gosu.button_down? Gosu::KB_J
+          lateralCam = 0.6 if Gosu.button_down? Gosu::KB_L
+
+          @camera.position.y += -1 if Gosu.button_down? Gosu::KB_O
+          @camera.position.y += 1 if Gosu.button_down? Gosu::KB_U
+          @camera.position.x += Math.sin(@camera.rotation.y) * frontalCam + Math.cos(-@camera.rotation.y) * lateralCam
+          @camera.position.z += Math.cos(@camera.rotation.y) * frontalCam + Math.sin(-@camera.rotation.y) * lateralCam
+
+          @camera.rotation.x += -0.03 if Gosu.button_down? Gosu::KB_NUMPAD_8
+          @camera.rotation.x += 0.03 if Gosu.button_down? Gosu::KB_NUMPAD_5
+          @camera.rotation.y += -0.03 if Gosu.button_down? Gosu::KB_NUMPAD_4
+          @camera.rotation.y += 0.03 if Gosu.button_down? Gosu::KB_NUMPAD_6
+        end
+        @player.attaque if Gosu.button_down? Gosu::KB_SPACE
+        @player.update
+        self.murCollision @player
+
+
+        if @teleporteur !=0
+          if self.dist(@player, @teleporteur) < (@player.itBox + @teleporteur.itBox)
+            @teleporteur.activer
+          end
+        end
       end
 
-      if !@freeCam && !@pause
-        @camera.position.x = -Math.sin(@player.angle) * 30 + @player.x
-        @camera.position.z = -Math.cos(@player.angle) * 25 + @player.z
-
-        @camera.rotation.y = @player.angle
-
-        @camera.position.y = -35
-        @camera.rotation.x = -0.9
-      else
-        frontalCam = 0
-        lateralCam = 0
-        frontalCam = -1 if Gosu.button_down? Gosu::KB_K
-        frontalCam = 1 if Gosu.button_down? Gosu::KB_I
-        lateralCam = -0.6 if Gosu.button_down? Gosu::KB_J
-        lateralCam = 0.6 if Gosu.button_down? Gosu::KB_L
-
-        @camera.position.y += -1 if Gosu.button_down? Gosu::KB_O
-        @camera.position.y += 1 if Gosu.button_down? Gosu::KB_U
-        @camera.position.x += Math.sin(@camera.rotation.y) * frontalCam + Math.cos(-@camera.rotation.y) * lateralCam
-        @camera.position.z += Math.cos(@camera.rotation.y) * frontalCam + Math.sin(-@camera.rotation.y) * lateralCam
-
-        @camera.rotation.x += -0.03 if Gosu.button_down? Gosu::KB_NUMPAD_8
-        @camera.rotation.x += 0.03 if Gosu.button_down? Gosu::KB_NUMPAD_5
-        @camera.rotation.y += -0.03 if Gosu.button_down? Gosu::KB_NUMPAD_4
-        @camera.rotation.y += 0.03 if Gosu.button_down? Gosu::KB_NUMPAD_6
+      @map.rooms.each do |room|
+        room.activerRoom
       end
 
       #################################
       #update des objets
-      if !@pause
-        @player.attaque if Gosu.button_down? Gosu::KB_SPACE
-
-        @player.update
-        @ennemis.each do |ennemi|
-          ennemi.attaque
+      @ennemis.each do |ennemi|
+        if 1 > ennemi.vie
+          ennemi.room.ennemis -= 1
+          ennemi.detruire
         end
+        ennemi.deplacements(@player.x, @player.z)
+        ennemi.attaque
+        if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable == 0
+          @player.vie -= 1
+          if rand > 0.5
+            @player.cri02.play(1)
+          else
+            @player.cri03.play(1)
+          end
+          @player.invulnerable = 70
+        end
+        self.murCollision ennemi
       end
 
-      self.murCollision @player
-      @projectiles.each do |projectile|
-        projectile.avancer
-        if self.murCollision projectile
-          projectile.detruire
-          for i in (0...10)
-            @particules << Particule.new(@map.rooms[rand(0..0)], @modeleParicule, projectile.x, projectile.y, projectile.z)
+      @ramassables.each do |ramassable|                                       #Pour les ruby
+        if ramassable.room.active
+          if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+            ramassable.detruire
+            @player.nbRuby += 1
+            @sonRubis.play(1)
           end
         end
       end
 
-      if !@pause
-        @ennemis.each do |ennemi|
-          ennemi.detruire if 1 > ennemi.vie
-          ennemi.deplacements(@player.x, @player.z)
-          if (self.dist(@player, ennemi) < (@player.itBox + ennemi.itBox)) && @player.invulnerable == 0
-            @player.vie -= 1
-            @rand = rand(2).to_i
-            if @rand == 0
-              @player.cri02.play(1)
-            elsif @rand == 1
-              @player.cri03.play(1)
+      @vies.each do |ramassable|                                              #Pour les vies
+        if ramassable.room.active
+          if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+            @player.vie += 1
+            ramassable.detruire
+          end
+        end
+      end
+      @pilules.each do |pilule|                                               #Pour les pilules
+        if pilule.room.active
+          if self.dist(@player, pilule) < (@player.itBox + pilule.itBox)
+            pilule.activeEffet
+            pilule.detruire
+          end
+        end
+      end
+      @pieges.each do |pilule|                                                #Pour les pieges
+        if pilule.room.active
+          if self.dist(@player, pilule) < (@player.itBox + pilule.itBox)
+            pilule.activeEffet
+            pilule.detruire
+          end
+        end
+      end
+      @ramassablesArme.each do |ramassable|                                   #Pour les armes
+        if ramassable.room.active
+          if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+            @player.arme = ramassable
+            ramassable.equiper
+            ramassable.detruire
+          end
+        end
+      end
+      @drones.each do |ramassable|                                            #Pour les drones
+        if ramassable.room.active
+          if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
+            @player.ajouterItem(ramassable)
+            ramassable.detruire
+          end
+        end
+      end
+      @projectiles.each do |projectile|                               #Pour les projectiles
+          projectile.avancer
+            if self.murCollision projectile
+              projectile.detruire
+              for i in (0...10)
+                if @player.arme.nom == "Bazooka"
+                  @particules << Particule.new(@map.rooms[rand(0..0)], @modeleParicule, projectile.x, projectile.y, projectile.z,true)
+                else
+                  @particules << Particule.new(@map.rooms[rand(0..0)], @modeleParicule, projectile.x, projectile.y, projectile.z)
+                end
+
+              end
             end
-            @player.invulnerable = 70
+      end
+      @particules.each do |par|
+        if par.aoe
+          @ennemis.each do |ennemie|
+            if Math.sqrt((ennemie.x - par.x)**2 + (ennemie.z - par.z)**2) < (par.itBox + ennemie.itBox)
+              par.mettreDegat(ennemie)
+            end
           end
-          self.murCollision ennemi
         end
       end
-
-
-
-      if self.dist(@player, @teleporteur) < (@player.itBox + @teleporteur.itBox)
-        @playerInitPos = rand(0..@nb_room-1)
-        @etage += 1
-        self.setModelesMurs
-
-        @teleporteur = Teleporteur.new(self, @map_width, @map_height, @cell_size, @wall_size, @nb_room, @type_gen, @playerInitPos, @batte, @modeleRuby, @ennemisModele, @modeleTP, @modPilule)
-
-        @map = @teleporteur.allSet[:map]
-        @projectiles = @teleporteur.allSet[:projectiles]
-        @ramassablesArme = @teleporteur.allSet[:ramassablesArme]
-        @ennemis = @teleporteur.allSet[:ennemis]
-        @ramassables = @teleporteur.allSet[:ramassables]
-        @pilules = @teleporteur.allSet[:pilules]
-        @drones = @teleporteur.allSet[:drones]
-        @particules = @teleporteur.allSet[:particules]
-        @vies = @teleporteur.allSet[:vies]
-        @pieges = @teleporteur.allSet[:pieges]
-
-        room = @map.rooms[@playerInitPos]
-        @player.x, @player.z = rand(room.width), rand(room.height)
-        @player.x = (@player.x + room.x_pos) * @cell_size
-        @player.z = (@player.z + room.y_pos) * @cell_size
-
-
-        @camera = Camera.new(@player.x, @player.y,@player.z-30)
-      end
-
-      if @etage == 4
-        @teleporteur.detruire
-      end
-      @ramassables.each do |ramassable|
-        if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
-          ramassable.detruire
-          @player.nbRuby += 1
-          @sonRubis.play(1)
-        end
-      end
-      @vies.each do |ramassable|
-        if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
-          @player.vie += 1
-          ramassable.detruire
-        end
-      end
-      @pilules.each do |pilule|
-        if self.dist(@player, pilule) < (@player.itBox + pilule.itBox)
-          pilule.activeEffet
-          pilule.detruire
-        end
-      end
-      @pieges.each do |pilule|
-        if self.dist(@player, pilule) < (@player.itBox + pilule.itBox)
-          pilule.activeEffet
-          pilule.detruire
-        end
-      end
-      @ramassablesArme.each do |ramassable|
-        if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
-          @player.arme = ramassable
-          ramassable.equiper
-          ramassable.detruire
-        end
-      end
-      @drones.each do |ramassable|
-        if self.dist(@player, ramassable) < (@player.itBox + ramassable.itBox)
-          @player.ajouterItem(ramassable)
-          ramassable.detruire
-        end
-      end
-
       self.iter @pieges
       self.iter @vies
       self.iter @drones
       self.iter @pilules
-
       self.iter @projectiles
-      #self.iter @ennemis
+      self.iter @ramassables
+      self.iter @ramassablesArme
+      self.iter @particules
+
       @ennemis.delete_if do |elem|
         elem.update
         if elem.isDetruit
           @player.nbZombie += 1
           if elem.is_a? MegaZombie
-            @zombieFin += 1
+            @gagner = true
           end
         end
-
         elem.isDetruit
       end
-      if @zombieFin == 9
-        @gagner = true
-      end
-
-      self.iter @ramassables
-      self.iter @ramassablesArme
-      self.iter @particules
 
       #MENU PAUSE
       @mouse_x = mouse_x.to_i+30
@@ -479,58 +582,73 @@ class Fenetre < Gosu::Window
       x = 0
     end
 
-    @ramassables.each do |ramassable|
-      if redraw?(ramassable.x, ramassable.z)
-        ramassable.draw(@camera)
+      @ramassables.each do |ramassable|
+        if ramassable.room.active && redraw?(ramassable.x, ramassable.z)
+          ramassable.draw(@camera)
+        end
       end
-    end
-    @pieges.each do |ramassable|
-      if redraw?(ramassable.x, ramassable.z)
-        ramassable.draw(@camera)
+      @pieges.each do |ramassable|
+        if ramassable.room.active && redraw?(ramassable.x, ramassable.z)
+          ramassable.draw(@camera)
+        end
       end
-    end
-    @vies.each do |ramassable|
-      if redraw?(ramassable.x, ramassable.z)
-        ramassable.draw(@camera)
+      @vies.each do |ramassable|
+        if ramassable.room.active && redraw?(ramassable.x, ramassable.z)
+          ramassable.draw(@camera)
+        end
       end
-    end
-    @drones.each do |ramassable|
-      if redraw?(ramassable.x, ramassable.z)
-        ramassable.draw(@camera)
+      @drones.each do |ramassable|
+        if ramassable.room.active && redraw?(ramassable.x, ramassable.z)
+          ramassable.draw(@camera)
+        end
       end
-    end
-    @pilules.each do |ramassable|
-      if redraw?(ramassable.x, ramassable.z)
-        ramassable.draw(@camera)
+      @pilules.each do |ramassable|
+        if ramassable.room.active && redraw?(ramassable.x, ramassable.z)
+          ramassable.draw(@camera)
+        end
       end
-    end
-    @ramassablesArme.each do |ramassable|
-      if redraw?(ramassable.x, ramassable.z)
-        ramassable.draw(@camera)
+      @ramassablesArme.each do |ramassable|
+        if ramassable.room.active && redraw?(ramassable.x, ramassable.z)
+          ramassable.draw(@camera)
+        end
       end
-    end
-    @projectiles.each do |ramassable|
-      if redraw?(ramassable.x, ramassable.z)
-        ramassable.draw(@camera)
+      @projectiles.each do |ramassable|
+        if redraw?(ramassable.x, ramassable.z)
+          ramassable.draw(@camera)
+        end
+      end
+
+      @particules.each do |ramassable|
+        if redraw?(ramassable.x, ramassable.z)
+          ramassable.draw(@camera)
+        end
+      end
+
+      @ennemis.each do |ennemi|
+        if redraw?(ennemi.x, ennemi.z)
+          ennemi.draw(@camera)
+        end
+      end
+
+    if @teleporteur != 0
+      if @teleporteur.room.active
+        @teleporteur.draw(@camera)
       end
     end
 
-    @particules.each do |ramassable|
-      if redraw?(ramassable.x, ramassable.z)
-        ramassable.draw(@camera)
-      end
-    end
-
-    @ennemis.each do |ennemi|
-      if redraw?(ennemi.x, ennemi.z)
-        ennemi.draw(@camera)
-      end
-    end
-
-    if @etage != 4
-      @teleporteur.draw(@camera)
-    end
   end
+
+
+
+
+
+
+
+
+
+
+
+
 
   def drawMapTotal
     z = 0
@@ -562,6 +680,9 @@ class Fenetre < Gosu::Window
     @ramassablesArme.each do |ennemi|
       ennemi.draw(@camera)
     end
-    @teleporteur.draw(@camera)
+    if @teleporteur != 0
+      @teleporteur.draw(@camera)
+    end
+
   end
 end

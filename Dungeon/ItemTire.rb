@@ -7,7 +7,7 @@ class ItemTire < Item
   def initialize(app,room,x=0,y=0,z=0)
     @room = room
 
-    rang = rand(3)
+    rang = rand(4)
 
     case rang
       when 0
@@ -37,7 +37,15 @@ class ItemTire < Item
         @vraiMod  = CreateModele::bazooka
         @son = Gosu::Sample.new('./media/armes/bazooka.wav')
         itbox = 3
-
+      when 3
+        @nom = "Pompe"
+        @attaqueVit = 2
+        @vitesseP = 2
+        @degats = 2
+        @modeleTire = CreateModele::projectile(0.5)
+        @vraiMod  = CreateModele::bazooka
+        @son = Gosu::Sample.new('./media/armes/bazooka.wav')
+        itbox = 3
     end
     @vitesse = 0
     @app = app
@@ -53,7 +61,17 @@ class ItemTire < Item
       @vitesse = 140
       @startAnime = true
       @son.play(1)
-      @app.projectiles << Projectile.new(@app,@app.player.angle,@x,@y,@z,@itBox,@degats+@app.player.degats,@modeleTire,@room,@vitesseP)
+      if @nom == "Pompe"
+          @app.projectiles << Projectile.new(@app,@app.player.angle+Math::PI/6,@x,@y,@z,@itBox,@degats+@app.player.degats,@modeleTire,@room,@vitesseP)
+          @app.projectiles << Projectile.new(@app,@app.player.angle,@x,@y,@z,@itBox,@degats+@app.player.degats,@modeleTire,@room,@vitesseP)
+          @app.projectiles << Projectile.new(@app,@app.player.angle+11*Math::PI/6,@x,@y,@z,@itBox,@degats+@app.player.degats,@modeleTire,@room,@vitesseP)
+      elsif @nom == "Bazooka"
+          pro = Projectile.new(@app,@app.player.angle,@x,@y,@z,@itBox,@degats+@app.player.degats,@modeleTire,@room,@vitesseP)
+          pro.aoe = true
+          @app.projectiles << pro
+      else
+          @app.projectiles << Projectile.new(@app,@app.player.angle,@x,@y,@z,@itBox,@degats+@app.player.degats,@modeleTire,@room,@vitesseP)
+      end
     end
   end
 

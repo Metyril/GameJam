@@ -2,7 +2,7 @@
 require 'gosu'  # Librairie graphique Gosu
 
 class Element
-    attr_accessor :x, :y, :z, :itBox, :isDetruit, :modele
+    attr_accessor :x, :y, :z, :itBox, :isDetruit, :modele,:room
 
     def initialize(room, modele,itbox=0,x=0,y=0,z=0,rand=true)
       @room = room
