@@ -7,7 +7,7 @@ class ItemTire < Item
   def initialize(app,room,x=0,y=0,z=0)
     @room = room
 
-    rang = rand(4)
+    rang = 2
 
     case rang
       when 0

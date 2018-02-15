@@ -31,7 +31,7 @@ HEIGHT = 720
 DEMIPI = Math::PI/2
 
 class Fenetre < Gosu::Window
-  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage, :score, :pieges,:gagner,:zombieFin,:bossModele
+  attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage, :score, :pieges,:gagner,:bossModele
   attr_accessor :modeleParicule, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert,:modeleDrone,:modPilule,:modeleRuby,:modeleProjectile,:modelePiege
   attr_accessor :sonRubis, :sonTeleporteur,:sonFin
   def initialize
@@ -48,7 +48,6 @@ class Fenetre < Gosu::Window
 
     @score = 0
     @etage = 0
-    @zombieFin = 0
     @fontHUD = Gosu::Font.new 30
     @iconRuby = Gosu::Image.new('./media/hud/iconRuby.png')
     @iconZombie = Gosu::Image.new('./media/hud/iconZombie.png')
@@ -160,9 +159,12 @@ class Fenetre < Gosu::Window
     end
     @map = Map.new(@map_width,@map_height,@cell_size,@wall_size,@nb_room,@type_gen)
     @playerInitPos = rand(0..@nb_room-1)
+    roomT = @playerInitPos
+    while roomT == @playerInitPos
+      roomT = rand(0..@nb_room-1)
+    end
     @teleporteur = 0
     self.initialisationDesAttributs
-    roomT = rand(0..@nb_room-1)
     @map.rooms.each_with_index do |room, r|                                       # Pour toutes les salles, rajouter Item
       if r != @playerInitPos                                                      # On ne rajoute rien dans la salle du joueur
         if @etage == 0                                                            # Différentes probabilitées selon l'étage
@@ -218,7 +220,7 @@ class Fenetre < Gosu::Window
     end
     self.setModelesMurs
     if etage == 0
-      @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0,2))
+      @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemTire.new(self, @map.rooms[@playerInitPos],0,0,0))
       @camera = Camera.new(@player.x, @player.y,@player.z-30)
     else
       minX = @map.rooms[@playerInitPos].x_pos*@map.rooms[@playerInitPos].cell_size
@@ -316,7 +318,7 @@ class Fenetre < Gosu::Window
 
 
         if @teleporteur !=0
-          if self.dist(@player, @teleporteur) < (@player.itBox + @teleporteur.itBox)
+          if @teleporteur.room.active && self.dist(@player, @teleporteur) < (@player.itBox + @teleporteur.itBox)
             @teleporteur.activer
           end
         end
@@ -403,12 +405,7 @@ class Fenetre < Gosu::Window
             if self.murCollision projectile
               projectile.detruire
               for i in (0...10)
-                if @player.arme.nom == "Bazooka"
-                  @particules << Particule.new(@map.rooms[rand(0..0)], @modeleParicule, projectile.x, projectile.y, projectile.z,true)
-                else
                   @particules << Particule.new(@map.rooms[rand(0..0)], @modeleParicule, projectile.x, projectile.y, projectile.z)
-                end
-
               end
             end
       end
@@ -463,14 +460,14 @@ class Fenetre < Gosu::Window
       if @player.vie <= 0
         @player.sonMort.play(1)
         @sonFin.play(1)
-        @score = @player.nbRuby + 10*(@player.nbZombie-@zombieFin) + 100*@zombieFin
+        @score = @player.nbRuby + 10*(@player.nbZombie) + 100
         self.close!
         MenuFin.new(@score, @gagner).show
       end
     else
       #CEST LA FIN
       @sonFin.play(1)
-      @score = @player.nbRuby + 10*(@player.nbZombie-@zombieFin) + 100*@zombieFin
+      @score = @player.nbRuby + 10*(@player.nbZombie) + 100
       self.close!
       MenuFin.new(@score, @gagner).show
     end
