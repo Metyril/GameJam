@@ -34,7 +34,7 @@ class Fenetre < Gosu::Window
   attr_accessor :player, :ennemis,:drones, :projectiles,  :particules, :map, :ramassablesArme, :ramassables, :pilules, :ennemisModele, :etage, :score, :pieges,:gagner,:zombieFin,:bossModele
   attr_accessor :modeleParicule, :modeleParicule2, :modelePointInterrogation,:modeleProjectileVert,:modeleDrone,:modPilule,:modeleRuby,:modeleProjectile,:modelePiege
   def initialize
-    super WIDTH, HEIGHT, options = {fullscreen: false}
+    super WIDTH, HEIGHT, options = {fullscreen: true}
 
     Triangle.setRefSize(WIDTH, HEIGHT)
 
