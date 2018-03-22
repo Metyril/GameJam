@@ -7,14 +7,14 @@ class ItemTire < Item
   def initialize(app,room,x=0,y=0,z=0)
     @room = room
 
-    rang = 2
+    rang = 4
 
     case rang
       when 0
         @nom = "Pistolet"
         @attaqueVit = 4
         @vitesseP = 3
-        @degats = 1
+        @degats = 2
         @modeleTire = CreateModele::projectile
         @vraiMod  = CreateModele::pistolet
         @son = Gosu::Sample.new('./media/armes/revolver.wav')
@@ -46,13 +46,21 @@ class ItemTire < Item
         @vraiMod  = CreateModele::pompe
         @son = Gosu::Sample.new('./media/armes/bazooka.wav')
         itbox = 3
+      when 4
+        @nom = "PistoletLaser"
+        @attaqueVit = 3
+        @vitesseP = 2
+        @degats = 1
+        @modeleTire = CreateModele::projectile(0.4)
+        @vraiMod = CreateModele::pompe
+        @son = Gosu::Sample.new('./media/armes/revolver.wav')
+        itbox = 1
     end
     @vitesse = 0
     @app = app
     @startAnime = false
     @sonRecup = Gosu::Sample.new('./media/divers/chgmt_arme.wav')
 
-    itbox = 1
     super room , @app.modelePointInterrogation, itbox , x,y,z
   end
 
@@ -69,6 +77,8 @@ class ItemTire < Item
           pro = Projectile.new(@app,@app.player.angle,@x,@y,@z,@itBox,@degats+@app.player.degats,@modeleTire,@room,@vitesseP)
           pro.aoe = true
           @app.projectiles << pro
+      elsif @nom == "PistoletLaser"
+          @app.projectiles << Laser.new(@app,@app.player.angle,@x,@y,@z,@itBox,@degats+@app.player.degats,@modeleTire,@room,@vitesseP)
       else
           @app.projectiles << Projectile.new(@app,@app.player.angle,@x,@y,@z,@itBox,@degats+@app.player.degats,@modeleTire,@room,@vitesseP)
       end

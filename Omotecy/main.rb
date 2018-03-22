@@ -18,6 +18,7 @@ require_relative '../Dungeon/Piege.rb'
 require_relative '../Dungeon/MegaZombie.rb'
 require_relative '../Dungeon/Particule.rb'
 require_relative '../Dungeon/Teleporteur.rb'
+require_relative '../Dungeon/Laser.rb'
 
 require_relative '../IHM/Bouton.rb'
 require_relative '../IHM/MenuFin.rb'
