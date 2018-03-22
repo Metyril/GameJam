@@ -36,4 +36,5 @@ class DroneAt < Item
       @x += Math.sin(angle) * v
       @z += Math.cos(angle) * v
     end
+    
 end
