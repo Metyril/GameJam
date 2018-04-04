@@ -175,6 +175,11 @@ class Fenetre < Gosu::Window
           self.spone(room,"MegaPilule",0.5,1)
           self.spone(room,"Drone",0.2,1)
           self.spone(room,"ItemPoing",0.5,1)
+          ##############
+
+          self.spone(room,"ItemTire",0.5,1)
+
+          ##############
           self.spone(room,"Vie",0.1,1)
           self.spone(room,"Piege",0.5,2)
         elsif @etage == 1
@@ -221,7 +226,8 @@ class Fenetre < Gosu::Window
     end
     self.setModelesMurs
     if etage == 0
-      @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemTire.new(self, @map.rooms[@playerInitPos],0,0,0))
+      #@player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemTire.new(self, @map.rooms[@playerInitPos],0,0,0))
+      @player = Player.new(@map.rooms[@playerInitPos], @playerModele, ItemPoing.new(self, @map.rooms[@playerInitPos],0,0,0, 2))
       @camera = Camera.new(@player.x, @player.y,@player.z-30)
     else
       minX = @map.rooms[@playerInitPos].x_pos*@map.rooms[@playerInitPos].cell_size

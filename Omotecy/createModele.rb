@@ -471,7 +471,18 @@ class CreateModele
     return Modele.new(pointBatte, triangleBatte)
   end
 
-  def self.pistolet
+  def self.pistolet variante = 0
+    if variante == 0
+      couleur1 = 0xffdcdde1
+      couleur2 = 0xff808e9b
+      couleur3 = 0xff2f3640
+      couleur4 = 0xffd2dae2
+    else
+      couleur1 = 0xffe74c3c
+      couleur2 = 0xff8e44ad
+      couleur3 = 0xffe67e22
+      couleur4 = 0xffc0392b
+    end
     size = 3
 
     p1 = Point.new(-0.1 * size, 0, 0)
@@ -491,34 +502,34 @@ class CreateModele
     pointsPistolet = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]
 
     trianglesPistolet = [
-      Triangle.new(p7, p9, p8, 0xffdcdde1),
-      Triangle.new(p9, p7, p10, 0xffdcdde1),
-      Triangle.new(p10, p7, p11, 0xffdcdde1),
-      Triangle.new(p11, p7, p12, 0xffdcdde1),
+      Triangle.new(p7, p9, p8, couleur1),
+      Triangle.new(p9, p7, p10, couleur1),
+      Triangle.new(p10, p7, p11, couleur1),
+      Triangle.new(p11, p7, p12, couleur1),
 
-      Triangle.new(p1, p2, p3, 0xffdcdde1),
-      Triangle.new(p3, p4, p1, 0xffdcdde1),
-      Triangle.new(p4, p5, p1, 0xffdcdde1),
-      Triangle.new(p5, p6, p1, 0xffdcdde1),
+      Triangle.new(p1, p2, p3, couleur1),
+      Triangle.new(p3, p4, p1, couleur1),
+      Triangle.new(p4, p5, p1, couleur1),
+      Triangle.new(p5, p6, p1, couleur1),
 
 
-      Triangle.new(p1, p8, p2, 0xff808e9b),
-      Triangle.new(p1, p7, p8, 0xff808e9b),
+      Triangle.new(p1, p8, p2, couleur2),
+      Triangle.new(p1, p7, p8, couleur2),
 
-      Triangle.new(p2, p8, p3, 0xff2f3640),
-      Triangle.new(p3, p8, p9, 0xff2f3640),
+      Triangle.new(p2, p8, p3, couleur3),
+      Triangle.new(p3, p8, p9, couleur3),
 
-      Triangle.new(p3, p9, p4, 0xffd2dae2),
-      Triangle.new(p4, p9, p10, 0xffd2dae2),
+      Triangle.new(p3, p9, p4, couleur4),
+      Triangle.new(p4, p9, p10, couleur4),
 
-      Triangle.new(p4, p10, p5, 0xffd2dae2),
-      Triangle.new(p10, p11, p5, 0xffd2dae2),
+      Triangle.new(p4, p10, p5, couleur4),
+      Triangle.new(p10, p11, p5, couleur4),
 
-      Triangle.new(p5, p11, p6, 0xff808e9b),
-      Triangle.new(p11, p12, p6, 0xff808e9b),
+      Triangle.new(p5, p11, p6, couleur2),
+      Triangle.new(p11, p12, p6, couleur2),
 
-      Triangle.new(p6, p7, p1, 0xff808e9b),
-      Triangle.new(p6, p12, p7, 0xff808e9b)
+      Triangle.new(p6, p7, p1, couleur2),
+      Triangle.new(p6, p12, p7, couleur2)
     ]
 
     return Modele.new(pointsPistolet, trianglesPistolet)

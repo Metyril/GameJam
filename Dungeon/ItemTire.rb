@@ -7,7 +7,8 @@ class ItemTire < Item
   def initialize(app,room,x=0,y=0,z=0)
     @room = room
 
-    rang = 4
+    #rang = 4
+    rang = rand(4)
 
     case rang
       when 0
@@ -33,7 +34,7 @@ class ItemTire < Item
         @attaqueVit = 1
         @vitesseP = 8
         @degats = 4
-        @modeleTire = CreateModele::projectile(0.8)
+        @modeleTire = CreateModele::projectile(0.8, 0xff2d3436, 0xff636e72)
         @vraiMod  = CreateModele::bazooka
         @son = Gosu::Sample.new('./media/armes/bazooka.wav')
         itbox = 3
@@ -42,7 +43,7 @@ class ItemTire < Item
         @attaqueVit = 2
         @vitesseP = 2
         @degats = 2
-        @modeleTire = CreateModele::projectile(0.4)
+        @modeleTire = CreateModele::projectile(0.4, 0xfff1c40f, 0xfff39c12)
         @vraiMod  = CreateModele::pompe
         @son = Gosu::Sample.new('./media/armes/bazooka.wav')
         itbox = 3
@@ -51,8 +52,8 @@ class ItemTire < Item
         @attaqueVit = 3
         @vitesseP = 2
         @degats = 1
-        @modeleTire = CreateModele::projectile(0.4)
-        @vraiMod = CreateModele::pompe
+        @modeleTire = CreateModele::projectile(0.4, 0xff3498db, 0xff2980b9)
+        @vraiMod = CreateModele::pistolet 1
         @son = Gosu::Sample.new('./media/armes/revolver.wav')
         itbox = 1
     end
